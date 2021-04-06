@@ -7,7 +7,7 @@ Install Git	        : https://git-scm.com/downloads <br>
 Install NodeJs		  : https://nodejs.org/en/download/ <br>
 Sign up for GitHub	: https://github.com <br>
 
-Go to the command prompt (Windows) or Terminal (Linux/OSX).<br>
+Go to the command prompt (Windows) or Terminal (Linux/OSX).<br><br>
 Register your git username and email to Git with commands: <br>
       <i>git config --global user.name “your username”</i> <br>
       <i>git config –global user.email “your email”</i> <br>
@@ -36,24 +36,22 @@ You can find Powershell in your start menu. Right click Powershell en select Run
 In the Powershell window type:<br>
   <i>Set-ExecutionPolicy unrestricted</i><br>
 
-
-First time run of Explain
--	Open VS Code from the desktop or Start menu
-  * Goto File -> Open
-    Navigate to the explain directory and select Open.
--	If asked by VS Code in right lower corner -> Install recommended extensions -> yes!
--	Create a new developer branch in VS Code to work in 
-  * First click on the the master brach in the lower left corner of VS Code
-- Create a new branch for yourself to work in (top middle in VS Code). You can choose any name.
-
-To run the developer edition of Explain
+<br>
+First time run of Explain<br>
+Open VS Code from the desktop or Start menu.<br>
+- Goto File -> Open<br>
+- Navigate to the explain directory and select Open.<br>
+-	If asked by VS Code in right lower corner -> Install recommended extensions -> yes!<br>
+- First click on the the master branch in the lower left corner of VS Code.<br>
+- Create a new branch for yourself to work in (top middle in VS Code). You can choose any name.<br>
+<br>
+To run the developer edition of Explain<br>
 -	In VS Code with the Explain project loaded (see step above)
-  * Go to Terminal in the menu bar and choose New Terminal
-  * In the terminal window below enter the command
-    quasar dev
-  * After compiling the explain developer edition is ready for use. 
-  * Go to any browser (prefereably Chrome) and type in the addressbar
-    localhost:8080
+Go to Terminal in the menu bar and choose New Terminal<br>
+In the terminal window below enter the command<br>
+<i>quasar dev</i><br>
+Go to any browser (prefereably Chrome) and type in the addressbar<br>
+<i>localhost:8080</i>
 
 
 Have fun!
