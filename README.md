@@ -1,4 +1,4 @@
-<u>How to install the developer edition of Explain<u>
+<u>How to install the developer edition of Explain</u>
 
 As Explain is completely open-source it only uses external open-source software-packages to run.
 
