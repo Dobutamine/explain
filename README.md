@@ -11,8 +11,10 @@ As Explain is completely open-source it only uses external open-source software-
   * Register your git username and email to Git with commands:
       git config --global user.name “your username”
       git config –global user.email “your email”
+      
   * Install the Yarn package manager with command:
       npm install -g yarn
+      
   * Install the Quasar framework with command:
       npm install -g @quasar/cli
 
