@@ -12,11 +12,9 @@ Register your git username and email to Git with commands: <br>
       <i>git config --global user.name “your username”</i> <br>
       <i>git config –global user.email “your email”</i> <br>
 <br>
-Install the Yarn package manager with command:<br>
-<i>npm install -g yarn</i> <br>
+Install the Yarn package manager with command: <i>npm install -g yarn</i> <br>
 <br>
-Install the Quasar framework with command:<br>
-<i>npm install -g @quasar/cli</i><br>
+Install the Quasar framework with command: <i>npm install -g @quasar/cli</i><br>
 <br>
 Go to the command prompt (Windows) or Terminal(Linux/OSX) if not already open.<br>
 Make a directory where you want to put the explain application.<br>
@@ -37,7 +35,7 @@ In the Powershell window type:<br>
   <i>Set-ExecutionPolicy unrestricted</i><br>
 
 <br>
-First time run of Explain<br>
+FIRST TIME RUN<br>
 Open VS Code from the desktop or Start menu.<br>
 - Goto File -> Open<br>
 - Navigate to the explain directory and select Open.<br>
@@ -45,7 +43,7 @@ Open VS Code from the desktop or Start menu.<br>
 - First click on the the master branch in the lower left corner of VS Code.<br>
 - Create a new branch for yourself to work in (top middle in VS Code). You can choose any name.<br>
 <br>
-To run the developer edition of Explain<br>
+RUNNING EXPLAIN<br>
 -	In VS Code with the Explain project loaded (see step above)
 Go to Terminal in the menu bar and choose New Terminal<br>
 In the terminal window below enter the command<br>
