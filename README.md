@@ -13,27 +13,28 @@ Register your git username and email to Git with commands: <br>
       <i>git config –global user.email “your email”<i> <br>
 <br>
 Install the Yarn package manager with command:<br>
-      <i>npm install -g yarn</i> <br>
+<i>npm install -g yarn</i> <br>
 <br>      
 Install the Quasar framework with command:
-      <i>npm install -g @quasar/cli<i>
-
--	Go to the command prompt (Windows) or Terminal(Linux/OSX) if not already open.
-  * Make a directory where you want to put the explain application. 
-    mkdir projects
-  * Change directory to the newly created folder with command.
-    cd projects
-  * Clone the GitHub Explain project with command
-    git clone https://github.com/Dobutamine/explain.git
-  * Navigate into the explain directory with command
-    cd explain
-  * Update the dependencies with command
-    yarn
-        
-WINDOWS USERS ONLY!
-To allow the scripts to run, open the Powershell with administrator rights
-  * You can find Powershell in your start menu. Right click Powershell en select Run as administrator. In the Powershell window type:
-    Set-ExecutionPolicy unrestricted
+<i>npm install -g @quasar/cli<i>
+<br>
+Go to the command prompt (Windows) or Terminal(Linux/OSX) if not already open.<br>
+Make a directory where you want to put the explain application.<br>
+  <i>mkdir projects</i><br>
+  * Change directory to the newly created folder with command.<br>
+    <i>cd projects</i><br>
+  * Clone the GitHub Explain project with command<br>
+    <i>git clone https://github.com/Dobutamine/explain.git</i><br>
+  * Navigate into the explain directory with command<br>
+    <i>cd explain</i><br>
+  * Update the dependencies with command<br>
+    <i>yarn</i><br>
+<br>
+WINDOWS USERS ONLY!<br>
+To allow the scripts to run, open the Powershell with administrator rights.<br>
+You can find Powershell in your start menu. Right click Powershell en select Run as administrator. <br>
+In the Powershell window type:<br>
+  <i>Set-ExecutionPolicy unrestricted</i><br>
 
 
 First time run of Explain
