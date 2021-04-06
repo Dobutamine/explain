@@ -1,19 +1,19 @@
-How to install the developer edition of Explain
+<ul>How to install the developer edition of Explain</ul>
 
 As Explain is completely open-source it only uses external open-source software-packages to run.
 
-Install VS Code     : https://code.visualstudio.com/download
-Install Git	        : https://git-scm.com/downloads
-Install NodeJs		  : https://nodejs.org/en/download/
-Sign up for GitHub	: https://github.com
+Install VS Code     : https://code.visualstudio.com/download <br>
+Install Git	        : https://git-scm.com/downloads <br>
+Install NodeJs		  : https://nodejs.org/en/download/ <br>
+Sign up for GitHub	: https://github.com <br>
 
-Go to the command prompt (Windows) or Terminal (Linux/OSX).
-Register your git username and email to Git with commands:
-      git config --global user.name “your username”
-      git config –global user.email “your email”
+Go to the command prompt (Windows) or Terminal (Linux/OSX).<br>
+Register your git username and email to Git with commands: <br>
+      <i>git config --global user.name “your username”</i> <br>
+      <i>git config –global user.email “your email”<i> <br>
       
-  * Install the Yarn package manager with command:
-      npm install -g yarn
+Install the Yarn package manager with command:<br>
+      <i>npm install -g yarn</i> <br>
       
   * Install the Quasar framework with command:
       npm install -g @quasar/cli
