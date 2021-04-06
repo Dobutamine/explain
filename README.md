@@ -16,7 +16,7 @@ Install the Yarn package manager with command:<br>
 <i>npm install -g yarn</i> <br>
 <br>
 Install the Quasar framework with command:<br>
-<i>npm install -g @quasar/cli<i>
+<i>npm install -g @quasar/cli</i><br>
 <br>
 Go to the command prompt (Windows) or Terminal(Linux/OSX) if not already open.<br>
 Make a directory where you want to put the explain application.<br>
