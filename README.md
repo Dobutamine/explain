@@ -10,7 +10,7 @@ Sign up for GitHub	: https://github.com <br>
 Go to the command prompt (Windows) or Terminal (Linux/OSX).<br>
 Register your git username and email to Git with commands: <br>
       <i>git config --global user.name “your username”</i> <br>
-      <i>git config –global user.email “your email”<i> <br>
+      <i>git config –global user.email “your email”</i> <br>
 <br>
 Install the Yarn package manager with command:<br>
 <i>npm install -g yarn</i> <br>
