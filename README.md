@@ -2,13 +2,13 @@ How to install the developer edition of Explain
 
 As Explain is completely open-source it only uses external open-source software-packages to run.
 
--	Install VS Code     : https://code.visualstudio.com/download
--	Install Git	        : https://git-scm.com/downloads
--	Install NodeJs		  : https://nodejs.org/en/download/
--	Sign up for GitHub	: https://github.com
+Install VS Code     : https://code.visualstudio.com/download
+Install Git	        : https://git-scm.com/downloads
+Install NodeJs		  : https://nodejs.org/en/download/
+Sign up for GitHub	: https://github.com
 
--	Go to the command prompt (Windows) or Terminal (Linux/OSX).
-  * Register your git username and email to Git with commands:
+Go to the command prompt (Windows) or Terminal (Linux/OSX).
+Register your git username and email to Git with commands:
       git config --global user.name “your username”
       git config –global user.email “your email”
       
