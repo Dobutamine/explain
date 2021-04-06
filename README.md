@@ -14,8 +14,8 @@ Register your git username and email to Git with commands: <br>
 <br>
 Install the Yarn package manager with command:<br>
 <i>npm install -g yarn</i> <br>
-
-Install the Quasar framework with command:
+<br>
+Install the Quasar framework with command:<br>
 <i>npm install -g @quasar/cli<i>
 <br>
 Go to the command prompt (Windows) or Terminal(Linux/OSX) if not already open.<br>
