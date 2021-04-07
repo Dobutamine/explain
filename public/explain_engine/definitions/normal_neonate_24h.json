@@ -94,7 +94,7 @@
          "description":"kidneys",
          "type":"component",
          "subtype":"BloodCompartment",
-         "is_enabled":true,
+         "is_enabled":false,
          "vol":0.001180910733583115,
          "vol_u":0.00086625,
          "el_min":31407,
