@@ -11,5 +11,10 @@ class Drugs {
     }
   }
 
-  modelCycle() {}
+  modelCycle() {
+
+    let drug = 23
+
+    
+  }
 }

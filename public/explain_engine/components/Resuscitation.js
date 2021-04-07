@@ -3,6 +3,7 @@
 class Resuscitation {
     constructor(_model) {
       this._model = _model;
+
     }
   
     modelStep() {
@@ -11,5 +12,7 @@ class Resuscitation {
       }
     }
   
-    modelCycle() {}
+    modelCycle() {
+
+    }
   }

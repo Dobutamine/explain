@@ -1609,8 +1609,11 @@
          "description":"",
          "type":"component",
          "subtype":"Resuscitation",
-         "is_enabled":false
+         "is_enabled":true,
+         "drukverdeling_li_re": 0.5,
+         "compression_pressure": 1
       },
+
       {
          "name":"HeartLungInteraction",
          "description":"",

@@ -17,21 +17,22 @@ class Kidneys {
     this.targetconductance=0
     this.resistance=0
     this.conchange=0
-
+    this._dc = 0
 
   }
 
   modelStep() {
+    
+
     if (this.is_enabled) {
       this.modelCycle();
     }
   }
 
   modelCycle() {
-
       // INPUTS
     // initial conditions
-    let dc=0
+    let dc = 0
     
     // Flow in L/sec
     let qt = this._model.components['AR_KID'].real_flow
@@ -109,4 +110,5 @@ class Kidneys {
 
     
   }
+
 }

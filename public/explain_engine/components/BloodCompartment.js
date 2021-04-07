@@ -165,16 +165,19 @@ class BloodCompartment {
 
   modelStep() {
     if (this.is_enabled) {
-      
-      // calculate the new blood compartment composition
-      if (this.initialized) {
-        this.calcEnergyUse()
-      } else {
-        this._model.components.Blood.initializeBloodCompartment(this)
-      }
-      
-      // calculate the pressure
-      this.pres = this.calcPressure();
+      this.modelCycle()
     }
+  }
+
+  modelCycle() {
+    // calculate the new blood compartment composition
+    if (this.initialized) {
+      this.calcEnergyUse()
+    } else {
+      this._model.components.Blood.initializeBloodCompartment(this)
+    }
+    
+    // calculate the pressure
+    this.pres = this.calcPressure();
   }
 }
