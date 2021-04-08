@@ -11,9 +11,9 @@
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
-         "vol":0.0048723050269226026,
-         "vol_u":0.00324844,
-         "el_min":32323,
+         "vol":0.00455400,
+         "vol_u":0.00296010,
+         "el_min":28232,
          "el_max":0,
          "el_k1":0,
          "el_k2":0,
@@ -56,6 +56,20 @@
          "vol":0.001802410605638852,
          "vol_u":0.001287,
          "el_min":64935,
+         "el_max":0,
+         "el_k1":0,
+         "el_k2":0,
+         "fvatp":0
+      },
+      {
+         "name":"COR",
+         "description":"coronary arteries",
+         "type":"component",
+         "subtype":"BloodCompartment",
+         "is_enabled":true,
+         "vol":0.00039600,
+         "vol_u": 0.00025740,
+         "el_min":324675,
          "el_max":0,
          "el_k1":0,
          "el_k2":0,
@@ -325,6 +339,36 @@
          "comp_to":"AARCH",
          "r_for":50,
          "r_back":50,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"AA_COR",
+         "description":"ascending aorta to coronaries",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":true,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"AA",
+         "comp_to":"COR",
+         "r_for":700000,
+         "r_back":700000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"COR_RA",
+         "description":"coronaries to right atrium",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":true,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"COR",
+         "comp_to":"RA",
+         "r_for":75000,
+         "r_back":75000,
          "r_k1":0,
          "r_k2":0
       },
@@ -1532,8 +1576,8 @@
             "real_flow"
          ],
          "myocardium_flow_source":[
-            "",
-            ""
+            "AA_COR",
+            "real_flow"
          ],
          "vsd_flow_source":[
             "SHUNT_VSD",
