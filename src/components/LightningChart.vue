@@ -305,42 +305,44 @@ export default {
       this.chartCh1Lineseries.clear()
       this.chartCh2Lineseries.clear()
 
-      let samples = parseInt(this.rtFrame / 0.015)
-      if (this.hires) {
-        samples = parseInt(this.rtFrame / 0.005)
-      }
-
-      const overrunCh1 = this.chartCh1Data.length - samples
-      const overrunCh2 = this.chartCh2Data.length - samples
-      if (overrunCh1 > 0) {
-        this.chartCh1Data.splice(0, overrunCh1)
-      }
-      if (overrunCh2 > 0) {
-        this.chartCh2Data.splice(0, overrunCh2)
-      }
-
-      this.rt_data.forEach(dataline => {
-        let xValue = dataline[this.xAxisModel][this.xAxisProp]
-        if (this.xAxisProp === 'none' | this.xAxisProp === '') {
-          xValue = dataline[this.xAxisModel]
-        }
-        if (this.chartCh1Model !== 'none') {
-          this.chartCh1Data.push({
-            x: xValue,
-            y: dataline[this.chartCh1Model][this.chartCh1Prop] * this.chartCh1Factor
-          })
+      if (this.rt_data) {
+        let samples = parseInt(this.rtFrame / 0.015)
+        if (this.hires) {
+          samples = parseInt(this.rtFrame / 0.005)
         }
 
-        if (this.chartCh2Model !== 'none') {
-          this.chartCh2Data.push({
-            x: xValue,
-            y: dataline[this.chartCh2Model][this.chartCh2Prop] * this.chartCh2Factor
-          })
+        const overrunCh1 = this.chartCh1Data.length - samples
+        const overrunCh2 = this.chartCh2Data.length - samples
+        if (overrunCh1 > 0) {
+          this.chartCh1Data.splice(0, overrunCh1)
         }
-      })
-      // console.log(this.chartCh1Data)
-      this.chartCh1Lineseries.add(this.chartCh1Data)
-      this.chartCh2Lineseries.add(this.chartCh2Data)
+        if (overrunCh2 > 0) {
+          this.chartCh2Data.splice(0, overrunCh2)
+        }
+
+        this.rt_data.forEach(dataline => {
+          let xValue = dataline[this.xAxisModel][this.xAxisProp]
+          if (this.xAxisProp === 'none' | this.xAxisProp === '') {
+            xValue = dataline[this.xAxisModel]
+          }
+          if (this.chartCh1Model !== 'none') {
+            this.chartCh1Data.push({
+              x: xValue,
+              y: dataline[this.chartCh1Model][this.chartCh1Prop] * this.chartCh1Factor
+            })
+          }
+
+          if (this.chartCh2Model !== 'none') {
+            this.chartCh2Data.push({
+              x: xValue,
+              y: dataline[this.chartCh2Model][this.chartCh2Prop] * this.chartCh2Factor
+            })
+          }
+        })
+        // console.log(this.chartCh1Data)
+        this.chartCh1Lineseries.add(this.chartCh1Data)
+        this.chartCh2Lineseries.add(this.chartCh2Data)
+      }
     },
     drawGraph () {
       this.chartCh1Lineseries.clear()

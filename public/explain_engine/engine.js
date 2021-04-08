@@ -19,12 +19,15 @@
 */
 
 // import the helper classes
-importScripts("./helpers/interventions.js");
-importScripts("./helpers/datalogger.js");
+importScripts("./helpers/Interventions.js");
+importScripts("./helpers/Datalogger.js");
 importScripts("./helpers/math_functions.js");
 
 // define an object which is going to hold available possible component types
 let componentTypes = {}
+
+// define an object which is going to hold available possible monitor types
+let monitorTypes = {}
 
 // define an object which is going to hold the entire model state and properties
 let current_model = {};
@@ -68,19 +71,19 @@ onmessage = function (e) {
       break;
 
     case "set": 
-      if (e.data.target === "datalogger") {
+      if (e.data.target === "datalogger" | e.data.target === "Datalogger") {
         // setting data handled by the datalogger of the model
         datalogger[e.data.action](e.data.data)
       }
       
-      if (e.data.target === "interventions") {
+      if (e.data.target === "interventions" | e.data.target === "Interventions") {
         // setters data handled by the interventions engine
         interventions[e.data.action](e.data.data)
       }
 
-      if (e.data.target === "ventilator") {
+      if (e.data.target === "Ventilator") {
         // setters data handled by the interventions engine
-        current_model.components['ventilator'][e.data.action](e.data.data)
+        current_model.components['Ventilator'][e.data.action](e.data.data)
       }
 
       if (e.data.action === "change_property") {
@@ -162,21 +165,11 @@ const initModel = function (model_definition) {
     // initialize all the components by first finding out what components are configures in the JSON file
     initializeComponents(model_definition)
 
-    // initialize global functions
-    model_definition["globals"].forEach(component => {
-      if (component.type === 'global_component') {
-        const compFileName = "./components/" + component.subtype + ".js"
-        try {
-          // import the component code
-          importScripts(compFileName);
-          current_model[component.global_functions[0]] = eval(component.global_functions[0])
-        } catch {
-          console.log('error: ' , compFileName)
-        }  
-      }
-    })
+    // initialize all the global non component functions
+    initializeGlobals(model_definition)
 
-    // current_model["calcAcidbaseFromTCO2"] = calcAcidbaseFromTCO2
+    // initialize all the monitors
+    initializeMonitors(model_definition)
 
     // import and initialize the datalogger
     datalogger = new Datalogger(current_model);
@@ -188,6 +181,62 @@ const initModel = function (model_definition) {
   }
 };
 
+const initializeGlobals = function (model_definition) {
+   // initialize global functions
+   model_definition["globals"].forEach(component => {
+    if (component.type === 'global_component') {
+      const compFileName = "./components/" + component.subtype + ".js"
+      try {
+        // import the component code
+        importScripts(compFileName);
+        current_model[component.global_functions[0]] = eval(component.global_functions[0])
+      } catch {
+        console.log('error: ' , compFileName)
+      }  
+    }
+  })
+}
+
+const initializeMonitors = function (model_definition) {
+  // initialize all the components by first finding out what components are configures in the JSON file
+  let monitorTypes = []
+  model_definition["monitoring"].forEach(monitor => {
+    if (monitor.subtype !== ""){
+      monitorTypes.push(monitor.subtype)
+    }
+  })
+  // remove duplicates
+  const monitorList = [...new Set(monitorTypes)]
+
+  // build a dictionary with all component types ready to be dynamically instantiated
+  monitorList.forEach(monitorType => {
+    // construct the component file name
+    const monitorFileName = "./helpers/" + monitorType + ".js"
+    try {
+      // import the component code
+      importScripts(monitorFileName);
+      // store the component type in a dictionary
+      monitorTypes[monitorType] = eval(monitorType);
+    } catch {
+      console.log('error: ' , monitorFileName)
+    }
+  })
+
+  // now we're going to read the JSON file and instatiate the desired type and populate the properties
+  model_definition["monitoring"].forEach(monitor => {
+    if (monitor.subtype !== ""){
+      // instantiate the component type and add a reference to the current model!
+      let newMonitor = new monitorTypes[monitor.subtype](current_model)
+      // add the properties
+      Object.keys(monitor).forEach(function (prop) {
+        newMonitor[prop] = monitor[prop];
+      });
+      // add the new component to the currentmodel
+      current_model.components[monitor.name] = newMonitor
+    }
+  })
+
+}
 // initialize the  model components from the model_definition file
 const initializeComponents = function (model_definition) {
   // initialize all the components by first finding out what components are configures in the JSON file

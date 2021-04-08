@@ -21,6 +21,8 @@ class Ventilator {
     this.pressure = 0;
 
     this._insp_volume_reached = false
+
+
     // declare the instance variables
     this._inspiration = false;
     this._expiration = true;
@@ -149,6 +151,8 @@ class Ventilator {
   setFiO2(fio2_new) {
     // set the dry air composition
 
+    this.fio2 = fio2_new
+
     let fargon = (0.0092 + 0.0092 * 0.2095) * (1 - fio2_new)
     let fco2 = (0.0004  + 0.0004  * 0.2095) * (1 - fio2_new)
     let fn2 = (0.7809 + 0.7809 * 0.2095) * (1 - fio2_new)
@@ -157,10 +161,11 @@ class Ventilator {
     let sum = fo2 + fargon + fco2 + fn2
     fn2 += 1 - sum
     
-    this._model.components['gas'].dry_air.fo2 = fo2
-    this._model.components['gas'].dry_air.fargon = fargon
-    this._model.components['gas'].dry_air.fco2 = fco2
-    this._model.components['gas'].dry_air.fn2 = fn2
+    this._model.components['Gas'].dry_air.fo2 = fo2
+    this._model.components['Gas'].dry_air.fargon = fargon
+    this._model.components['Gas'].dry_air.fco2 = fco2
+    this._model.components['Gas'].dry_air.fn2 = fn2
+
 
 
   }
@@ -293,7 +298,7 @@ class Ventilator {
     let t = this._model.modeling_stepsize;
 
     // get the atmospheric pressure
-    let p_atm = this._model.components["metabolism"].p_atm;
+    let p_atm = this._model.components["Metabolism"].p_atm;
 
     // get the different sensor inputs
     this.sensor_p_atm = p_atm
