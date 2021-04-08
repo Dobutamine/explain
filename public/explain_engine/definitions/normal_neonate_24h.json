@@ -352,8 +352,8 @@
          "no_backflow":false,
          "comp_from":"AA",
          "comp_to":"COR",
-         "r_for":700000,
-         "r_back":700000,
+         "r_for":300000,
+         "r_back":300000,
          "r_k1":0,
          "r_k2":0
       },
