@@ -1465,6 +1465,13 @@
          "type":"component",
          "subtype":"HeartLungInteraction",
          "is_enabled":false
+      },
+      {
+         "name":"HeartOxygenation",
+         "description":"",
+         "type":"component",
+         "subtype":"HeartOxygenation",
+         "is_enabled":false
       }
    ],
    "globals": [
