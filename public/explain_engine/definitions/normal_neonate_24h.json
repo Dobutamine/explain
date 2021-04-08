@@ -1528,24 +1528,24 @@
             "real_flow"
          ],
          "lungshunt_flow_source":[
-            "",
-            ""
+            "SHUNT_LUNG",
+            "real_flow"
          ],
          "myocardium_flow_source":[
             "",
             ""
          ],
          "vsd_flow_source":[
-            "",
-            ""
+            "SHUNT_VSD",
+            "real_flow"
          ],
          "ofo_flow_source":[
-            "",
-            ""
+            "SHUNT_OFO",
+            "real_flow"
          ],
          "pda_flow_source":[
-            "",
-            ""
+            "SHUNT_DA",
+            "real_flow"
          ],
          "ivc_flow_source":[
             "VCII_RA",
