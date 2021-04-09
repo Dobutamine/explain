@@ -1465,14 +1465,6 @@
          "type":"component",
          "subtype":"HeartLungInteraction",
          "is_enabled":false
-      },
-      {
-         "name":"HeartOxygenation",
-         "description":"",
-         "type":"component",
-         "subtype":"HeartOxygenation",
-         "is_enabled":true,
-         "pva_normal": 2.46
       }
    ],
    "globals": [

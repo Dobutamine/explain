@@ -39,7 +39,9 @@ class Monitor {
     this.rvo = 0
     this.ecmo_flow = 0
     this.lv_stroke = 0
+    this.lv_stroke_work = 0
     this.rv_stroke = 0
+    this.rv_stroke_work = 0
 
     this.pao2 = 0
     this.paco2 = 0
@@ -211,10 +213,12 @@ class Monitor {
 
       this.lvo = (this._lvo_counter / this._time_counter) * 60.0
       this.lv_stroke = this._lvo_counter
+      this.lv_stroke_work = this.lv_stroke * this.abp_mean
       this._lvo_counter = 0
 
       this.rvo = (this._rvo_counter / this._time_counter) * 60.0
       this.rv_stroke = this._rvo_counter
+      this.rv_stroke_work = this.rv_stroke * this.pap_mean
       this._rvo_counter = 0
 
       this.kidney_flow = (this._kidney_flow_counter / this._time_counter) * 60.0
