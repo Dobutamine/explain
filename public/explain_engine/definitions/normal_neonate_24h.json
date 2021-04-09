@@ -11,9 +11,9 @@
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
-         "vol":0.0048723050269226026,
-         "vol_u":0.00324844,
-         "el_min":32323,
+         "vol":0.00455400,
+         "vol_u":0.00296010,
+         "el_min":28232,
          "el_max":0,
          "el_k1":0,
          "el_k2":0,
@@ -56,6 +56,20 @@
          "vol":0.001802410605638852,
          "vol_u":0.001287,
          "el_min":64935,
+         "el_max":0,
+         "el_k1":0,
+         "el_k2":0,
+         "fvatp":0
+      },
+      {
+         "name":"COR",
+         "description":"coronary arteries",
+         "type":"component",
+         "subtype":"BloodCompartment",
+         "is_enabled":true,
+         "vol":0.00039600,
+         "vol_u": 0.00025740,
+         "el_min":324675,
          "el_max":0,
          "el_k1":0,
          "el_k2":0,
@@ -325,6 +339,36 @@
          "comp_to":"AARCH",
          "r_for":50,
          "r_back":50,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"AA_COR",
+         "description":"ascending aorta to coronaries",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":true,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"AA",
+         "comp_to":"COR",
+         "r_for":300000,
+         "r_back":300000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"COR_RA",
+         "description":"coronaries to right atrium",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":true,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"COR",
+         "comp_to":"RA",
+         "r_for":75000,
+         "r_back":75000,
          "r_k1":0,
          "r_k2":0
       },
@@ -734,6 +778,66 @@
          "r_k2":0
       },
       {
+         "name":"SHUNT_DA",
+         "description":"ductus arteriosus",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":false,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"AARCH",
+         "comp_to":"APC",
+         "r_for":18000,
+         "r_back":18000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"SHUNT_OFO",
+         "description":"foramen ovale",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":false,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"LA",
+         "comp_to":"RA",
+         "r_for":18000,
+         "r_back":18000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"SHUNT_VSD",
+         "description":"ventricular septal defect",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":false,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"LV",
+         "comp_to":"RV",
+         "r_for":18000,
+         "r_back":18000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
+         "name":"SHUNT_LUNG",
+         "description":"lung shunt",
+         "type":"component",
+         "subtype":"BloodConnector",
+         "is_enabled":false,
+         "no_flow":false,
+         "no_backflow":false,
+         "comp_from":"APC",
+         "comp_to":"PV",
+         "r_for":18000,
+         "r_back":18000,
+         "r_k1":0,
+         "r_k2":0
+      },
+      {
          "name":"OUT",
          "description":"outside air",
          "type":"component",
@@ -763,22 +867,7 @@
          "el_k1":0,
          "el_k2":0,
          "fh2o":0.063,
-         "temp_source":"body",
-         "ctotal":39.37095411791871,
-         "ch2o":2.4803701094288786,
-         "ph2o":47.960078973657915,
-         "co2":7.20824416642134,
-         "po2":130.7565202368579,
-         "fo2":0.17176078420234847,
-         "cargon":0.37863002568212867,
-         "pargon":6.859904066340945,
-         "fargon":0.009011118526657372,
-         "cco2":1.1520429965504317,
-         "pco2":20.743936353551756,
-         "fco2":0.027249079197545906,
-         "cn2":32.13828120164831,
-         "pn2":582.2716397179856,
-         "fn2":0.7648676584202728
+         "temp_source":"body"
       },
       {
          "name":"ALL",
@@ -794,22 +883,7 @@
          "el_k1":0,
          "el_k2":0,
          "fh2o":0.063,
-         "temp_source":"body",
-         "ctotal":39.46991571943896,
-         "ch2o":2.4866046903246546,
-         "ph2o":48.08062993135266,
-         "co2":5.478159338149125,
-         "po2":99.2525394803944,
-         "fo2":0.13005050050701225,
-         "cargon":0.3786300256820999,
-         "pargon":6.859904066340423,
-         "fargon":0.008988525250116003,
-         "cco2":2.5430506550455925,
-         "pco2":46.07336616374738,
-         "fco2":0.060369884347611855,
-         "cn2":32.13828120164467,
-         "pn2":582.2716397179195,
-         "fn2":0.7629499312842491
+         "temp_source":"body"
       },
       {
          "name":"ALR",
@@ -825,22 +899,7 @@
          "el_k1":0,
          "el_k2":0,
          "fh2o":0.063,
-         "temp_source":"body",
-         "ctotal":39.46991571943896,
-         "ch2o":2.4866046903246546,
-         "ph2o":48.08062993135266,
-         "co2":5.478159338149125,
-         "po2":99.2525394803944,
-         "fo2":0.13005050050701225,
-         "cargon":0.3786300256820999,
-         "pargon":6.859904066340423,
-         "fargon":0.008988525250116003,
-         "cco2":2.5430506550455925,
-         "pco2":46.07336616374738,
-         "fco2":0.060369884347611855,
-         "cn2":32.13828120164467,
-         "pn2":582.2716397179195,
-         "fn2":0.7629499312842491
+         "temp_source":"body"
       },
       {
          "name":"VENTIN",
@@ -1222,6 +1281,7 @@
          "t_in":0.4,
          "t_ex":0.7999999999999999,
          "t_ex_backup":5,
+         "fio2": 0.21,
          "cycling_mode":"time",
          "ventilator_mode":"pressure",
          "synchronized":true,
@@ -1268,7 +1328,7 @@
          "g_map_cont":0,
          "g_map_res":0,
          "g_map_venpool":0,
-         "g_map_hp":10,
+         "g_map_hp":0,
          "g_lungvol_hp":-0.1,
          "lung_vol_hp_threshold":0.00025
       },
@@ -1360,6 +1420,80 @@
          "is_enabled":false
       },
       {
+         "name":"Blood",
+         "description":"",
+         "type":"component",
+         "subtype":"Blood",
+         "is_enabled":true,
+         "compounds":{
+            "to2":8,
+            "tco2":25.18,
+            "sodium":138,
+            "chloride":100,
+            "hemoglobin":10,
+            "albumin":30,
+            "phosphates":1.5,
+            "sid":41.6,
+            "uma":10
+         }
+      },
+      {
+         "name":"Gas",
+         "description":"",
+         "type":"component",
+         "subtype":"Gas",
+         "is_enabled":true,
+         "gas_constant":62.36367,
+         "temp_room":20,
+         "dry_air":{
+            "fo2":0.2095,
+            "fargon":0.0092,
+            "fco2":0.0004,
+            "fn2":0.7809
+         }
+      },
+      {
+         "name":"Resuscitation",
+         "description":"",
+         "type":"component",
+         "subtype":"Resuscitation",
+         "is_enabled":false
+      },
+      {
+         "name":"HeartLungInteraction",
+         "description":"",
+         "type":"component",
+         "subtype":"HeartLungInteraction",
+         "is_enabled":false
+      },
+      {
+         "name":"HeartOxygenation",
+         "description":"",
+         "type":"component",
+         "subtype":"HeartOxygenation",
+         "is_enabled":true,
+         "pva_normal": 2.46
+      }
+   ],
+   "globals": [
+      {
+         "name":"AcidBase",
+         "description":"",
+         "type":"global_component",
+         "subtype":"AcidBase",
+         "global_functions": [ "calcAcidbaseFromTCO2" ]
+      },
+      {
+         "name":"Oxygenation",
+         "description":"",
+         "type":"global_component",
+         "subtype":"Oxygenation",
+         "global_functions": [ "calcOxygenationFromTO2" ]
+      }
+
+   ],
+   "monitoring": [
+      {
          "name":"Monitor",
          "description":"",
          "type":"component",
@@ -1446,24 +1580,24 @@
             "real_flow"
          ],
          "lungshunt_flow_source":[
-            "",
-            ""
+            "SHUNT_LUNG",
+            "real_flow"
          ],
          "myocardium_flow_source":[
-            "",
-            ""
+            "AA_COR",
+            "real_flow"
          ],
          "vsd_flow_source":[
-            "",
-            ""
+            "SHUNT_VSD",
+            "real_flow"
          ],
          "ofo_flow_source":[
-            "",
-            ""
+            "SHUNT_OFO",
+            "real_flow"
          ],
          "pda_flow_source":[
-            "",
-            ""
+            "SHUNT_DA",
+            "real_flow"
          ],
          "ivc_flow_source":[
             "VCII_RA",
@@ -1502,12 +1636,12 @@
             ""
          ],
          "vent_peak_pressure_source":[
-            "",
-            ""
+            "Ventilator",
+            "peak_pressure"
          ],
          "vent_plateau_pressure_source":[
-            "",
-            ""
+            "Ventilator",
+            "plateau_pressure"
          ],
          "vent_compliance_source":[
             "",
@@ -1518,122 +1652,57 @@
             ""
          ],
          "vent_peep_source":[
-            "",
-            ""
+            "Ventilator",
+            "peep"
          ],
          "vent_freq_source":[
-            "",
-            ""
+            "Ventilator",
+            "measured_freq"
          ],
          "vent_minute_volume_source":[
-            "",
-            ""
+            "Ventilator",
+            "minute_volume"
          ],
          "vent_tidal_volume_source":[
-            "",
-            ""
+            "Ventilator",
+            "exhaled_tidal_volume"
          ],
          "vent_tidal_volume_insp_source":[
             "",
             ""
          ],
          "vent_insp_flow_source":[
-            "",
-            ""
+            "Ventilator",
+            "insp_flow"
          ],
          "vent_exp_flow_source":[
-            "",
-            ""
+            "Ventilator",
+            "exp_flow"
          ],
          "vent_insp_time_source":[
-            "",
-            ""
+            "Ventilator",
+            "t_in"
          ],
          "vent_exp_time_source":[
-            "",
-            ""
+            "Ventilator",
+            "t_ex"
          ],
          "vent_flow_signal_source":[
-            "",
-            ""
+            "Ventilator",
+            "flow"
          ],
          "vent_pressure_signal_source":[
-            "",
-            ""
+            "Ventilator",
+            "pressure"
          ],
          "vent_volume_signal_source":[
-            "",
-            ""
+            "Ventilator",
+            "volume"
          ],
          "vent_fio2_source":[
-            "",
-            ""
-         ],
-         "svO2_svc":73.1725326958856
-      },
-      {
-         "name":"Blood",
-         "description":"",
-         "type":"component",
-         "subtype":"Blood",
-         "is_enabled":true,
-         "compounds":{
-            "to2":8,
-            "tco2":25.18,
-            "sodium":138,
-            "chloride":100,
-            "hemoglobin":10,
-            "albumin":30,
-            "phosphates":1.5,
-            "sid":41.6,
-            "uma":10
-         }
-      },
-      {
-         "name":"Gas",
-         "description":"",
-         "type":"component",
-         "subtype":"Gas",
-         "is_enabled":true,
-         "gas_constant":62.36367,
-         "temp_room":20,
-         "dry_air":{
-            "fo2":0.2095,
-            "fargon":0.0092,
-            "fco2":0.0004,
-            "fn2":0.7809
-         }
-      },
-      {
-         "name":"Resuscitation",
-         "description":"",
-         "type":"component",
-         "subtype":"Resuscitation",
-         "is_enabled":false
-      },
-      {
-         "name":"HeartLungInteraction",
-         "description":"",
-         "type":"component",
-         "subtype":"HeartLungInteraction",
-         "is_enabled":false
+            "Ventilator",
+            "fio2"
+         ]
       }
-   ],
-   "globals": [
-      {
-         "name":"AcidBase",
-         "description":"",
-         "type":"global_component",
-         "subtype":"AcidBase",
-         "global_functions": [ "calcAcidbaseFromTCO2" ]
-      },
-      {
-         "name":"Oxygenation",
-         "description":"",
-         "type":"global_component",
-         "subtype":"Oxygenation",
-         "global_functions": [ "calcOxygenationFromTO2" ]
-      }
-
    ]
 }

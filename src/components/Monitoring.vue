@@ -41,7 +41,7 @@
         <div class="row">
             <q-input class="col" v-model="ivc_flow" filled dense square label="ivc flow" />
             <q-input class="col" v-model="svc_flow" filled dense square label="svc flow" />
-            <q-input class="col" v-model="myo_flow" filled dense square label="myo flow" />
+            <q-input class="col" v-model="myo_flow" filled dense square label="cor flow" />
         </div>
         <div class="row">
             <q-input class="col" v-model="pda_flow" filled dense square label="pda flow" />

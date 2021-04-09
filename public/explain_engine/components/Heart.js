@@ -6,6 +6,14 @@ class Heart {
     this.aaf = 0.0
     this.vaf = 0.0
 
+    this.prev_aaf = 0.0
+    this.prev_vaf = 0.0
+
+    this.systole = 0
+    this.systole_counter = 0
+    this.diastole_counter = 0
+    this.diastole = 0
+
     // local state properties
     this._model = _model;
   }
@@ -39,6 +47,17 @@ class Heart {
     } else {
       this.vaf = 0;
     }
+
+    // if (this.prev_vaf >= this.vaf) {
+    //   this.systole_counter = 0
+    //   this.diastole_counter += 1
+    // } else {
+    //   this.diastole_counter = 0
+    //   this.systole_counter += 1
+    // }
+
+    this.prev_vaf = this.vaf
+    // check whether we're in systole or diastole
 
 
     // increase the atrial and ventricular activation function timers

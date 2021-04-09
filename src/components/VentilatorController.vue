@@ -137,7 +137,7 @@ export default {
       chart1YAxis: null,
       chart1Ch1Lineseries: null,
       chart1Ch1Data: [],
-      chart1Ch1Model: 'monitor',
+      chart1Ch1Model: 'Monitor',
       chart1Ch1Prop: 'vent_pressure_signal',
       chart1Ch1Factor: 1.35951,
       chart1Ch1Offset: 0,
@@ -214,7 +214,7 @@ export default {
         case 'pressure':
           this.xAxisModel = 'time'
           this.xAxisProp = 'none'
-          this.chart1Ch1Model = 'monitor'
+          this.chart1Ch1Model = 'Monitor'
           this.chart1Ch1Prop = 'vent_pressure_signal'
           this.chart1YAxis.setScrollStrategy(AxisScrollStrategies.Numeric)
           this.chart1YAxis.setInterval(this.chart1MinY, this.chart1MaxY)
@@ -222,14 +222,14 @@ export default {
         case 'flow':
           this.xAxisModel = 'time'
           this.xAxisProp = 'none'
-          this.chart1Ch1Model = 'monitor'
+          this.chart1Ch1Model = 'Monitor'
           this.chart1Ch1Prop = 'vent_flow_signal'
           this.chart1YAxis.setScrollStrategy(AxisScrollStrategies.fitting)
           break
         case 'volume':
           this.xAxisModel = 'time'
           this.xAxisProp = 'none'
-          this.chart1Ch1Model = 'monitor'
+          this.chart1Ch1Model = 'Monitor'
           this.chart1Ch1Prop = 'vent_volume_signal'
           this.chart1YAxis.setScrollStrategy(AxisScrollStrategies.fitting)
           break
@@ -237,64 +237,64 @@ export default {
     },
     changeTV () {
       if (this.ventModeSelector !== 'hfov') {
-        this.$model.setPropertyDirect('ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
-        this.$model.setPropertyDirect('ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
+        this.$model.setPropertyDirect('Ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
+        this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
       }
     },
     changeVolumeGaranteed () {
       if (this.ventModeSelector !== 'hfov') {
         if (this.volumeGaranteed) {
-          this.$model.setPropertyDirect('ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
-          this.$model.setPropertyDirect('ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'volume_garanteed', this.volumeGaranteed)
+          this.$model.setPropertyDirect('Ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
+          this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'volume_garanteed', this.volumeGaranteed)
         } else {
-          this.$model.setPropertyDirect('ventilator', 'volume_garanteed', this.volumeGaranteed)
-          this.$model.setPropertyDirect('ventilator', 'pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'volume_garanteed', this.volumeGaranteed)
+          this.$model.setPropertyDirect('Ventilator', 'pip', this.vent_set_pip / 1.35951)
         }
       }
     },
     changerTrigger () {
-      this.$model.setPropertyDirect('ventilator', 'trigger_volume', this.vent_set_trigger_volume / 1000)
+      this.$model.setPropertyDirect('Ventilator', 'trigger_volume', this.vent_set_trigger_volume / 1000)
     },
     changeFiO2 () {
-      this.$model.setPropertyByFunction('ventilator', 'setFiO2', this.vent_set_fio2 / 100)
+      this.$model.setPropertyByFunction('Ventilator', 'setFiO2', this.vent_set_fio2 / 100)
     },
     changeVentilatorMode () {
       switch (this.ventModeSelector) {
         case 'sippv':
           this.hfov = false
-          this.$model.setPropertyDirect('ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'pip', this.vent_set_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'peep', this.vent_set_peep / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 't_in', this.vent_set_tin)
-          this.$model.setPropertyDirect('ventilator', 't_ex', (60 / this.vent_set_freq) - this.vent_set_tin)
-          this.$model.setPropertyDirect('ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
-          this.$model.setPropertyDirect('ventilator', 'cycling_mode', 'time')
-          this.$model.setPropertyDirect('ventilator', 'ventilator_mode', 'pressure')
-          this.$model.setPropertyDirect('ventilator', 'mandatory_mode', false)
+          this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'peep', this.vent_set_peep / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 't_in', this.vent_set_tin)
+          this.$model.setPropertyDirect('Ventilator', 't_ex', (60 / this.vent_set_freq) - this.vent_set_tin)
+          this.$model.setPropertyDirect('Ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
+          this.$model.setPropertyDirect('Ventilator', 'cycling_mode', 'time')
+          this.$model.setPropertyDirect('Ventilator', 'ventilator_mode', 'pressure')
+          this.$model.setPropertyDirect('Ventilator', 'mandatory_mode', false)
           this.labelFreq = 'Fbackup'
 
           break
         case 'simv':
           this.hfov = false
-          this.$model.setPropertyDirect('ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'pip', this.vent_set_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'peep', this.vent_set_peep / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 't_in', this.vent_set_tin)
-          this.$model.setPropertyDirect('ventilator', 't_ex', (60 / this.vent_set_freq) - this.vent_set_tin)
-          this.$model.setPropertyDirect('ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
-          this.$model.setPropertyDirect('ventilator', 'cycling_mode', 'time')
-          this.$model.setPropertyDirect('ventilator', 'ventilator_mode', 'pressure')
-          this.$model.setPropertyDirect('ventilator', 'mandatory_mode', true)
+          this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_max_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'peep', this.vent_set_peep / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 't_in', this.vent_set_tin)
+          this.$model.setPropertyDirect('Ventilator', 't_ex', (60 / this.vent_set_freq) - this.vent_set_tin)
+          this.$model.setPropertyDirect('Ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
+          this.$model.setPropertyDirect('Ventilator', 'cycling_mode', 'time')
+          this.$model.setPropertyDirect('Ventilator', 'ventilator_mode', 'pressure')
+          this.$model.setPropertyDirect('Ventilator', 'mandatory_mode', true)
           this.labelFreq = 'Freq'
           break
         case 'psv':
-          this.$model.setPropertyDirect('ventilator', 'pip', this.vent_set_pip / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'peep', this.vent_set_peep / 1.35951)
-          this.$model.setPropertyDirect('ventilator', 'cycling_mode', 'flow')
-          this.$model.setPropertyDirect('ventilator', 'ventilator_mode', 'pressure')
-          this.$model.setPropertyDirect('ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
-          this.$model.setPropertyDirect('ventilator', 'mandatory_mode', false)
+          this.$model.setPropertyDirect('Ventilator', 'pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'peep', this.vent_set_peep / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'cycling_mode', 'flow')
+          this.$model.setPropertyDirect('Ventilator', 'ventilator_mode', 'pressure')
+          this.$model.setPropertyDirect('Ventilator', 'target_tidal_volume', this.vent_set_target_tv / 1000)
+          this.$model.setPropertyDirect('Ventilator', 'mandatory_mode', false)
           this.hfov = false
           break
         case 'hfov':
@@ -306,32 +306,32 @@ export default {
         // first calculate the expiration time from the inspiration time
         const newTex = (60 / this.vent_set_freq) - this.vent_set_tin
 
-        this.$model.setPropertyDirect('ventilator', 't_in', this.vent_set_tin)
-        this.$model.setPropertyDirect('ventilator', 't_ex', newTex)
+        this.$model.setPropertyDirect('Ventilator', 't_in', this.vent_set_tin)
+        this.$model.setPropertyDirect('Ventilator', 't_ex', newTex)
       }
     },
     changeMaxPIP () {
       if (this.ventModeSelector !== 'hfov') {
         if (this.vent_set_max_pip > this.vent_set_peep + 2) {
-          this.$model.setPropertyDirect('ventilator', 'max_pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_pip / 1.35951)
         }
       }
     },
     changePIP () {
       if (this.ventModeSelector !== 'hfov') {
         if (this.vent_set_pip > this.vent_set_peep + 2) {
-          this.$model.setPropertyDirect('ventilator', 'pip', this.vent_set_pip / 1.35951)
+          this.$model.setPropertyDirect('Ventilator', 'pip', this.vent_set_pip / 1.35951)
         }
       }
     },
     changePEEP () {
       if (this.ventModeSelector !== 'hfov') {
-        this.$model.setPropertyDirect('ventilator', 'peep', this.vent_set_peep / 1.35951)
+        this.$model.setPropertyDirect('Ventilator', 'peep', this.vent_set_peep / 1.35951)
       }
     },
     changeInspFlow () {
       if (this.ventModeSelector !== 'hfov') {
-        this.$model.setPropertyDirect('ventilator', 'insp_flow', this.vent_set_insp_flow)
+        this.$model.setPropertyDirect('Ventilator', 'insp_flow', this.vent_set_insp_flow)
       }
     },
     drawRTGraph () {
@@ -388,29 +388,29 @@ export default {
     updateMonitorRealtime (data) {
       if (data.time - this.prevTime > 1) {
         this.prevTime = data.time
-        this.vent_peak_presssure = ((data.monitor.vent_peak_presssure) * 1.35951).toFixed(1)
+        this.vent_peak_presssure = ((data.Monitor.vent_peak_presssure) * 1.35951).toFixed(1)
 
         if (this.graphSelector === 'pressure') {
           const newY = parseInt(this.vent_peak_presssure) + 0.25 * parseInt(this.vent_peak_presssure)
           this.chart1MaxY = newY
           this.chart1YAxis.setInterval(this.chart1MinY, newY)
         }
-        this.vent_plateau_pressure = ((data.monitor.vent_plateau_pressure) * 1.35951).toFixed(1)
-        this.vent_compliance = (data.monitor.vent_compliance).toFixed(3)
-        this.vent_resistance = (data.monitor.vent_resistance).toFixed(3)
-        this.vent_peep = ((data.monitor.vent_peep) * 1.35951).toFixed(1)
-        this.vent_freq = (data.monitor.vent_freq).toFixed(0)
-        this.vent_minute_volume = (data.monitor.vent_minute_volume).toFixed(1)
-        this.vent_tidal_volume = ((data.monitor.vent_tidal_volume) * 1000).toFixed(1)
-        this.vent_insp_flow = (data.monitor.vent_insp_flow).toFixed(1)
-        this.vent_exp_flow = (data.monitor.vent_exp_flow).toFixed(1)
-        this.vent_insp_time = (data.monitor.vent_insp_time).toFixed(1)
-        this.vent_exp_time = (data.monitor.vent_exp_time).toFixed(1)
-        this.vent_mean = (((this.vent_insp_time * this.vent_freq) / 60) * ((data.monitor.vent_peak_presssure * 1.35951) - (data.monitor.vent_peep * 1.35951)) + (data.monitor.vent_peep * 1.35951)).toFixed(1)
-        this.vent_leak = ((1 - data.monitor.vent_tidal_volume / data.monitor.vent_tidal_volume_insp) * 100).toFixed(1)
-        this.vent_ie_ratio = `1: ${(data.monitor.vent_exp_time / data.monitor.vent_insp_time).toFixed(1)}`
-        this.vent_fio2 = Math.ceil(data.monitor.vent_fio2 * 100)
-        this.vent_tin = (data.monitor.vent_insp_time).toFixed(1)
+        this.vent_plateau_pressure = ((data.Monitor.vent_plateau_pressure) * 1.35951).toFixed(1)
+        // this.vent_compliance = (data.Monitor.vent_compliance).toFixed(3)
+        // this.vent_resistance = (data.Monitor.vent_resistance).toFixed(3)
+        this.vent_peep = ((data.Monitor.vent_peep) * 1.35951).toFixed(1)
+        this.vent_freq = (data.Monitor.vent_freq).toFixed(0)
+        this.vent_minute_volume = (data.Monitor.vent_minute_volume).toFixed(1)
+        this.vent_tidal_volume = ((data.Monitor.vent_tidal_volume) * 1000).toFixed(1)
+        this.vent_insp_flow = (data.Monitor.vent_insp_flow).toFixed(1)
+        this.vent_exp_flow = (data.Monitor.vent_exp_flow).toFixed(1)
+        this.vent_insp_time = (data.Monitor.vent_insp_time).toFixed(1)
+        this.vent_exp_time = (data.Monitor.vent_exp_time).toFixed(1)
+        this.vent_mean = (((this.vent_insp_time * this.vent_freq) / 60) * ((data.Monitor.vent_peak_presssure * 1.35951) - (data.Monitor.vent_peep * 1.35951)) + (data.Monitor.vent_peep * 1.35951)).toFixed(1)
+        // this.vent_leak = ((1 - data.Monitor.vent_tidal_volume / data.Monitor.vent_tidal_volume_insp) * 100).toFixed(1)
+        this.vent_ie_ratio = `1: ${(data.Monitor.vent_exp_time / data.Monitor.vent_insp_time).toFixed(1)}`
+        this.vent_fio2 = Math.ceil(data.Monitor.vent_fio2 * 100)
+        this.vent_tin = (data.Monitor.vent_insp_time).toFixed(1)
       }
     },
     buildGraph () {
