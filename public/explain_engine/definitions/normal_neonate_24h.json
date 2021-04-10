@@ -16,8 +16,7 @@
          "el_min":28232,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"AARCH",
@@ -30,8 +29,7 @@
          "el_min":32323,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"AD",
@@ -44,8 +42,7 @@
          "el_min":4638,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"AR",
@@ -58,8 +55,7 @@
          "el_min":64935,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"COR",
@@ -72,8 +68,7 @@
          "el_min":324675,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"LB",
@@ -86,8 +81,7 @@
          "el_min":6281,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.2
+         "el_k2":0
       },
       {
          "name":"LIVSPLE",
@@ -100,8 +94,7 @@
          "el_min":20938,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.1
+         "el_k2":0
       },
       {
          "name":"KIDNEYS",
@@ -114,8 +107,7 @@
          "el_min":31407,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.1
+         "el_k2":0
       },
       {
          "name":"INTESTINES",
@@ -128,8 +120,7 @@
          "el_min":31407,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.1
+         "el_k2":0
       },
       {
          "name":"UB",
@@ -142,8 +133,7 @@
          "el_min":12562,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.25
+         "el_k2":0
       },
       {
          "name":"BRAIN",
@@ -156,8 +146,7 @@
          "el_min":12562,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0.25
+         "el_k2":0
       },
       {
          "name":"VCII",
@@ -170,8 +159,7 @@
          "el_min":780,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"VCIE",
@@ -184,8 +172,7 @@
          "el_min":146,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"VR",
@@ -198,8 +185,7 @@
          "el_min":1521,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"VCS",
@@ -212,8 +198,7 @@
          "el_min":230,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"APC",
@@ -226,8 +211,7 @@
          "el_min":5830,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"LL",
@@ -240,8 +224,7 @@
          "el_min":4398,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"LR",
@@ -254,8 +237,7 @@
          "el_min":4398,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"PV",
@@ -268,8 +250,7 @@
          "el_min":4535,
          "el_max":0,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"LA",
@@ -282,8 +263,7 @@
          "el_min":1550,
          "el_max":2586,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"RA",
@@ -296,8 +276,7 @@
          "el_min":550,
          "el_max":2086,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"LV",
@@ -310,8 +289,7 @@
          "el_min":486,
          "el_max":12500,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"RV",
@@ -324,8 +302,7 @@
          "el_min":486,
          "el_max":20500,
          "el_k1":0,
-         "el_k2":0,
-         "fvatp":0
+         "el_k2":0
       },
       {
          "name":"AA_AARCH",
@@ -1231,7 +1208,11 @@
          "resp_q":0.8,
          "p_atm":760,
          "outside_temp":20,
-         "body_temp":36.9
+         "body_temp":36.9,
+         "active_comps": [
+            { "LB": 0.5 },
+            { "UB": 0.5 }
+         ]
       },
       {
          "name":"Heart",
