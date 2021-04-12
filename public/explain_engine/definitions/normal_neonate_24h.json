@@ -1214,8 +1214,9 @@
             {  "comp": "KIDNEYS", "fvatp": 0.1 },
             {  "comp": "LIVSPLE", "fvatp": 0.1 },
             {  "comp": "INTESTINES", "fvatp": 0.1 },
-            {  "comp": "UB", "fvatp": 0.25 },
-            {  "comp": "BRAIN", "fvatp": 0.25 }
+            {  "comp": "UB", "fvatp": 0.2 },
+            {  "comp": "BRAIN", "fvatp": 0.25 },
+            {  "comp": "COR", "fvatp": 0.05 }
          ]
       },
       {

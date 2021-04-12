@@ -3,9 +3,6 @@
 class Metabolism {
   constructor (_model) {
     this._model = _model
-
-    this._metActiveModelList = []
-    this.initialized = false
   }
 
   modelStep () {
@@ -16,7 +13,6 @@ class Metabolism {
 
   modelCycle () {
     // distribute the energy use of the model over the different compartments
-    // console.log(this.active_comps)
     this.active_comps.forEach(act_comp => {
       this.calcEnergyUse(act_comp)
     })
