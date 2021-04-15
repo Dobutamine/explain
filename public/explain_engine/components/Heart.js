@@ -91,11 +91,26 @@ class Heart {
     }
 
     // varying elastance activation function of the ventricles
+    const _T = 60 / this._model.components.ECG.heart_rate
+    const alpha1 = 0
+    const alpha2 = 0
+    const n1 = 0
+    const n2 = 0
+
     if (ncc_ventricular >= 0 && ncc_ventricular < (ventricular_duration / t)) {
       this.vaf = Math.pow(Math.sin(Math.PI * (ncc_ventricular / ventricular_duration) * t), 2);
+      // E[t] = a (1 - Exp[-n*t])*(1 - (t/t0)^m/(1 + (t/t0)^m))
+      // a = 1.8; t0 = 0.5; n = 2; m = 20; (T = 1)
+      const factor1 = Math.pow((t / alpha1 * _T), n1)
+      const factor2 = Math.pow((t / alpha2 * _T), n2)
+      this.vaf = (factor1 / (1 + factor1)) * ( 1 / factor2)
+      
+      
     } else {
       this.vaf = 0;
     }
+
+    // E[t] = a (1 - Exp[-n*t])*(1 - (t/t0)^m/(1 + (t/t0)^m))
 
     // heart cycle determination
     if (this.prev_vaf >= this.vaf && !this.diastole) {
