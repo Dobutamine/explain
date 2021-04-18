@@ -4,6 +4,8 @@ class Monitor {
   constructor(_model) {
     this._model = _model;
 
+    this.vti = 0
+
     this.heart_rate = 0
     this.saO2_pre = 0
     this.saO2_post = 0
@@ -39,7 +41,9 @@ class Monitor {
     this.rvo = 0
     this.ecmo_flow = 0
     this.lv_stroke = 0
+    this.lv_stroke_work = 0
     this.rv_stroke = 0
+    this.rv_stroke_work = 0
 
     this.pao2 = 0
     this.paco2 = 0
@@ -118,6 +122,8 @@ class Monitor {
     this.cvp_signal = this.getValueFromModel(this.cvp_signal_source)
     this.ecin_signal = this.getValueFromModel(this.ecin_signal_source)
     this.ecout_signal = this.getValueFromModel(this.ecout_signal_source)
+
+    this.vti = (this._model.components['VCS_RA'].real_flow * 1000 / (Math.PI * 0.0225)) / 100
 
     this.etco2_signal = this.getValueFromModel(this.etco2_signal_source)
     this.resp_signal = this.getValueFromModel(this.resp_signal_source)
@@ -211,10 +217,12 @@ class Monitor {
 
       this.lvo = (this._lvo_counter / this._time_counter) * 60.0
       this.lv_stroke = this._lvo_counter
+      this.lv_stroke_work = this.lv_stroke * this.abp_mean
       this._lvo_counter = 0
 
       this.rvo = (this._rvo_counter / this._time_counter) * 60.0
       this.rv_stroke = this._rvo_counter
+      this.rv_stroke_work = this.rv_stroke * this.pap_mean
       this._rvo_counter = 0
 
       this.kidney_flow = (this._kidney_flow_counter / this._time_counter) * 60.0

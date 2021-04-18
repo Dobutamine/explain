@@ -177,6 +177,7 @@ class Datalogger {
       delete newObj._calcEnergyUse;
       delete newObj.calcAcidbaseFromTCO2
       delete newObj.calcPlasmaNetcharge
+  
 
       
 
@@ -241,11 +242,6 @@ class Datalogger {
       delete newObj._calcEnergyUse;
       delete newObj.calcAcidbaseFromTCO2
       delete newObj.calcPlasmaNetcharge
-
-
-
-      
-
 
       // store the copy into the model_state
       model_state[newObj.name] = newObj;
