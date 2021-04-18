@@ -4,6 +4,8 @@ class Monitor {
   constructor(_model) {
     this._model = _model;
 
+    this.vti = 0
+
     this.heart_rate = 0
     this.saO2_pre = 0
     this.saO2_post = 0
@@ -120,6 +122,8 @@ class Monitor {
     this.cvp_signal = this.getValueFromModel(this.cvp_signal_source)
     this.ecin_signal = this.getValueFromModel(this.ecin_signal_source)
     this.ecout_signal = this.getValueFromModel(this.ecout_signal_source)
+
+    this.vti = (this._model.components['VCS_RA'].real_flow * 1000 / (Math.PI * 0.0225)) / 100
 
     this.etco2_signal = this.getValueFromModel(this.etco2_signal_source)
     this.resp_signal = this.getValueFromModel(this.resp_signal_source)

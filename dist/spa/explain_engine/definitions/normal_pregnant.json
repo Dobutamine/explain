@@ -1,0 +1,986 @@
+{
+    "name":"normal neonate",
+    "description":"normal 3.3 kg neonate at an age of 24h with shunts closed",
+    "weight": 3.3,
+    "model_time_total": 0,
+    "modeling_stepsize": 0.0005,
+    "components": [
+        {
+            "name": "PA",
+            "description": "pulmonary artery",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.186,
+            "vol_u": 0.05,
+            "el_min": 133.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "PV",
+            "description": "pulmonary veins",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.460,
+            "vol_u": 0.35,
+            "el_min": 64.5,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "LA",
+            "description": "left atrium",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.047,
+            "vol_u": -0.005,
+            "el_min": 138.0,
+            "el_max": 360.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "LV",
+            "description": "left ventricle",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.121,
+            "vol_u": 0.014,
+            "el_min": 77.0,
+            "el_max": 3860.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "AA",
+            "description": "ascending aorta",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.135,
+            "vol_u": 0.068,
+            "el_min": 1288.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "AD",
+            "description": "descending aorta",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.333,
+            "vol_u": 0.175,
+            "el_min": 539.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "LB",
+            "description": "lower body",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 2.295,
+            "vol_u": 1.614,
+            "el_min": 23.3,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "AR",
+            "description": "renal arteries",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.014,
+            "vol_u": 0.009,
+            "el_min": 16400.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "KID",
+            "description": "glomerulus / kidneys",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.063,
+            "vol_u": 0.051,
+            "el_min": 1375,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "VR",
+            "description": "renal veins",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.014,
+            "vol_u": 0.009,
+            "el_min": 1600.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "UA",
+            "description": "uterine arteries",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.280,
+            "vol_u": 0.210,
+            "el_min": 1143.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "SA",
+            "description": "spiral arteries",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.080,
+            "vol_u": 0.060,
+            "el_min": 3500.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "PL",
+            "description": "",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.120,
+            "vol_u": 0.090,
+            "el_min": 333.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "UV",
+            "description": "uterine veins",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.500,
+            "vol_u": 0.400,
+            "el_min": 64.0,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "VC",
+            "description": "renal veins",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 1.197,
+            "vol_u": 0.956,
+            "el_min": 12.9,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.4
+          },
+          {
+            "name": "RA",
+            "description": "right atrium",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.050,
+            "vol_u": 0.009,
+            "el_min": 73.0,
+            "el_max": 400.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "RV",
+            "description": "right ventricle",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.182,
+            "vol_u": 0.045,
+            "el_min": 26.0,
+            "el_max": 333.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "UB",
+            "description": "upper body",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.681,
+            "vol_u": 0.41,
+            "el_min": 58.7,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "PL_fetus",
+            "description": "placenta to fetus",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.03,
+            "vol_u": 0.023,
+            "el_min": 4286,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "UmbA",
+            "description": "umbilical arteries",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.025,
+            "vol_u": 0.019,
+            "el_min": 8333,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "UmbV",
+            "description": "upper body",
+            "type": "component",
+            "subtype": "BloodCompartment",
+            "is_enabled": true,   
+            "vol": 0.035,
+            "vol_u": 0.026,
+            "el_min": 2222,
+            "el_max": 0.0,
+            "el_k1": 0.0,
+            "el_k2": 0.0,
+            "fvatp": 0.0
+          },
+          {
+            "name": "PA_PV",
+            "description": "pulmonary artery to pulmonary veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "PA",
+            "comp_to": "PV",
+            "r_for": 105,
+            "r_back": 105,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "PV_LA",
+            "description": "pulmonary veins to left atrium",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "PV",
+            "comp_to": "LA",
+            "r_for": 3,
+            "r_back": 3,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AA_AD",
+            "description": "ascending aorta to descending aorta",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AA",
+            "comp_to": "AD",
+            "r_for": 20,
+            "r_back": 20,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AA_UB",
+            "description": "ascending aorta to upper body",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AA",
+            "comp_to": "UB",
+            "r_for": 2100,
+            "r_back": 2100,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AD_LB",
+            "description": "descending aorta to lower body",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AD",
+            "comp_to": "LB",
+            "r_for": 1500,
+            "r_back": 1500,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AD_AR",
+            "description": "descending aorta to renal arteries",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AD",
+            "comp_to": "AR",
+            "r_for": 100,
+            "r_back": 100,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AR_KID",
+            "description": "renal arteries to kidneys",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AR",
+            "comp_to": "KID",
+            "r_for":1400,
+            "r_back": 1400,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "KID_VR",
+            "description": "kidneys to renal veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "KID",
+            "comp_to": "VR",
+            "r_for": 2250,
+            "r_back": 2250,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "VR_VC",
+            "description": "renal veins to vena cava",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "VR",
+            "comp_to": "VC",
+            "r_for": 690,
+            "r_back": 690,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "AD_UA",
+            "description": "descending aorta to uterine arteries",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "AD",
+            "comp_to": "UA",
+            "r_for": 133,
+            "r_back": 133,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "UA_SA",
+            "description": "uterine arteries to spiral arteries",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "UA",
+            "comp_to": "SA",
+            "r_for": 1013,
+            "r_back": 1013,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "SA_UV",
+            "description": "spiral arteries to uterine veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "SA",
+            "comp_to": "UV",
+            "r_for": 74400,
+            "r_back": 74400,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "UA_UV",
+            "description": "uterine arteries to uterine veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "UA",
+            "comp_to": "UV",
+            "r_for": 34615,
+            "r_back": 34615,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "SA_PL",
+            "description": "spiral arteries to placenta",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "SA",
+            "comp_to": "PL",
+            "r_for": 5000,
+            "r_back": 5000,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "PL_UV",
+            "description": "placenta to uterine veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "PL",
+            "comp_to": "UV",
+            "r_for": 178,
+            "r_back": 178,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "UV_VC",
+            "description": "uterine veins to vena cava",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "UV",
+            "comp_to": "VC",
+            "r_for": 300,
+            "r_back": 300,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "UB_VC",
+            "description": "upper body to vena cava",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "UB",
+            "comp_to": "VC",
+            "r_for": 500,
+            "r_back": 500,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "LB_VC",
+            "description": "lower body to vena cava",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "LB",
+            "comp_to": "VC",
+            "r_for": 265,
+            "r_back": 265,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+      
+          {
+            "name": "VC_RA",
+            "description": "vena cava to right atrium",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "VC",
+            "comp_to": "RA",
+            "r_for": 3,
+            "r_back": 3,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "UmbA_PL_fetus",
+            "description": "umbilical arteries to placenta fetus",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "UmbA",
+            "comp_to": "PL_fetus",
+            "r_for": 2727,
+            "r_back": 2727,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "PL_fetus_UmbV",
+            "description": "placenta fetus to umbilical veins",
+            "type": "component",
+            "subtype": "BloodConnector",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": false,
+            "comp_from": "PL_fetus",
+            "comp_to": "UmbV",
+            "r_for": 1364,
+            "r_back": 1364,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "LA_LV",
+            "description": "mitral Valve",
+            "type": "component",
+            "subtype": "Valve",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": true,
+            "comp_from": "LA",
+            "comp_to": "LV",
+            "r_for": 3,
+            "r_back": 1000000000,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+      
+          {
+            "name": "LV_AA",
+            "description": "aortic Valve",
+            "type": "component",
+            "subtype": "Valve",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": true,
+            "comp_from": "LV",
+            "comp_to": "AA",
+            "r_for": 8,
+            "r_back": 1000000000,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "RA_RV",
+            "description": "tricuspid Valve",
+            "type": "component",
+            "subtype": "Valve",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": true,
+            "comp_from": "RA",
+            "comp_to": "RV",
+            "r_for": 3,
+            "r_back": 1000000000,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+       
+          {
+            "name": "RV_PA",
+            "description": "pulmonary Valve",
+            "type": "component",
+            "subtype": "Valve",
+            "is_enabled": true,
+            "no_flow": false,
+            "no_backflow": true,
+            "comp_from": "RV",
+            "comp_to": "PA",
+            "r_for": 3,
+            "r_back": 1000000000,
+            "r_k1": 0.0,
+            "r_k2": 0.0
+          },
+          {
+            "name": "Heart",
+            "description": "heart contraction",
+            "type": "component",
+            "subtype": "Heart",
+            "is_enabled": true,
+            "activation_delay": 0.001
+          },
+          {
+            "name": "ANS",
+            "description": "autonomic nervous system",
+            "type": "component",
+            "subtype": "ANS",
+            "is_enabled": false
+          },
+          {
+            "name":"ECG",
+            "description":"ecg",
+            "type":"component",
+            "subtype":"ECG",
+            "is_enabled":true,
+            "heart_rate":84,
+            "heart_rate_ref":84,
+            "venticular_escape_rate":40,
+            "rhythm_type":0,
+            "pq_time":0.1,
+            "av_delay":0.02,
+            "qrs_time":0.075,
+            "qt_time":0.4,
+            "cqt_time":0.19773180231718618,
+            "amp_p":1,
+            "skew_p":2.5,
+            "width_p":20,
+            "amp_q":-0.5,
+            "width_q":20,
+            "skew_q":2,
+            "amp_r":10,
+            "width_r":20,
+            "skew_r":2.5,
+            "amp_s":-1.5,
+            "width_s":20,
+            "skew_s":10,
+            "amp_t":2,
+            "skew_t":2,
+            "width_t":25
+         },
+         {
+            "name": "Metabolism",
+            "description": "metabolism",
+            "type": "component",
+            "subtype": "Metabolism",
+            "is_enabled": true,
+            "atp_need": 0.1,
+            "resp_q": 0.8,
+            "p_atm": 760.0,
+            "outside_temp": 20.0,
+            "body_temp": 36.9
+          },
+          {
+            "name": "Blood",
+            "description": "",
+            "type": "component",
+            "subtype": "Blood",
+            "is_enabled": true,
+            "compounds": {
+              "to2": 4,
+              "tco2": 25.18,
+              "sodium": 138,
+              "chloride": 100,
+              "hemoglobin": 10.0,
+              "albumin": 30.0,
+              "phosphates": 1.5,
+              "sid": 41.6,
+              "uma": 10
+            }
+          },
+          {
+            "name": "Uterus",
+            "description": "",
+            "type": "Uterus",
+            "subtype": "",
+            "is_enabled": false
+          },
+          {
+            "name": "Placenta",
+            "description": "",
+            "type": "Placenta",
+            "subtype": "",
+            "is_enabled": false
+          },
+          {
+            "name":"Monitor",
+            "description":"",
+            "type":"component",
+            "subtype":"Monitor",
+            "is_enabled":true,
+            "heartrate_source":[
+               "ECG",
+               "measured_heartrate"
+            ],
+            "resprate_source":[
+               "",
+               ""
+            ],
+            "etco2_source":[
+               "",
+               ""
+            ],
+            "temp_source":[
+               "Metabolism",
+               "body_temp"
+            ],
+            "ecg_signal_source":[
+               "ECG",
+               "ecg_signal"
+            ],
+            "abp_signal_source":[
+               "AA",
+               "pres"
+            ],
+            "pap_signal_source":[
+               "PA",
+               "pres"
+            ],
+            "cvp_signal_source":[
+               "VC",
+               "pres"
+            ],
+            "ecin_signal_source":[
+               "",
+               ""
+            ],
+            "ecout_signal_source":[
+               "",
+               ""
+            ],
+            "etco2_signal_source":[
+               "",
+               ""
+            ],
+            "resp_signal_source":[
+               "",
+               ""
+            ],
+            "sao2_pre_source":[
+               "",
+               ""
+            ],
+            "sao2_post_source":[
+               "",
+               ""
+            ],
+            "svo2_source":[
+               "",
+               ""
+            ],
+            "svo2_source2":[
+               "",
+               ""
+            ],
+            "arterial_bloodgas_source":"",
+            "alveolar_gas_source":[
+               
+            ],
+            "liver_flow_source":[
+               "",
+               "real_flow"
+            ],
+            "kidney_flow_source":[
+               "AR_KIDNEYS",
+               "real_flow"
+            ],
+            "brain_flow_source":[
+               "",
+               ""
+            ],
+            "lungshunt_flow_source":[
+               "",
+               ""
+            ],
+            "myocardium_flow_source":[
+               "",
+               ""
+            ],
+            "vsd_flow_source":[
+               "",
+               ""
+            ],
+            "ofo_flow_source":[
+               "",
+               ""
+            ],
+            "pda_flow_source":[
+               "",
+               ""
+            ],
+            "ivc_flow_source":[
+               "VC_RA",
+               "real_flow"
+            ],
+            "ub_flow_source":[
+               "",
+               ""
+            ],
+            "lb_flow_source":[
+               "",
+               ""
+            ],
+            "svc_flow_source":[
+               "",
+               ""
+            ],
+            "lvo_source":[
+               "LV_AA",
+               "real_flow"
+            ],
+            "rvo_source":[
+               "RV_PA",
+               "real_flow"
+            ],
+            "ecmo_flow_source":[
+               "",
+               ""
+            ],
+            "tidal_volume_source":[
+               "",
+               ""
+            ],
+            "minute_volume_source":[
+               "",
+               ""
+            ],
+            "vent_peak_pressure_source":[
+               "",
+               ""
+            ],
+            "vent_plateau_pressure_source":[
+               "",
+               ""
+            ],
+            "vent_compliance_source":[
+               "",
+               ""
+            ],
+            "vent_resistance_source":[
+               "",
+               ""
+            ],
+            "vent_peep_source":[
+               "",
+               ""
+            ],
+            "vent_freq_source":[
+               "",
+               ""
+            ],
+            "vent_minute_volume_source":[
+               "",
+               ""
+            ],
+            "vent_tidal_volume_source":[
+               "",
+               ""
+            ],
+            "vent_tidal_volume_insp_source":[
+               "",
+               ""
+            ],
+            "vent_insp_flow_source":[
+               "",
+               ""
+            ],
+            "vent_exp_flow_source":[
+               "",
+               ""
+            ],
+            "vent_insp_time_source":[
+               "",
+               ""
+            ],
+            "vent_exp_time_source":[
+               "",
+               ""
+            ],
+            "vent_flow_signal_source":[
+               "",
+               ""
+            ],
+            "vent_pressure_signal_source":[
+               "",
+               ""
+            ],
+            "vent_volume_signal_source":[
+               "",
+               ""
+            ],
+            "vent_fio2_source":[
+               "",
+               ""
+            ]
+         }
+
+
+
+    ],
+    "globals": []
+}

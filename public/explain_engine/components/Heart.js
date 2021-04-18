@@ -5,6 +5,9 @@ class Heart {
     // state properties (accessible from outside)
     this.aaf = 0.0
     this.vaf = 0.0
+    this.vaf2 = 0
+    this.n1 = 1.9
+    this.n2 = 1.9
 
     this.prev_aaf = 0.0
     this.prev_vaf = 0.0
@@ -91,23 +94,23 @@ class Heart {
     }
 
     // varying elastance activation function of the ventricles
-    const _T = 60 / this._model.components.ECG.heart_rate
-    const alpha1 = 0
-    const alpha2 = 0
-    const n1 = 0
-    const n2 = 0
+
 
     if (ncc_ventricular >= 0 && ncc_ventricular < (ventricular_duration / t)) {
       this.vaf = Math.pow(Math.sin(Math.PI * (ncc_ventricular / ventricular_duration) * t), 2);
       // E[t] = a (1 - Exp[-n*t])*(1 - (t/t0)^m/(1 + (t/t0)^m))
       // a = 1.8; t0 = 0.5; n = 2; m = 20; (T = 1)
-      const factor1 = Math.pow((t / alpha1 * _T), n1)
-      const factor2 = Math.pow((t / alpha2 * _T), n2)
-      this.vaf = (factor1 / (1 + factor1)) * ( 1 / factor2)
-      
+
+      // const _t = ncc_ventricular * t
+      // const t0 = ventricular_duration
+      // const f1 = Math.exp(-this.n * _t)
+      // const f2 = Math.pow(_t / t0, this.m)
+
+      // this.vaf = this.a * (1 - f1) * ((1 - f2)/ (1 + f2)) 
       
     } else {
-      this.vaf = 0;
+      this.vaf = 0
+      this.vaf2 = 0
     }
 
     // E[t] = a (1 - Exp[-n*t])*(1 - (t/t0)^m/(1 + (t/t0)^m))

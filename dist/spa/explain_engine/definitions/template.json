@@ -1,0 +1,25 @@
+{
+   "name": "",
+   "description": "",
+   "weight": 0,
+   "model_time_total": 0,
+   "modeling_stepsize": 0.0005,
+   "components": [
+      {
+         "name":"",
+         "description":"",
+         "type":"component",
+         "subtype":""
+      }
+   ],
+   "globals": [
+      {
+         "name":"",
+         "description":"",
+         "type":"global_component",
+         "subtype":"",
+         "global_functions": [ "" ]
+      }
+
+   ]
+}
