@@ -20,7 +20,7 @@
 
 // import the helper classes
 importScripts("./helpers/Interventions.js");
-importScripts("./helpers/Datalogger.js");
+importScripts("./helpers/datalogger.js");
 importScripts("./helpers/math_functions.js");
 
 // define an object which is going to hold available possible component types
