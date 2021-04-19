@@ -32,21 +32,28 @@
         ductus arteriosus size
       </div>
       <div>
-          <q-slider label v-model="pdaSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changePDASize"/>
+          <q-slider label v-model="pdaSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changePDASize"/>
       </div>
 
       <div class="q-ma-es text-overline text-center"  >
         foramen ovale size
       </div>
       <div>
-         <q-slider label v-model="ofoSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeOFOSize"/>
+         <q-slider label v-model="ofoSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changeOFOSize"/>
       </div>
 
       <div class="q-ma-es text-overline text-center"  >
         ventricular septal defect size
       </div>
       <div>
-         <q-slider label v-model="vsdSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeVSDSize"/>
+         <q-slider label v-model="vsdSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changeVSDSize"/>
+      </div>
+
+      <div class="q-ma-es text-overline text-center"  >
+
+      </div>
+      <div>
+         <q-btn @click="addVolume"  color="teal-7">add 10 ml of volume in 10 seconds</q-btn>
       </div>
 
   </q-card>
@@ -59,9 +66,9 @@ export default {
       isEnabled: true,
       svr: 100,
       pvr: 100,
-      pdaSize: 100,
-      ofoSize: 100,
-      vsdSize: 100,
+      pdaSize: 0,
+      ofoSize: 0,
+      vsdSize: 0,
       contractilityRight: 100,
       contractilityLeft: 100
     }
@@ -120,27 +127,45 @@ export default {
     },
     changePDASize () {
       if (this.pdaSize > 0) {
-        const scaling = this.pdaSize / 100
+        const scaling = 100 / this.pdaSize
 
+        this.$model.setPropertyDirect('SHUNT_DA', 'is_enabled', true)
         this.$model.setPropertyDirect('SHUNT_DA', 'r_for_fac', scaling)
         this.$model.setPropertyDirect('SHUNT_DA', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_DA', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_back_fac', 100000)
       }
     },
     changeOFOSize () {
       if (this.ofoSize > 0) {
-        const scaling = this.ofoSize / 100
+        const scaling = 100 / this.ofoSize
 
+        this.$model.setPropertyDirect('SHUNT_OFO', 'is_enabled', true)
         this.$model.setPropertyDirect('SHUNT_OFO', 'r_for_fac', scaling)
         this.$model.setPropertyDirect('SHUNT_OFO', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_OFO', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_back_fac', 100000)
       }
     },
     changeVSDSize () {
-      if (this.ofoSize > 0) {
-        const scaling = this.ofoSize / 100
+      if (this.vsdSize > 0) {
+        const scaling = 100 / this.vsdSize
 
+        this.$model.setPropertyDirect('SHUNT_VSD', 'is_enabled', true)
         this.$model.setPropertyDirect('SHUNT_VSD', 'r_for_fac', scaling)
         this.$model.setPropertyDirect('SHUNT_VSD', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_VSD', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_back_fac', 100000)
       }
+    },
+    addVolume () {
+      this.$model.setPropertyByFunction('IV', 'administerFluidBolus', [0.01, 10, 'VCIE'])
     }
   }
 }

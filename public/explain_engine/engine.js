@@ -86,6 +86,11 @@ onmessage = function (e) {
         current_model.components['Ventilator'][e.data.action](e.data.data)
       }
 
+      if (e.data.target === "IV") {
+        // setters data handled by the interventions engine
+        current_model.components['IV'][e.data.action](e.data.data)
+      }
+
       if (e.data.action === "change_property") {
         // directly set a parameter on the model
         current_model.components[e.data.target] = e.data.data
