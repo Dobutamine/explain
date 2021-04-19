@@ -1317,7 +1317,7 @@
          "g_map_cont":0,
          "g_map_res":0,
          "g_map_venpool":0,
-         "g_map_hp":0,
+         "g_map_hp":10,
          "g_lungvol_hp":-0.1,
          "lung_vol_hp_threshold":0.00025
       },
