@@ -104,7 +104,7 @@
     </q-file>
     </div>
     <div>
-      <q-btn @click="normalState">Normal Neonate</q-btn>
+      <q-btn @click="normalState" color="red-10">Normal Neonate Preset</q-btn>
     </div>
   </q-card>
 </template>
