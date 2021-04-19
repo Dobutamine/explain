@@ -123,7 +123,7 @@ class Monitor {
     this.ecin_signal = this.getValueFromModel(this.ecin_signal_source)
     this.ecout_signal = this.getValueFromModel(this.ecout_signal_source)
 
-    this.vti = (this._model.components['VCS_RA'].real_flow * 1000 / (Math.PI * 0.0225)) / 100
+    // this.vti = (this._model.components['VCS_RA'].real_flow * 1000 / (Math.PI * 0.0225)) / 100
 
     this.etco2_signal = this.getValueFromModel(this.etco2_signal_source)
     this.resp_signal = this.getValueFromModel(this.resp_signal_source)
