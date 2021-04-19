@@ -32,21 +32,21 @@
         ductus arteriosus size
       </div>
       <div>
-          <q-slider label v-model="pdaSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changePDASize"/>
+          <q-slider label v-model="pdaSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changePDASize"/>
       </div>
 
       <div class="q-ma-es text-overline text-center"  >
         foramen ovale size
       </div>
       <div>
-         <q-slider label v-model="ofoSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changeOFOSize"/>
+         <q-slider label v-model="ofoSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeOFOSize"/>
       </div>
 
       <div class="q-ma-es text-overline text-center"  >
         ventricular septal defect size
       </div>
       <div>
-         <q-slider label v-model="vsdSize" dark :min="0" :max="500" :step="1" color="teal-10" @change="changeVSDSize"/>
+         <q-slider label v-model="vsdSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeVSDSize"/>
       </div>
 
       <div class="q-ma-es text-overline text-center"  >
