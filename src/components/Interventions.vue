@@ -53,7 +53,7 @@
 
       </div>
       <div>
-         <q-btn @click="addVolume"  color="teal-7">add 10 ml of volume in 10 seconds</q-btn>
+         <q-btn @click="addVolume"  color="teal-7">add 10 ml of volume</q-btn>
       </div>
 
   </q-card>
@@ -165,7 +165,7 @@ export default {
       }
     },
     addVolume () {
-      this.$model.setPropertyByFunction('IV', 'administerFluidBolus', [0.01, 10, 'VCIE'])
+      this.$model.setPropertyByFunction('IV', 'administerFluidBolus', [0.01, 3, 'VCIE'])
     }
   }
 }
