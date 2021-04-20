@@ -103,9 +103,9 @@
       <q-icon name="save" class="text-grey" style="font-size: 1rem;" />
     </q-file>
     </div>
-    <div>
+    <!-- <div>
       <q-btn @click="normalState" color="red-10">Normal Neonate Preset</q-btn>
-    </div>
+    </div> -->
   </q-card>
 </template>
 

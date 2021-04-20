@@ -1,12 +1,20 @@
 <template>
 <q-card class="q-pb-sm q-pt-es q-ma-sm" bordered>
-
-  <div v-if="isEnabled" class="row q-mt-es q-ml-md q-mr-md q-mb-sm">
+        <div v-if="isEnabled" class="row q-mt-es q-ml-md q-mr-md q-mb-sm">
     <q-select :options="stateNames" dense class="col q-mr-sm" v-model="selectedState" @input="selectState" label="select chart layout" style="width: 100px; font-size: 12px"></q-select>
-    <q-btn class="q-ma-xs" dense color="negative" size="sm"  @click="deleteState">X</q-btn>
-    <q-btn class="q-ma-xs" dense color="teal-7" size="sm"  @click="storeState">store</q-btn>
+    <q-btn class="q-ma-xs" dense color="negative" size="sm"  @click="deleteState">
+      <q-icon name="delete"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm"  @click="storeState">
+      <q-icon name="bookmark"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm" @click="screenshot">
+      <q-icon name="screenshot"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm" @click="exportData">
+      <q-icon name="save"></q-icon>
+    </q-btn>
   </div>
-
   <div :class="graphClass" :id="id"></div>
 
    <q-dialog v-model="showPopUp" position="top" auto-close>
@@ -94,18 +102,10 @@
     <q-checkbox v-model="scaling" dense label="multipliers" @input="channelFactoringToggle" style="font-size: 12px"/>
     <q-input v-if="scaling" v-model.number="chartCh1Factor" type="number" label="y1" filled dense style="width: 75px; font-size: 10px"/>
     <q-input v-if="scaling" v-model.number="chartCh2Factor" type="number" label="y2" filled dense style="width: 75px; font-size: 10px"/>
-     <q-input v-model.number="rtFrame" type="number" label="frame(s)" filled dense style="width: 75px; font-size: 10px"/>
-     <q-btn outline size="sm" color="grey-4" >DOWNLOAD DATA
-       <q-popup-edit v-model="exportFileName" content-class="bg-dark text-white" @save="exportData">
-          <q-input dark color="white" v-model="exportFileName" dense autofocus counter @change="exportData">
-            <template v-slot:append>
-              <q-icon name="save" />
-            </template>
-          </q-input>
-        </q-popup-edit>
-     </q-btn>
+    <q-input v-model.number="rtFrame" type="number" label="frame(s)" filled dense style="width: 75px; font-size: 10px"/>
   </div>
 <q-resize-observer @resize="onResize" />
+
 </q-card>
 </template>
 
@@ -200,8 +200,11 @@ export default {
   methods: {
     onResize (size) {
       if (this.chart) {
-        this.chart.engine.renderFrame(size.width, 300)
+        this.chart.engine.renderFrame(size.width, 250)
       }
+    },
+    screenshot () {
+      this.chart.saveToFile('screenshot')
     },
     selectState () {
       this.chart_states.forEach(state => {
@@ -246,7 +249,7 @@ export default {
       }
     },
     storeState () {
-      if (this.xAxisModel !== 'time') {
+      if (this.xAxisModel === 'time') {
         this.stateName = 'time vs ' + this.chartCh1Model + '_' + this.chartCh1Prop
         if (this.chartCh2Model !== 'none') {
           this.stateName += ' & ' + this.chartCh2Model + '_' + this.chartCh2Prop
@@ -289,6 +292,7 @@ export default {
           this.chart_states.splice(foundIndex, 1, newState)
         }
         this.showPopUp = true
+        this.selectedState = newState.name
         this.updateLocalStorageChartStates()
       } else {
         this.showPopUp = true
@@ -318,6 +322,7 @@ export default {
     },
     exportData () {
       // download to local disk
+      this.exportFileName = 'data'
       const data = JSON.stringify(this.chartCh1Data)
       const blob = new Blob([data], { type: 'text/json' })
       const e = document.createEvent('MouseEvents')
@@ -773,12 +778,12 @@ export default {
 <style>
 .rectangle {
   display: flex;
-  height: 300px;
+  height: 250px;
   width: 100%;
 }
 .rectangleHide {
   display: none;
-  height: 300px;
+  height: 250px;
   width: 100%;
 }
 .gutter {
