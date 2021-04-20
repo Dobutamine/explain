@@ -323,14 +323,30 @@ export default {
       const e = document.createEvent('MouseEvents')
       const a = document.createElement('a')
       if (this.exportFileName.includes('.json')) {
-        a.download = this.exportFileName
+        a.download = this.exportFileName + '-y1'
       } else {
-        a.download = this.exportFileName + '.json'
+        a.download = this.exportFileName + '-y1.json'
       }
       a.href = window.URL.createObjectURL(blob)
       a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
       e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
       a.dispatchEvent(e)
+
+      if (this.chartCh2Model !== 'none') {
+        const data2 = JSON.stringify(this.chartCh2Data)
+        const blob = new Blob([data2], { type: 'text/json' })
+        const e = document.createEvent('MouseEvents')
+        const a = document.createElement('a')
+        if (this.exportFileName.includes('.json')) {
+          a.download = this.exportFileName + '-y2'
+        } else {
+          a.download = this.exportFileName + '-y2.json'
+        }
+        a.href = window.URL.createObjectURL(blob)
+        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+        a.dispatchEvent(e)
+      }
     },
     toggleIsEnabled () {
       this.isEnabled = !this.isEnabled
