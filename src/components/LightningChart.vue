@@ -1,7 +1,24 @@
 <template>
 <q-card class="q-pb-sm q-pt-es q-ma-sm" bordered>
 
+  <div v-if="isEnabled" class="row q-mt-es q-ml-md q-mr-md q-mb-sm">
+    <q-select :options="stateNames" dense class="col q-mr-sm" v-model="selectedState" @input="selectState" label="select chart layout" style="width: 100px; font-size: 12px"></q-select>
+    <q-btn class="q-ma-xs" dense color="negative" size="sm"  @click="deleteState">X</q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm"  @click="storeState">store</q-btn>
+  </div>
+
   <div :class="graphClass" :id="id"></div>
+
+   <q-dialog v-model="showPopUp" position="top" auto-close>
+        <q-card style="width: 350px">
+          <q-card-section class="row items-center no-wrap">
+            <div>
+              <div class="text-weight-bold">{{ popUpMessage }}</div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
   <div v-if="isEnabled" class="row q-mt-sm">
     <div class="col">
       <div class="q-gutter-es row gutter">
@@ -171,7 +188,13 @@ export default {
       y2Mean: 0,
       y2SD: 0,
       y2PerMinute: 0,
-      y2PerBeat: 0
+      y2PerBeat: 0,
+      stateName: 'test',
+      stateNames: [],
+      chart_states: [],
+      selectedState: '',
+      showPopUp: false,
+      popUpMessage: 'test'
     }
   },
   methods: {
@@ -179,6 +202,119 @@ export default {
       if (this.chart) {
         this.chart.engine.renderFrame(size.width, 300)
       }
+    },
+    selectState () {
+      this.chart_states.forEach(state => {
+        if (state.name === this.selectedState) {
+          this.xAxisModel = state.xAxisModel
+          this.xAxisProp = state.xAxisProp
+          this.chartCh1Model = state.chartCh1Model
+          this.chartCh1Prop = state.chartCh1Prop
+          this.chartCh2Model = state.chartCh2Model
+          this.chartCh2Prop = state.chartCh2Prop
+          this.autoScale = state.autoScale
+          this.minY = state.minY
+          this.maxY = state.maxY
+          this.hires = state.hires
+          this.showSummary = state.showSummary
+          this.rtFrame = state.rtFrame
+          this.scaling = state.scaling
+          this.chartCh1Factor = state.chartCh1Factor
+          this.chartCh2Factor = state.chartCh2Factor
+
+          this.hiresToggle()
+          this.autoScaleToggle()
+          this.channelFactoringToggle()
+          this.xAxisChanged()
+          this.ch1Changed()
+          this.ch2Changed()
+        }
+      })
+    },
+    deleteState () {
+      const foundIndex = this.chart_states.findIndex(element => element.name === this.selectedState)
+      const foundIndex2 = this.stateNames.findIndex(element => element === this.selectedState)
+
+      if (foundIndex > -1) {
+        // it is a new one
+        this.chart_states.splice(foundIndex, 1)
+        this.stateNames.splice(foundIndex2, 1)
+        this.updateLocalStorageChartStates()
+        this.stateName = ''
+        this.selectedState = ''
+        this.showPopUp = true
+      }
+    },
+    storeState () {
+      if (this.xAxisModel !== 'time') {
+        this.stateName = 'time vs ' + this.chartCh1Model + '_' + this.chartCh1Prop
+        if (this.chartCh2Model !== 'none') {
+          this.stateName += ' & ' + this.chartCh2Model + '_' + this.chartCh2Prop
+        }
+      } else {
+        this.stateName = this.xAxisModel + '_' + this.xAxisProp + ' vs ' + this.chartCh1Model + '_' + this.chartCh1Prop
+        if (this.chartCh2Model !== 'none') {
+          this.stateName += ' & ' + this.chartCh2Model + '_' + this.chartCh2Prop
+        }
+      }
+
+      if (this.stateName !== '') {
+        const newState = {
+          name: this.stateName,
+          xAxisModel: this.xAxisModel,
+          xAxisProp: this.xAxisProp,
+          chartCh1Model: this.chartCh1Model,
+          chartCh1Prop: this.chartCh1Prop,
+          chartCh2Model: this.chartCh2Model,
+          chartCh2Prop: this.chartCh2Prop,
+          autoScale: this.autoScale,
+          minY: this.minY,
+          maxY: this.maxY,
+          hires: this.hires,
+          showSummary: this.showSummary,
+          rtFrame: this.rtFrame,
+          scaling: this.scaling,
+          chartCh1Factor: this.chartCh1Factor,
+          chartCh2Factor: this.chartCh2Factor
+        }
+
+        const foundIndex = this.chart_states.findIndex(element => element.name === this.stateName)
+
+        if (foundIndex === -1) {
+        // it is a new one
+          this.chart_states.push(newState)
+          this.stateNames.push(newState.name)
+        } else {
+          // update the old one
+          this.chart_states.splice(foundIndex, 1, newState)
+        }
+        this.showPopUp = true
+        this.updateLocalStorageChartStates()
+      } else {
+        this.showPopUp = true
+        this.popUpMessage = 'please provide a diagram name'
+      }
+    },
+    updateLocalStorageChartStates () {
+      this.popUpMessage = 'chart layout saved'
+      localStorage.chart_states = JSON.stringify(this.chart_states)
+    },
+    loadChartStatesFromLocalStorage () {
+      // clear the diagram list
+      this.chart_states = []
+      // fill the scriptlist with an array of scripts
+      if (localStorage.chart_states) {
+        this.chart_states = JSON.parse(localStorage.chart_states)
+      }
+      // update the scriptlist names array
+      this.updateChartStatesNames()
+    },
+    updateChartStatesNames () {
+      this.stateNames = []
+      this.selectedState = ''
+      this.chart_states.forEach(state => {
+        this.stateNames.push(state.name)
+      })
     },
     exportData () {
       // download to local disk
@@ -608,6 +744,12 @@ export default {
     this.$root.$on('add_to_graph1', (e) => { this.selectNewGraphFromOutside(e, 1) })
     this.$root.$on('add_to_graph2', (e) => { this.selectNewGraphFromOutside(e, 2) })
     this.$root.$on('remove_from_diagram', (e) => { this.removeGraphFromOutside(e) })
+
+    if (localStorage.chart_states) {
+      this.chart_states = JSON.parse(localStorage.chart_states)
+    }
+
+    this.loadChartStatesFromLocalStorage()
   }
 }
 </script>

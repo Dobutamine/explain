@@ -146,7 +146,6 @@ class ECG {
         break;
 
     }
-
   }
 
   updateECG(model_interval) {
