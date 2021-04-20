@@ -47,7 +47,7 @@ export default {
       watchedmodels: [],
       display: 'block',
       pixiApp: null,
-      editingSelection: 1,
+      editingSelection: 0,
       stage: {
         width: 0,
         hieght: 0,

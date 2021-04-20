@@ -42,6 +42,20 @@
          <q-slider label v-model="ofoSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeOFOSize"/>
       </div>
 
+      <div class="q-ma-es text-overline text-center"  >
+        ventricular septal defect size
+      </div>
+      <div>
+         <q-slider label v-model="vsdSize" dark :min="0" :max="1000" :step="1" color="teal-10" @change="changeVSDSize"/>
+      </div>
+
+      <div class="q-ma-es text-overline text-center"  >
+
+      </div>
+      <div>
+         <q-btn @click="addVolume"  color="teal-7">add 10 ml of volume</q-btn>
+      </div>
+
   </q-card>
 </template>
 
@@ -52,8 +66,9 @@ export default {
       isEnabled: true,
       svr: 100,
       pvr: 100,
-      pdaSize: 100,
-      ofoSize: 100,
+      pdaSize: 0,
+      ofoSize: 0,
+      vsdSize: 0,
       contractilityRight: 100,
       contractilityLeft: 100
     }
@@ -66,30 +81,32 @@ export default {
       const scaling = this.svr / 100
 
       this.$model.setPropertyDirect('AD_LB', 'r_for_fac', scaling)
-      this.$model.setPropertyDirect('AD_LIVER', 'r_for_fac', scaling)
-      this.$model.setPropertyDirect('AD_KIDNEYS', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AD_LIVSPLE', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AD_AR', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AD_INTESTINES', 'r_for_fac', scaling)
 
-      this.$model.setPropertyDirect('AA_UB', 'r_for_fac', scaling)
-      this.$model.setPropertyDirect('AA_BRAIN', 'r_for_fac', scaling)
-      this.$model.setPropertyDirect('AA_MYO', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AARCH_UB', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AARCH_BRAIN', 'r_for_fac', scaling)
+      this.$model.setPropertyDirect('AA_COR', 'r_for_fac', scaling)
 
       this.$model.setPropertyDirect('AD_LB', 'r_back_fac', scaling)
-      this.$model.setPropertyDirect('AD_LIVER', 'r_back_fac', scaling)
-      this.$model.setPropertyDirect('AD_KIDNEYS', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AD_LIVSPLE', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AD_AR', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AD_INTESTINES', 'r_back_fac', scaling)
 
-      this.$model.setPropertyDirect('AA_UB', 'r_back_fac', scaling)
-      this.$model.setPropertyDirect('AA_BRAIN', 'r_back_fac', scaling)
-      this.$model.setPropertyDirect('AA_MYO', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AARCH_UB', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AARCH_BRAIN', 'r_back_fac', scaling)
+      this.$model.setPropertyDirect('AA_COR', 'r_back_fac', scaling)
     },
     changePVR () {
       if (this.pvr > 0) {
         const scaling = this.pvr / 100
 
-        this.$model.setPropertyDirect('PA_LL', 'r_for_fac', scaling)
-        this.$model.setPropertyDirect('PA_LR', 'r_for_fac', scaling)
+        this.$model.setPropertyDirect('APC_LL', 'r_for_fac', scaling)
+        this.$model.setPropertyDirect('APC_LR', 'r_for_fac', scaling)
 
-        this.$model.setPropertyDirect('PA_LR', 'r_back_fac', scaling)
-        this.$model.setPropertyDirect('PA_LR', 'r_back_fac', scaling)
+        this.$model.setPropertyDirect('APC_LR', 'r_back_fac', scaling)
+        this.$model.setPropertyDirect('APC_LR', 'r_back_fac', scaling)
       }
     },
     changeContractilityRight () {
@@ -110,19 +127,45 @@ export default {
     },
     changePDASize () {
       if (this.pdaSize > 0) {
-        const scaling = this.pdaSize / 100
+        const scaling = 100 / this.pdaSize
 
-        this.$model.setPropertyDirect('PDA', 'r_for_fac', scaling)
-        this.$model.setPropertyDirect('PDA', 'r_back_fac', scaling)
+        this.$model.setPropertyDirect('SHUNT_DA', 'is_enabled', true)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_for_fac', scaling)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_DA', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_DA', 'r_back_fac', 100000)
       }
     },
     changeOFOSize () {
       if (this.ofoSize > 0) {
-        const scaling = this.ofoSize / 100
+        const scaling = 100 / this.ofoSize
 
-        this.$model.setPropertyDirect('OFO', 'r_for_fac', scaling)
-        this.$model.setPropertyDirect('OFO', 'r_back_fac', scaling)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'is_enabled', true)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_for_fac', scaling)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_OFO', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_OFO', 'r_back_fac', 100000)
       }
+    },
+    changeVSDSize () {
+      if (this.vsdSize > 0) {
+        const scaling = 100 / this.vsdSize
+
+        this.$model.setPropertyDirect('SHUNT_VSD', 'is_enabled', true)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_for_fac', scaling)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_back_fac', scaling)
+      } else {
+        this.$model.setPropertyDirect('SHUNT_VSD', 'is_enabled', false)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_for_fac', 100000)
+        this.$model.setPropertyDirect('SHUNT_VSD', 'r_back_fac', 100000)
+      }
+    },
+    addVolume () {
+      this.$model.setPropertyByFunction('IV', 'administerFluidBolus', [0.01, 3, 'VCIE'])
     }
   }
 }

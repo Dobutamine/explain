@@ -146,7 +146,6 @@ class ECG {
         break;
 
     }
-
   }
 
   updateECG(model_interval) {
@@ -157,7 +156,7 @@ class ECG {
     if (this.heart_rate > 0) {
       this._sa_node_period = 60 / this.heart_rate;
     } else {
-      this._sa_node_period = 60;
+      this._sa_node_period = 600000;
     }
 
     if (this.venticular_escape_rate > 0) {

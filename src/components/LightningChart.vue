@@ -1,7 +1,32 @@
 <template>
 <q-card class="q-pb-sm q-pt-es q-ma-sm" bordered>
-
+        <div v-if="isEnabled" class="row q-mt-es q-ml-md q-mr-md q-mb-sm">
+    <q-select :options="stateNames" dense class="col q-mr-sm" v-model="selectedState" @input="selectState" label="select chart layout" style="width: 100px; font-size: 12px"></q-select>
+    <q-btn class="q-ma-xs" dense color="negative" size="sm"  @click="deleteState">
+      <q-icon name="delete"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm"  @click="storeState">
+      <q-icon name="bookmark"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm" @click="screenshot">
+      <q-icon name="screenshot"></q-icon>
+    </q-btn>
+    <q-btn class="q-ma-xs" dense color="teal-7" size="sm" @click="exportData">
+      <q-icon name="save"></q-icon>
+    </q-btn>
+  </div>
   <div :class="graphClass" :id="id"></div>
+
+   <q-dialog v-model="showPopUp" position="top" auto-close>
+        <q-card style="width: 350px">
+          <q-card-section class="row items-center no-wrap">
+            <div>
+              <div class="text-weight-bold">{{ popUpMessage }}</div>
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-dialog>
+
   <div v-if="isEnabled" class="row q-mt-sm">
     <div class="col">
       <div class="q-gutter-es row gutter">
@@ -77,18 +102,10 @@
     <q-checkbox v-model="scaling" dense label="multipliers" @input="channelFactoringToggle" style="font-size: 12px"/>
     <q-input v-if="scaling" v-model.number="chartCh1Factor" type="number" label="y1" filled dense style="width: 75px; font-size: 10px"/>
     <q-input v-if="scaling" v-model.number="chartCh2Factor" type="number" label="y2" filled dense style="width: 75px; font-size: 10px"/>
-     <q-input v-model.number="rtFrame" type="number" label="frame(s)" filled dense style="width: 75px; font-size: 10px"/>
-     <q-btn outline size="sm" color="grey-4" >DOWNLOAD DATA
-       <q-popup-edit v-model="exportFileName" content-class="bg-dark text-white" @save="exportData">
-          <q-input dark color="white" v-model="exportFileName" dense autofocus counter @change="exportData">
-            <template v-slot:append>
-              <q-icon name="save" />
-            </template>
-          </q-input>
-        </q-popup-edit>
-     </q-btn>
+    <q-input v-model.number="rtFrame" type="number" label="frame(s)" filled dense style="width: 75px; font-size: 10px"/>
   </div>
 <q-resize-observer @resize="onResize" />
+
 </q-card>
 </template>
 
@@ -130,13 +147,13 @@ export default {
       chartYAxis: null,
       chartCh1Lineseries: null,
       chartCh1Data: [],
-      chartCh1Model: 'Heart',
-      chartCh1Prop: 'vaf',
+      chartCh1Model: 'LV',
+      chartCh1Prop: 'pres',
       chartCh1Factor: 1,
       chartCh2Lineseries: null,
       chartCh2Data: [],
-      chartCh2Model: 'Heart',
-      chartCh2Prop: 'vaf2',
+      chartCh2Model: 'AA',
+      chartCh2Prop: 'pres',
       chartCh2Factor: 1,
       callback: () => {},
       callback_datalogger: this.drawGraph,
@@ -171,30 +188,170 @@ export default {
       y2Mean: 0,
       y2SD: 0,
       y2PerMinute: 0,
-      y2PerBeat: 0
+      y2PerBeat: 0,
+      stateName: 'test',
+      stateNames: [],
+      chart_states: [],
+      selectedState: '',
+      showPopUp: false,
+      popUpMessage: 'test'
     }
   },
   methods: {
     onResize (size) {
       if (this.chart) {
-        this.chart.engine.renderFrame(size.width, 300)
+        this.chart.engine.renderFrame(size.width, 250)
       }
+    },
+    screenshot () {
+      this.chart.saveToFile('screenshot')
+    },
+    selectState () {
+      this.chart_states.forEach(state => {
+        if (state.name === this.selectedState) {
+          this.xAxisModel = state.xAxisModel
+          this.xAxisProp = state.xAxisProp
+          this.chartCh1Model = state.chartCh1Model
+          this.chartCh1Prop = state.chartCh1Prop
+          this.chartCh2Model = state.chartCh2Model
+          this.chartCh2Prop = state.chartCh2Prop
+          this.autoScale = state.autoScale
+          this.minY = state.minY
+          this.maxY = state.maxY
+          this.hires = state.hires
+          this.showSummary = state.showSummary
+          this.rtFrame = state.rtFrame
+          this.scaling = state.scaling
+          this.chartCh1Factor = state.chartCh1Factor
+          this.chartCh2Factor = state.chartCh2Factor
+
+          this.hiresToggle()
+          this.autoScaleToggle()
+          this.channelFactoringToggle()
+          this.xAxisChanged()
+          this.ch1Changed()
+          this.ch2Changed()
+        }
+      })
+    },
+    deleteState () {
+      const foundIndex = this.chart_states.findIndex(element => element.name === this.selectedState)
+      const foundIndex2 = this.stateNames.findIndex(element => element === this.selectedState)
+
+      if (foundIndex > -1) {
+        // it is a new one
+        this.chart_states.splice(foundIndex, 1)
+        this.stateNames.splice(foundIndex2, 1)
+        this.updateLocalStorageChartStates()
+        this.stateName = ''
+        this.selectedState = ''
+        this.showPopUp = true
+      }
+    },
+    storeState () {
+      if (this.xAxisModel === 'time') {
+        this.stateName = 'time vs ' + this.chartCh1Model + '_' + this.chartCh1Prop
+        if (this.chartCh2Model !== 'none') {
+          this.stateName += ' & ' + this.chartCh2Model + '_' + this.chartCh2Prop
+        }
+      } else {
+        this.stateName = this.xAxisModel + '_' + this.xAxisProp + ' vs ' + this.chartCh1Model + '_' + this.chartCh1Prop
+        if (this.chartCh2Model !== 'none') {
+          this.stateName += ' & ' + this.chartCh2Model + '_' + this.chartCh2Prop
+        }
+      }
+
+      if (this.stateName !== '') {
+        const newState = {
+          name: this.stateName,
+          xAxisModel: this.xAxisModel,
+          xAxisProp: this.xAxisProp,
+          chartCh1Model: this.chartCh1Model,
+          chartCh1Prop: this.chartCh1Prop,
+          chartCh2Model: this.chartCh2Model,
+          chartCh2Prop: this.chartCh2Prop,
+          autoScale: this.autoScale,
+          minY: this.minY,
+          maxY: this.maxY,
+          hires: this.hires,
+          showSummary: this.showSummary,
+          rtFrame: this.rtFrame,
+          scaling: this.scaling,
+          chartCh1Factor: this.chartCh1Factor,
+          chartCh2Factor: this.chartCh2Factor
+        }
+
+        const foundIndex = this.chart_states.findIndex(element => element.name === this.stateName)
+
+        if (foundIndex === -1) {
+        // it is a new one
+          this.chart_states.push(newState)
+          this.stateNames.push(newState.name)
+        } else {
+          // update the old one
+          this.chart_states.splice(foundIndex, 1, newState)
+        }
+        this.showPopUp = true
+        this.selectedState = newState.name
+        this.updateLocalStorageChartStates()
+      } else {
+        this.showPopUp = true
+        this.popUpMessage = 'please provide a diagram name'
+      }
+    },
+    updateLocalStorageChartStates () {
+      this.popUpMessage = 'chart layouts updated'
+      localStorage.chart_states = JSON.stringify(this.chart_states)
+    },
+    loadChartStatesFromLocalStorage () {
+      // clear the diagram list
+      this.chart_states = []
+      // fill the scriptlist with an array of scripts
+      if (localStorage.chart_states) {
+        this.chart_states = JSON.parse(localStorage.chart_states)
+      }
+      // update the scriptlist names array
+      this.updateChartStatesNames()
+    },
+    updateChartStatesNames () {
+      this.stateNames = []
+      this.selectedState = ''
+      this.chart_states.forEach(state => {
+        this.stateNames.push(state.name)
+      })
     },
     exportData () {
       // download to local disk
+      this.exportFileName = 'data'
       const data = JSON.stringify(this.chartCh1Data)
       const blob = new Blob([data], { type: 'text/json' })
       const e = document.createEvent('MouseEvents')
       const a = document.createElement('a')
       if (this.exportFileName.includes('.json')) {
-        a.download = this.exportFileName
+        a.download = this.exportFileName + '-y1'
       } else {
-        a.download = this.exportFileName + '.json'
+        a.download = this.exportFileName + '-y1.json'
       }
       a.href = window.URL.createObjectURL(blob)
       a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
       e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
       a.dispatchEvent(e)
+
+      if (this.chartCh2Model !== 'none') {
+        const data2 = JSON.stringify(this.chartCh2Data)
+        const blob = new Blob([data2], { type: 'text/json' })
+        const e = document.createEvent('MouseEvents')
+        const a = document.createElement('a')
+        if (this.exportFileName.includes('.json')) {
+          a.download = this.exportFileName + '-y2'
+        } else {
+          a.download = this.exportFileName + '-y2.json'
+        }
+        a.href = window.URL.createObjectURL(blob)
+        a.dataset.downloadurl = ['text/json', a.download, a.href].join(':')
+        e.initEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
+        a.dispatchEvent(e)
+      }
     },
     toggleIsEnabled () {
       this.isEnabled = !this.isEnabled
@@ -608,6 +765,12 @@ export default {
     this.$root.$on('add_to_graph1', (e) => { this.selectNewGraphFromOutside(e, 1) })
     this.$root.$on('add_to_graph2', (e) => { this.selectNewGraphFromOutside(e, 2) })
     this.$root.$on('remove_from_diagram', (e) => { this.removeGraphFromOutside(e) })
+
+    if (localStorage.chart_states) {
+      this.chart_states = JSON.parse(localStorage.chart_states)
+    }
+
+    this.loadChartStatesFromLocalStorage()
   }
 }
 </script>
@@ -615,12 +778,12 @@ export default {
 <style>
 .rectangle {
   display: flex;
-  height: 300px;
+  height: 250px;
   width: 100%;
 }
 .rectangleHide {
   display: none;
-  height: 300px;
+  height: 250px;
   width: 100%;
 }
 .gutter {

@@ -20,7 +20,7 @@
 
 // import the helper classes
 importScripts("./helpers/Interventions.js");
-importScripts("./helpers/Datalogger.js");
+importScripts("./helpers/datalogger.js");
 importScripts("./helpers/math_functions.js");
 
 // define an object which is going to hold available possible component types
@@ -84,6 +84,11 @@ onmessage = function (e) {
       if (e.data.target === "Ventilator") {
         // setters data handled by the interventions engine
         current_model.components['Ventilator'][e.data.action](e.data.data)
+      }
+
+      if (e.data.target === "IV") {
+        // setters data handled by the interventions engine
+        current_model.components['IV'][e.data.action](e.data.data)
       }
 
       if (e.data.action === "change_property") {

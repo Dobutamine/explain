@@ -26,6 +26,7 @@ class DiagramValve {
     this.sprite.buttonMode = true
     this.sprite.tint = '0x000000'
     this.sprite.zIndex = 1
+    this.sprite.label = label
     this.pos = 0
     this.sprite.scale.set(0.04, 0.04)
     this.pixiApp.stage.addChild(this.sprite)

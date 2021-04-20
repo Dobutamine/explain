@@ -150,7 +150,7 @@
       },
       {
          "name":"VCII",
-         "description":"intrathoracic vena cava inferior",
+         "description":"vena cava inferior intrathoracic",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -163,7 +163,7 @@
       },
       {
          "name":"VCIE",
-         "description":"extrathoracic vena cava inferior",
+         "description":"vena cava inferior extrathoracic ",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -202,7 +202,7 @@
       },
       {
          "name":"APC",
-         "description":"pulmonary circulation arteries",
+         "description":"pulmonary artery",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -215,7 +215,7 @@
       },
       {
          "name":"LL",
-         "description":"pulmonary circulation capillaries left lung",
+         "description":"left lung",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -228,7 +228,7 @@
       },
       {
          "name":"LR",
-         "description":"pulmonary circulation capillaries right lung",
+         "description":"right lung",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -241,7 +241,7 @@
       },
       {
          "name":"PV",
-         "description":"pulmonary circulation capillaries",
+         "description":"pulmonary veins",
          "type":"component",
          "subtype":"BloodCompartment",
          "is_enabled":true,
@@ -366,7 +366,7 @@
       },
       {
          "name":"AD_LB",
-         "description":"systemic circulation arteries to lower body",
+         "description":"descending aorta to lower body",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -381,7 +381,7 @@
       },
       {
          "name":"AD_INTESTINES",
-         "description":"systemic circulation arteries to INTESTINES",
+         "description":"descending aorta to intestines",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -396,7 +396,7 @@
       },
       {
          "name":"AD_LIVSPLE",
-         "description":"systemic circulation arteries to liver and spleen",
+         "description":"descending aorta to liver and spleen",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -411,7 +411,7 @@
       },
       {
          "name":"AD_AR",
-         "description":"systemic circulation arteries to renal arteries",
+         "description":"descending aorta to renal arteries",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -621,7 +621,7 @@
       },
       {
          "name":"APC_LL",
-         "description":"pulmonary circulation arteries to left lung capillaries",
+         "description":"pulmonary artery to left lung",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -636,7 +636,7 @@
       },
       {
          "name":"APC_LR",
-         "description":"pulmonary circulation arteries to right lung capillaries",
+         "description":"pulmonary artery to right lung",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -651,7 +651,7 @@
       },
       {
          "name":"LL_PV",
-         "description":"left pulmonary circulation capillaries to left atrium",
+         "description":"left lung to pulmonary veins",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -666,7 +666,7 @@
       },
       {
          "name":"LR_PV",
-         "description":"right pulmonary circulation capillaries to left atrium",
+         "description":"right lung to pulmonary veins",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -681,7 +681,7 @@
       },
       {
          "name":"PV_LA",
-         "description":"pulmonary circulation veins to left atrium",
+         "description":"pulmonary veins to  left atrium",
          "type":"component",
          "subtype":"BloodConnector",
          "is_enabled":true,
@@ -764,8 +764,8 @@
          "no_backflow":false,
          "comp_from":"AARCH",
          "comp_to":"APC",
-         "r_for":18000,
-         "r_back":18000,
+         "r_for":5000,
+         "r_back":5000,
          "r_k1":0,
          "r_k2":0
       },
@@ -779,8 +779,8 @@
          "no_backflow":false,
          "comp_from":"LA",
          "comp_to":"RA",
-         "r_for":18000,
-         "r_back":18000,
+         "r_for":2500,
+         "r_back":2500,
          "r_k1":0,
          "r_k2":0
       },
@@ -794,8 +794,8 @@
          "no_backflow":false,
          "comp_from":"LV",
          "comp_to":"RV",
-         "r_for":18000,
-         "r_back":18000,
+         "r_for":5000,
+         "r_back":5000,
          "r_k1":0,
          "r_k2":0
       },
@@ -809,8 +809,8 @@
          "no_backflow":false,
          "comp_from":"APC",
          "comp_to":"PV",
-         "r_for":18000,
-         "r_back":18000,
+         "r_for":5000,
+         "r_back":5000,
          "r_k1":0,
          "r_k2":0
       },
@@ -1174,7 +1174,7 @@
          "subtype":"ECG",
          "is_enabled":true,
          "heart_rate":129.06237956694608,
-         "heart_rate_ref":"140",
+         "heart_rate_ref":"160",
          "venticular_escape_rate":40,
          "rhythm_type":0,
          "pq_time":0.1,
@@ -1285,8 +1285,8 @@
          "th_lungvol":0.04,
          "op_lungvol":0.05,
          "sa_lungvol":0.06,
-         "th_map":40,
-         "op_map":57,
+         "th_map":30,
+         "op_map":45,
          "sa_map":70,
          "th_po2":5.25,
          "op_po2":52.5,
@@ -1317,7 +1317,7 @@
          "g_map_cont":0,
          "g_map_res":0,
          "g_map_venpool":0,
-         "g_map_hp":0,
+         "g_map_hp":10,
          "g_lungvol_hp":-0.1,
          "lung_vol_hp_threshold":0.00025
       },
@@ -1376,6 +1376,16 @@
          "type":"component",
          "subtype":"Birth",
          "is_enabled":false
+      },
+      {
+         "name":"IV",
+         "description":"",
+         "type":"component",
+         "subtype":"IV",
+         "is_enabled":true,
+         "fluid_bolus": 0,
+         "fluid_bolus_time": 10,
+         "fluid_bolus_target": ["VCIE"]
       },
       {
          "name":"ECMO",

@@ -61,12 +61,12 @@
         <div class="row">
             <q-input class="col" v-model="rv_stroke" filled dense square label="rv stroke" />
             <q-input class="col" v-model="lungshunt_flow" filled dense square label="lung shunt" />
-            <q-input class="col" v-model="ecmo_flow" filled dense square label="ecmo_flow" />
+            <q-input class="col" v-model="qpqs" filled dense square label="Qp:Qs" />
         </div>
         <div class="row">
+            <q-input class="col" v-model="ecmo_flow" filled dense square label="ecmo_flow" />
             <q-input class="col" v-model="ecinp" filled dense square label="pre oxy pres" />
             <q-input class="col" v-model="ecoutp" filled dense square label="post oxy pres" />
-            <q-input class="col" v-model="ecoutp" filled dense square label="" />
         </div>
       </div>
     </div>
@@ -118,6 +118,7 @@ export default {
       brain_flow: 0,
       ub_flow: 0,
       lb_flow: 0,
+      qpqs: 1,
       lungshunt_flow: 0,
       oxy_flow_ub: 0,
       oxy_flow_lb: 0,
@@ -244,6 +245,9 @@ export default {
           this.lv_stroke = this.checkIsNaN((data.Monitor.lv_stroke), 4)
           this.rvo = this.checkIsNaN((data.Monitor.rvo), 4)
           this.rv_stroke = this.checkIsNaN((data.Monitor.rv_stroke), 4)
+
+          const temp = parseFloat(this.lvo) / (parseFloat(this.ivc_flow) + parseFloat(this.svc_flow))
+          this.qpqs = this.checkIsNaN(temp, 3)
         }
 
         if (this.respiratoryEnabled) {
