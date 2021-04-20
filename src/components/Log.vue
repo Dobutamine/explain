@@ -5,9 +5,8 @@
         model log
       </div>
    </div>
-  <div v-if="isEnabled" class="row q-mt-es">
+  <div v-if="isEnabled" class="q-mt-es">
       <q-virtual-scroll
-      clas="col"
         style="max-height: 210px;"
         :items="log"
         >
@@ -16,11 +15,10 @@
         :key="index"
         dense
       >
-        <q-item-section class="q-ma-es bg-grey-9">
-          <q-item-label class="text-overline bg-grey-9" style="width: 100%" >
-            {{ item.message }}
-          </q-item-label>
-        </q-item-section>
+        <div class="q-gutter-es q-mt-es row gutter  bg-grey-9">
+          {{ item.message }}
+        </div>
+
       </q-item>
     </template>
   </q-virtual-scroll>
