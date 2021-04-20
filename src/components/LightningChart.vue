@@ -300,7 +300,7 @@ export default {
       }
     },
     updateLocalStorageChartStates () {
-      this.popUpMessage = 'chart layout saved'
+      this.popUpMessage = 'chart layouts updated'
       localStorage.chart_states = JSON.stringify(this.chart_states)
     },
     loadChartStatesFromLocalStorage () {
