@@ -105,8 +105,6 @@ class Valve {
           // add blood to comp1 in liters
           this.comp1.volIn(this._flow * this.t, this.comp2);
 
-          
-
           // store the real flow (flip the sign as the real flow is backwards)
           this.real_flow = -this._flow;
         }
