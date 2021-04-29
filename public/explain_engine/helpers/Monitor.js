@@ -96,6 +96,10 @@ class Monitor {
 
     this._time_counter = 0
     this._time_start = 0
+
+    this.backup = false
+    this.backup_timer = 0
+    this.back_up_interval = 5
   }
 
   modelStep() {
@@ -173,7 +177,10 @@ class Monitor {
     }
     
 
-    if (this._model.components.ECG.ncc_ventricular === 1) {
+    if (this._model.components.ECG.ncc_ventricular === 1 | this.backup) {
+      this.backup = false
+      this.backup_timer = 0
+
       this.abp_syst = this._abp_max
       this.abp_diast = this._abp_min
       this.abp_mean = (this.abp_syst + (2 * this.abp_diast)) / 3
@@ -252,6 +259,12 @@ class Monitor {
       this._time_counter = 0
     }
 
+    if (this.backup_timer > this.back_up_interval) {
+      this.backup = true
+      this.backup_timer = 0
+    }
+    this.backup_timer += this._model.modeling_stepsize
+    
     this._liver_flow_counter += this.getValueFromModel(this.liver_flow_source) * this._model.modeling_stepsize
     this._myo_flow_counter += this.getValueFromModel(this.myocardium_flow_source) * this._model.modeling_stepsize
 

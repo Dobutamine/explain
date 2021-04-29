@@ -1174,7 +1174,7 @@
          "subtype":"ECG",
          "is_enabled":true,
          "heart_rate":129.06237956694608,
-         "heart_rate_ref":"160",
+         "heart_rate_ref": 160,
          "venticular_escape_rate":40,
          "rhythm_type":0,
          "pq_time":0.1,
@@ -1210,13 +1210,15 @@
          "outside_temp":20,
          "body_temp":36.9,
          "active_comps": [
-            {  "comp": "LB", "fvatp": 0.2 },
+            {  "comp": "LB", "fvatp": 0.185 },
             {  "comp": "KIDNEYS", "fvatp": 0.1 },
             {  "comp": "LIVSPLE", "fvatp": 0.1 },
             {  "comp": "INTESTINES", "fvatp": 0.1 },
             {  "comp": "UB", "fvatp": 0.2 },
             {  "comp": "BRAIN", "fvatp": 0.25 },
-            {  "comp": "COR", "fvatp": 0.05 }
+            {  "comp": "COR", "fvatp": 0.05 },
+            {  "comp": "AA", "fvatp": 0.005 },
+            {  "comp": "AD", "fvatp": 0.01 }
          ]
       },
       {
@@ -1456,7 +1458,13 @@
          "description":"",
          "type":"component",
          "subtype":"Resuscitation",
-         "is_enabled":false
+         "is_enabled":false,
+         "continue_resuscitation" : false,   
+         "ratio_comp": 3,
+         "ratio_resp": 1,  
+         "p_max": 40,
+         "p_min":0,
+         "f_comp":2
       },
       {
          "name":"HeartLungInteraction",

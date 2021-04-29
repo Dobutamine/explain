@@ -2,16 +2,10 @@
 
 class Resuscitation {
   constructor(_model) {
-    this._model = _model;
-    this._comp_counter = 0;
-    this._resp_counter = 0;
-    this.p_max = 60;
-    this.p_min = 0;
-    this.f_comp = 2;
-    this.f_resp = 0.5;
-    this.ratio_comp = 3;
-    this.ratio_resp = 1;
-    this.AA_pres_1 = 10;
+    this._model         = _model;
+    this._comp_counter  = 0;
+    this._resp_counter  = 0;
+    this.compressions  = 0;
   }
 
   modelStep() {
@@ -22,55 +16,89 @@ class Resuscitation {
 
   modelCycle() {
     // Model sinus function
-    let a_sinus = (this.p_max - this.p_min) / 2;
-    let b_sinus = (this.p_max + this.p_min) / 2;
-    let c_sinus = 2 * Math.PI * this.f_comp;
-    let sinus   = a_sinus + b_sinus * Math.sin(c_sinus * this._comp_counter - 0.5 * Math.PI);
+    let a_sinus  = (this.p_max + this.p_min)/2; // average
+    let b_sinus  = (this.p_max - this.p_min)/2; // amplitude
+    let c_sinus  = 2*Math.PI * this.f_comp;
+    this._sinus = a_sinus + b_sinus * Math.sin(c_sinus*this._comp_counter - 0.5*Math.PI);
 
-    this.compressions = sinus;
+    this.compressions = this._sinus;
 
-    // Chest compressions
-    // if (this._comp_counter <= (this.ratio_comp/this.f_comp)){
+    switch(this.continue_resuscitation){
+      case true:
+        this.continue()
+        break
 
-      // apply
-      this._model.components["AA"].pres_ext = 0.8 * sinus;
-      this._model.components["AARCH"].pres_ext = 0.8 * sinus;
-      this._model.components["VCII"].pres_ext = 0.8 * sinus;
-      this._model.components["APC"].pres_ext = 0.8 * sinus;
-      this._model.components["LL"].pres_ext = 0.8 * sinus;
-      this._model.components["LR"].pres_ext = 0.8 * sinus;
-      this._model.components["PV"].pres_ext = 0.8 * sinus;
-      this._model.components["LA"].pres_ext = 1.0 * sinus;
-      this._model.components["RA"].pres_ext = 1.0 * sinus;
-      this._model.components["LV"].pres_ext = 1.0 * sinus;
-      this._model.components["RV"].pres_ext = 1.0 * sinus;
+      case false:
+        this.discontinue()
+        break
+    }
+  }
 
+  continue(){
+    // Apply chest compressions
+    this._model.components["LV"].pres_ext     = 1.0 * this._sinus;
+    this._model.components["RV"].pres_ext     = 1.0 * this._sinus;
+    // this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
+    // this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
+    // this._model.components["COR"].pres_ext    = 0.8 * this._sinus;
+    // this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
+    // this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
+    // this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
+    // this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
+    // this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
+    // this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
+    // this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
+
+    // this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
+    // this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
+    
+    // update counter for sinus 
+    this._comp_counter += this._model.modeling_stepsize;
+
+    // Apply respiratory support
+    this._model.components['Ventilator'].is_enabled  = true;
+  }
+
+  discontinue(){
+    // Apply chest compressions
+    if (this._comp_counter <= (this.ratio_comp/this.f_comp)){
+      this._model.components["LV"].pres_ext     = 1.0 * this._sinus;
+      this._model.components["RV"].pres_ext     = 1.0 * this._sinus;
+      // this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
+      // this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
+      // this._model.components["COR"].pres_ext    = 0.8 * this._sinus;
+      // this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
+      // this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
+      // this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
+      // this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
+      // this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
+      // this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
+      // this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
+
+      // this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
+      // this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
+    
       // update counter
       this._comp_counter += this._model.modeling_stepsize;
+    }
+    
+    // Apply respiratory support
+    let total_time_vent =  this._model.components['Ventilator'].t_in + this._model.components['Ventilator'].t_ex;
 
-      if (this._comp_counter > 0.5) {
-        this._comp_counter = 0
-        this._model.components.ECG.ncc_ventricular = 0
-      }
-    // }
-
-    // Respiration
-    //else if (this._resp_counter <=(ratio_resp/f_resp)){
-      // ventilator aanzetten
-      //this._model.components['ventilator'].is_enabled  = true 
-
+    if (this._resp_counter <= (this.ratio_resp * total_time_vent) && this._comp_counter >= (this.ratio_comp/this.f_comp)){
+      this._model.components['Ventilator'].is_enabled  = true; 
       // update counter
-      //this._resp_counter += this._model["modeling stepsize"];
-    //}
-    //else if (this._resp_counter >=(ratio_resp/f_resp)){
-      // ventilator uitzetten
-      //this._model.components['ventilator'].is_enabled  = false
-    //}
-
-    // reset counter if needed
-    // if (this._comp_counter >= (this.ratio_comp/this.f_comp) && this._resp_counter >= (this.ratio_resp/this.f_resp)){
-    //   this._comp_counter = 0;
-    //   this._resp_counter = 0;
-    // }
+      this._resp_counter += this._model.modeling_stepsize;
+    }
+      
+    if (this._resp_counter >= (this.ratio_resp * total_time_vent)){
+      this._model.components['Ventilator'].is_enabled  = false;
+    }
+  
+    // reset counters 
+    if (this._comp_counter >= (this.ratio_comp/this.f_comp) && this._resp_counter >= (this.ratio_resp * total_time_vent)){
+      this._comp_counter = 0;
+      this._resp_counter = 0;
+    }
   }
 }

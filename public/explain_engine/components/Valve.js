@@ -69,6 +69,11 @@ class Valve {
         // calculate the flow with direction from comp1 to comp2
         this._flow = (pres1 - pres2) / this.res;
 
+        // first check whether comp1 has enough blood volume left
+        if (this.comp1.vol < this._flow * this.t) {
+          this._flow = this.comp1.vol / this.t
+        }
+
         // remove blood in liters from comp1
         this.comp1.volOut(this._flow * this.t);
 
@@ -89,11 +94,18 @@ class Valve {
           // calculate the flow with direction from comp2 to comp1 
           this._flow = (pres2 - pres1) / this.res;
 
-          // add blood to comp1 in liters
-          this.comp1.volIn(this._flow * this.t, this.comp2);
+           // first check whether comp1 has enough blood volume left
+           if (this.comp2.vol < this._flow * this.t) {
+            this._flow = this.comp2.vol / this.t
+          }
 
           // remove blood from comp2 in lieters
           this.comp2.volOut(this._flow * this.t);
+
+          // add blood to comp1 in liters
+          this.comp1.volIn(this._flow * this.t, this.comp2);
+
+          
 
           // store the real flow (flip the sign as the real flow is backwards)
           this.real_flow = -this._flow;

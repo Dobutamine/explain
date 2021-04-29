@@ -46,6 +46,7 @@ let datalogger = {};
 let main_timer;
 let realtime_step = 0.03
 
+let total_volume = 0
 // the onmessage function is an event handler handling messages posted to the model engine worker thread.
 // e is a MessageEvent object wich contains a data field containing the message
 onmessage = function (e) {
@@ -314,6 +315,8 @@ const disposeModel = function () {
 // calculate a number of seconds of the model and storing data
 const calculateModel = function (time_to_calculate) {
 
+  total_volume = 0
+
   // first switch off datalogger realtime mode
   datalogger.realtime = false;
 
@@ -346,6 +349,8 @@ const calculateModel = function (time_to_calculate) {
   
   // stop the model which clears all timers 
   stopModel()
+
+  // console.log(total_volume)
 };
 
 // calculate a number of seconds of the model without storing data
@@ -420,7 +425,11 @@ const modelStep = function () {
   // iterate over all components and do the modelstep. The actual modeling is done in this loop
   for (const key in current_model.components) {
     current_model.components[key].modelStep();
+    // if (current_model.components[key].subtype === 'BloodCompartment') {
+    //   total_volume += current_model.components[key].vol
+    // }
   }
+
 
   // update the intervention engine
   interventions.modelStep(current_model.model_time_total);
