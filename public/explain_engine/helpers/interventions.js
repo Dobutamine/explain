@@ -51,7 +51,7 @@ class Interventions {
       new_property.property_loc = "none";
       new_property.started = false;
       new_property.completed = false;
-      new_property.at_time = _propertyChange.at_time + this._current_model_time;
+      new_property.at_time = parseFloat(_propertyChange.at_time) + parseFloat(this._current_model_time)
 
       // to determine the property type we have to find the propert
       try {
