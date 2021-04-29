@@ -38,19 +38,19 @@ class Resuscitation {
     // Apply chest compressions
     this._model.components["LV"].pres_ext     = 1.0 * this._sinus;
     this._model.components["RV"].pres_ext     = 1.0 * this._sinus;
-    // this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
-    // this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
+    this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
+    this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
     // this._model.components["COR"].pres_ext    = 0.8 * this._sinus;
-    // this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
-    // this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
-    // this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
-    // this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
-    // this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
-    // this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
-    // this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
+    this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
+    this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
+    this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
+    this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
+    this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
+    this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
+    this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
 
-    // this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
-    // this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
+    this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
+    this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
     
     // update counter for sinus 
     this._comp_counter += this._model.modeling_stepsize;
@@ -64,19 +64,19 @@ class Resuscitation {
     if (this._comp_counter <= (this.ratio_comp/this.f_comp)){
       this._model.components["LV"].pres_ext     = 1.0 * this._sinus;
       this._model.components["RV"].pres_ext     = 1.0 * this._sinus;
-      // this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
-      // this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
+      this._model.components["LA"].pres_ext     = 1.0 * this._sinus;
+      this._model.components["RA"].pres_ext     = 1.0 * this._sinus;
       // this._model.components["COR"].pres_ext    = 0.8 * this._sinus;
-      // this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
-      // this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
-      // this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
-      // this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
-      // this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
-      // this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
-      // this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
+      this._model.components["AA"].pres_ext     = 0.5 * this._sinus;
+      this._model.components["AARCH"].pres_ext  = 0.5 * this._sinus;
+      this._model.components["VCII"].pres_ext   = 0.5 * this._sinus;
+      this._model.components["APC"].pres_ext    = 0.5 * this._sinus;
+      this._model.components["PV"].pres_ext     = 0.5 * this._sinus;
+      this._model.components["LL"].pres_ext     = 0.3 * this._sinus;
+      this._model.components["LR"].pres_ext     = 0.3 * this._sinus;
 
-      // this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
-      // this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
+      this._model.components["CHEST_L"].pres_ext= 0.3 * this._sinus;
+      this._model.components["CHEST_R"].pres_ext= 0.3 * this._sinus;
     
       // update counter
       this._comp_counter += this._model.modeling_stepsize;
