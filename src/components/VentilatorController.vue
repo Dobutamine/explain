@@ -17,7 +17,7 @@
         { label: 'volume', value: 'volume' }]"
       />
       <q-checkbox v-model="hires" dense label="hi-res" @input="hiresToggle" style="font-size: 12px" class="q-ml-md"/>
-  </div>
+     </div>
 
    <div class="q-gutter-xs row q-mb-sm justify-center">
       <q-card v-if="!hfov && !volumeGaranteed" class="q-pa-sm q-ma-sm" bordered>
@@ -68,6 +68,8 @@
     </div>
 
     <div class="row justify-center q-ma-sm">
+      <q-toggle class="q-mt-es q-mr-sm text-overline" size="sm" v-model="ventilatorState" color="red-10" label="on/off" @input="ventilatorToggle" style="font-size: 12px"/>
+
       <q-btn-toggle
       color="grey-10"
       toggle-color="red-10"
@@ -145,6 +147,7 @@ export default {
       chart1MinY: 0,
       chart1MaxY: 100,
 
+      ventilatorState: false,
       vent_set_max_pip: 20,
       vent_set_pip: 20,
       vent_set_peep: 5,
@@ -316,6 +319,33 @@ export default {
           this.$model.setPropertyDirect('Ventilator', 'max_pip', this.vent_set_pip / 1.35951)
         }
       }
+    },
+    ventilatorToggle () {
+      if (this.ventilatorState) {
+        this.turnOnVentilator()
+      } else {
+        this.turnOffVentilator()
+      }
+    },
+    turnOnVentilator () {
+      this.$model.setPropertyDirect('Ventilator', 'is_enabled', true)
+      this.$model.setPropertyDirect('Breathing', 'spont_breathing_enabled', false)
+
+      this.$model.setPropertyDirect('OUT_NCA', 'is_enabled', true)
+      this.$model.setPropertyDirect('OUT_NCA', 'no_flow', true)
+
+      this.$model.setPropertyDirect('YPIECE_NCA', 'is_enabled', true)
+      this.$model.setPropertyDirect('YPIECE_NCA', 'no_flow', false)
+    },
+    turnOffVentilator () {
+      this.$model.setPropertyDirect('Ventilator', 'is_enabled', false)
+      this.$model.setPropertyDirect('Breathing', 'spont_breathing_enabled', true)
+
+      this.$model.setPropertyDirect('OUT_NCA', 'is_enabled', true)
+      this.$model.setPropertyDirect('OUT_NCA', 'no_flow', false)
+
+      this.$model.setPropertyDirect('YPIECE_NCA', 'is_enabled', true)
+      this.$model.setPropertyDirect('YPIECE_NCA', 'no_flow', true)
     },
     changePIP () {
       if (this.ventModeSelector !== 'hfov') {

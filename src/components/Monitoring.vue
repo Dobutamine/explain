@@ -91,6 +91,7 @@ export default {
   data () {
     return {
       isEnabled: true,
+      initialized: false,
       bloodgasEnabled: true,
       hemodynamicEnabled: true,
       respiratoryEnabled: false,
@@ -150,10 +151,6 @@ export default {
   mounted () {
     this.modelEventListener = this.$model.engine.addEventListener('message', (message) => {
       switch (message.data.type) {
-        case 'mes':
-          if (message.data.data[0] === 'ready') {
-          }
-          break
         case 'data':
           switch (message.data.target) {
             case 'datalogger_output':
@@ -196,63 +193,30 @@ export default {
     updateMonitorRealtime (data) {
       if (data.time - this.prevTime > 1) {
         this.prevTime = data.time
+        console.log(data)
         if (this.isEnabled) {
-          this.heartrate = parseInt(data.Monitor.heart_rate)
-          if (parseInt(data.Monitor.abp_syst) !== -1000) {
-            this.abp = `${this.checkIsNaN(parseInt(data.Monitor.abp_syst), 0)}/${this.checkIsNaN(parseInt(data.Monitor.abp_diast), 0)} (${parseInt(data.Monitor.abp_mean)})`
-          } else {
-            this.abp = '-'
-          }
-          if (parseInt(data.Monitor.pap_syst) !== -1000) {
-            this.pap = `${this.checkIsNaN(parseInt(data.Monitor.pap_syst), 0)}/${this.checkIsNaN(parseInt(data.Monitor.pap_diast), 0)} (${parseInt(data.Monitor.pap_mean)})`
-          } else {
-            this.pap = '-'
-          }
-          this.sao2_pre = this.checkIsNaN(parseInt(data.Monitor.saO2_pre), 0)
-          this.sao2_post = this.checkIsNaN(parseInt(data.Monitor.saO2_post), 0)
-          this.resp_rate = this.checkIsNaN(parseInt(data.Monitor.resp_rate), 0)
-          this.etco2 = this.checkIsNaN(parseInt(data.Monitor.etco2), 0)
-          this.temp = this.checkIsNaN((data.Monitor.temperature), 1)
-          this.cvp = this.checkIsNaN((data.Monitor.cvp), 1)
-          this.ecinp = this.checkIsNaN((data.Monitor.ecinp), 1)
-          this.ecoutp = this.checkIsNaN((data.Monitor.ecoutp), 1)
+
         }
 
         if (this.bloodgasEnabled) {
-          this.ph = this.checkIsNaN((data.Monitor.ph), 2)
-          this.po2 = this.checkIsNaN((data.Monitor.pao2), 0)
-          this.pco2 = this.checkIsNaN((data.Monitor.paco2), 0)
+
         }
 
         if (this.hemodynamicEnabled) {
-          this.ivc_flow = this.checkIsNaN((data.Monitor.ivc_flow), 4)
-          this.svc_flow = this.checkIsNaN((data.Monitor.svc_flow), 4)
-          this.myo_flow = this.checkIsNaN((data.Monitor.myo_flow), 4)
-
-          this.pda_flow = this.checkIsNaN((data.Monitor.pda_flow), 4)
-          this.ofo_flow = this.checkIsNaN((data.Monitor.ofo_flow), 4)
-          this.vsd_flow = this.checkIsNaN((data.Monitor.vsd_flow), 4)
-          this.lungshunt_flow = this.checkIsNaN((data.Monitor.lungshunt_flow), 4)
-          this.ecmo_flow = this.checkIsNaN((data.Monitor.ecmo_flow), 4)
-
-          this.kidney_flow = this.checkIsNaN((data.Monitor.kidney_flow), 4)
-          this.liver_flow = this.checkIsNaN((data.Monitor.liver_flow), 4)
-          this.brain_flow = this.checkIsNaN((data.Monitor.brain_flow), 4)
-          this.ub_flow = this.checkIsNaN((data.Monitor.ub_flow), 4)
-          this.lb_flow = this.checkIsNaN((data.Monitor.lb_flow), 4)
-
-          this.lvo = this.checkIsNaN((data.Monitor.lvo), 4)
-          this.lv_stroke = this.checkIsNaN((data.Monitor.lv_stroke), 4)
-          this.rvo = this.checkIsNaN((data.Monitor.rvo), 4)
-          this.rv_stroke = this.checkIsNaN((data.Monitor.rv_stroke), 4)
-
-          const temp = parseFloat(this.lvo) / (parseFloat(this.ivc_flow) + parseFloat(this.svc_flow))
-          this.qpqs = this.checkIsNaN(temp, 3)
+          data.Monitor.parameters.forEach(element => {
+            if (element.label === 'lvo') {
+              this[element.label] = this.checkIsNaN(element.flow, 4)
+              this.lv_stroke = this.checkIsNaN(element.stroke, 4)
+            }
+            if (element.label === 'rvo') {
+              this.rvo = this.checkIsNaN(element.flow, 4)
+              this.rv_stroke = this.checkIsNaN(element.stroke, 4)
+            }
+          })
         }
 
         if (this.respiratoryEnabled) {
-          this.tidal_volume = this.checkIsNaN((data.Monitor.tidal_volume), 4)
-          this.minute_volume = this.checkIsNaN((data.Monitor.minute_volume), 4)
+
         }
       }
     }
