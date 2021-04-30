@@ -100,11 +100,12 @@ class BloodCompartment {
       const cc_from = comp_from[currentCompound]
 
       const inflow = (cc_from - cc_to) * dvol
-      cc_to= (cc_to * this.vol + inflow) / this.vol
-
-      if (cc_to < 0) {
+      if (this.vol > 0) {
+        cc_to = (cc_to * this.vol + inflow) / this.vol
+      } else {
         cc_to = 0
       }
+      
       this[currentCompound] = cc_to
     }
   }
