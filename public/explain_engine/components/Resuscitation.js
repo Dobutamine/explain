@@ -16,10 +16,10 @@ class Resuscitation {
 
   modelCycle() {
     // Model sinus function
-    let a_sinus  = (this.p_max + this.p_min)/2; // average
-    let b_sinus  = (this.p_max - this.p_min)/2; // amplitude
-    let c_sinus  = 2*Math.PI * this.f_comp;
-    this._sinus = a_sinus + b_sinus * Math.sin(c_sinus*this._comp_counter - 0.5*Math.PI);
+    let a_sinus  = (this.p_max + this.p_min) / 2; // average
+    let b_sinus  = (this.p_max - this.p_min) / 2; // amplitude
+    let c_sinus  = 2 * Math.PI * this.f_comp;
+    this._sinus = a_sinus + b_sinus * Math.sin(c_sinus * this._comp_counter - 0.5 * Math.PI);
 
     this.compressions = this._sinus;
 
