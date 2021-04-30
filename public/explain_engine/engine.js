@@ -66,7 +66,11 @@ onmessage = function (e) {
     
     case "set_direct":
       // set a model property directly (dangerous!)
-      current_model.components[e.data.target][e.data.action] = e.data.data
+      if (typeof current_model.components[e.data.target][e.data.action] === 'number') {
+        current_model.components[e.data.target][e.data.action] = parseFloat(e.data.data)
+      } else {
+        current_model.components[e.data.target][e.data.action] = e.data.data
+      }
       // send message that the property is set
       sendMessage("mes", null, null, [`${e.data.target}.${e.data.action} = ${e.data.data}`]);
       break;

@@ -101,6 +101,10 @@ class Interventions {
     // set the started flag to true
     _intervention["started"] = true;
 
+    if (_intervention.in_time <= 0) {
+      _intervention.in_time = 1
+    }
+
     switch (_intervention.property_type) {
       case "string":
         // switch the boolean as this is an on or off phenomena
