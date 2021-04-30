@@ -21,7 +21,6 @@ class GasConnector {
     this._initialized = false
   }
 
-
   calcResistance(pres1, pres2) {
      // calculate the flow dependent parts
      const nonlinear_fac1 = this.r_k1 * this.r_k1_fac * this.flow;
@@ -63,6 +62,10 @@ class GasConnector {
       if (pres1 > pres2) {
         // calculate the flow with direction from comp1 to comp2
         this.flow = (pres1 - pres2) / this.res;
+        // first check whether comp1 has enough gas volume left
+        if (this.comp1.vol < this.flow * this.t) {
+          this.flow = this.comp1.vol / this.t
+        }
         // remove blood in liters from comp1
         this.comp1.volOut(this.flow * this.t);
         // add blood in liters to comp2
@@ -77,10 +80,14 @@ class GasConnector {
         } else {
           // calculate the flow with direction from comp2 to comp1 
           this.flow =(pres2 - pres1) / this.res;
-          // add blood to comp1 in liters
-          this.comp1.volIn(this.flow * this.t, this.comp2);
+          // first check whether comp1 has enough gas volume left
+          if (this.comp2.vol < this.flow * this.t) {
+            this.flow = this.comp2.vol / this.t
+          }
           // remove blood from comp2 in lieters
           this.comp2.volOut(this.flow * this.t);
+          // add blood to comp1 in liters
+          this.comp1.volIn(this.flow * this.t, this.comp2);
           // store the real flow (flip th sign as the real flow is backwards)
           this.real_flow = -this.flow;
         }

@@ -40,7 +40,13 @@ class ANS {
         activation = value - operating_point;
       }
     }
-    return activation;
+
+    if (!Number.isNaN(activation)) {
+      return activation;
+    } else {
+      return 0
+    }
+    
   }
   modelStep() {
     if (this.is_enabled) {

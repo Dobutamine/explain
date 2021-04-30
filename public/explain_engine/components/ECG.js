@@ -156,13 +156,13 @@ class ECG {
     if (this.heart_rate > 0) {
       this._sa_node_period = 60 / this.heart_rate;
     } else {
-      this._sa_node_period = 600000;
+      this._sa_node_period = 6000000000;
     }
 
     if (this.venticular_escape_rate > 0) {
       this._vent_escape_period = 60 / this.venticular_escape_rate
     } else {
-      this._vent_escape_period = 600000
+      this._vent_escape_period = 6000000000
     }
 
     // determine rhythm properties

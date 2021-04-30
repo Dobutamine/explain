@@ -84,7 +84,7 @@ class Heart {
     let ncc_atrial = this._model.components.ECG.ncc_atrial
     let atrial_duration = this._model.components.ECG.pq_time
     let ncc_ventricular = this._model.components.ECG.ncc_ventricular
-    let ventricular_duration = (this._model.components.ECG.cqt_time + this._model.components.ECG.qrs_time)
+    let ventricular_duration = (this._model.components.ECG.cqt_time)
 
     // varying elastance activation function of the atria
     if (ncc_atrial >= 0 && ncc_atrial < (atrial_duration / t)) {
