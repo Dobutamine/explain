@@ -769,219 +769,6 @@
             "is_enabled": false
           }
     ],
-    "monitoring": [
-      {
-        "name":"Monitor",
-        "description":"",
-        "type":"component",
-        "subtype":"Monitor",
-        "is_enabled":true,
-        "heartrate_source":[
-           "ECG",
-           "measured_heartrate"
-        ],
-        "resprate_source":[
-           "",
-           ""
-        ],
-        "etco2_source":[
-           "",
-           ""
-        ],
-        "temp_source":[
-           "Metabolism",
-           "body_temp"
-        ],
-        "ecg_signal_source":[
-           "ECG",
-           "ecg_signal"
-        ],
-        "abp_signal_source":[
-           "AA",
-           "pres"
-        ],
-        "pap_signal_source":[
-           "PA",
-           "pres"
-        ],
-        "cvp_signal_source":[
-           "VC",
-           "pres"
-        ],
-        "ecin_signal_source":[
-           "",
-           ""
-        ],
-        "ecout_signal_source":[
-           "",
-           ""
-        ],
-        "etco2_signal_source":[
-           "",
-           ""
-        ],
-        "resp_signal_source":[
-           "",
-           ""
-        ],
-        "sao2_pre_source":[
-           "",
-           ""
-        ],
-        "sao2_post_source":[
-           "",
-           ""
-        ],
-        "svo2_source":[
-           "",
-           ""
-        ],
-        "svo2_source2":[
-           "",
-           ""
-        ],
-        "arterial_bloodgas_source":"",
-        "alveolar_gas_source":[
-           
-        ],
-        "liver_flow_source":[
-           "",
-           ""
-        ],
-        "kidney_flow_source":[
-           "AR_KIDNEYS",
-           "real_flow"
-        ],
-        "brain_flow_source":[
-           "",
-           ""
-        ],
-        "lungshunt_flow_source":[
-           "",
-           ""
-        ],
-        "myocardium_flow_source":[
-           "",
-           ""
-        ],
-        "vsd_flow_source":[
-           "",
-           ""
-        ],
-        "ofo_flow_source":[
-           "",
-           ""
-        ],
-        "pda_flow_source":[
-           "",
-           ""
-        ],
-        "ivc_flow_source":[
-           "VC_RA",
-           "real_flow"
-        ],
-        "ub_flow_source":[
-           "",
-           ""
-        ],
-        "lb_flow_source":[
-           "",
-           ""
-        ],
-        "svc_flow_source":[
-           "",
-           ""
-        ],
-        "lvo_source":[
-           "LV_AA",
-           "real_flow"
-        ],
-        "rvo_source":[
-           "RV_PA",
-           "real_flow"
-        ],
-        "ecmo_flow_source":[
-           "",
-           ""
-        ],
-        "tidal_volume_source":[
-           "",
-           ""
-        ],
-        "minute_volume_source":[
-           "",
-           ""
-        ],
-        "vent_peak_pressure_source":[
-           "",
-           ""
-        ],
-        "vent_plateau_pressure_source":[
-           "",
-           ""
-        ],
-        "vent_compliance_source":[
-           "",
-           ""
-        ],
-        "vent_resistance_source":[
-           "",
-           ""
-        ],
-        "vent_peep_source":[
-           "",
-           ""
-        ],
-        "vent_freq_source":[
-           "",
-           ""
-        ],
-        "vent_minute_volume_source":[
-           "",
-           ""
-        ],
-        "vent_tidal_volume_source":[
-           "",
-           ""
-        ],
-        "vent_tidal_volume_insp_source":[
-           "",
-           ""
-        ],
-        "vent_insp_flow_source":[
-           "",
-           ""
-        ],
-        "vent_exp_flow_source":[
-           "",
-           ""
-        ],
-        "vent_insp_time_source":[
-           "",
-           ""
-        ],
-        "vent_exp_time_source":[
-           "",
-           ""
-        ],
-        "vent_flow_signal_source":[
-           "",
-           ""
-        ],
-        "vent_pressure_signal_source":[
-           "",
-           ""
-        ],
-        "vent_volume_signal_source":[
-           "",
-           ""
-        ],
-        "vent_fio2_source":[
-           "",
-           ""
-        ]
-     } 
-    ],
     "globals": [
       {
         "name":"AcidBase",
@@ -997,5 +784,44 @@
         "subtype":"Oxygenation",
         "global_functions": [ "calcOxygenationFromTO2" ]
      }
-    ]
+    ],
+    "monitoring": [
+      {
+         "name": "Monitor",
+         "description": "",
+         "type": "component",
+         "subtype": "Monitor",
+         "is_enabled": true,
+         "parameters": [
+            {
+               "label": "lvo",
+               "model": "LV_AA",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
+            },
+            {
+               "label": "rvo",
+               "model": "RV_APC",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
+            },
+            {
+               "label": "lv stroke",
+               "model": "LV_AA",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "stroke"
+            },
+            {
+               "label": "heartrate",
+               "model": "ECG",
+               "prop": "heart_rate",
+               "decimals": 0,
+               "type": "vital"
+            }
+         ]
+      }
+   ]
 }

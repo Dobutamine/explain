@@ -12,7 +12,6 @@
                 :options="[
                   { label: 'files', value: 'files' },
                   { label: 'props', value: 'props' },
-                  { label: 'interventions', value: 'interventions'},
                   { label: 'scripts', value: 'scripts' }]"
                 />
             </div>
@@ -27,9 +26,6 @@
           >
             <q-carousel-slide name="files">
                 <FileReader></FileReader>
-            </q-carousel-slide>
-            <q-carousel-slide name="interventions">
-                <Interventions></Interventions>
             </q-carousel-slide>
             <q-carousel-slide name="props">
                 <ModelProps></ModelProps>
@@ -161,7 +157,6 @@ import JSONEditor from 'components/JSONEditor'
 import ECMO from 'components/ECMO'
 import BigNumbers from 'components/BigNumbers'
 import Log from 'components/Log'
-import Interventions from 'components/Interventions'
 
 export default {
   name: 'PageIndex',
@@ -179,8 +174,7 @@ export default {
     JSONEditor,
     BigNumbers,
     ECMO,
-    Log,
-    Interventions
+    Log
   },
   data () {
     return {

@@ -1493,214 +1493,40 @@
    ],
    "monitoring": [
       {
-         "name":"Monitor",
-         "description":"",
-         "type":"component",
-         "subtype":"Monitor",
-         "is_enabled":true,
-         "heartrate_source":[
-            "ECG",
-            "measured_heartrate"
-         ],
-         "resprate_source":[
-            "Breathing",
-            "spont_resp_rate"
-         ],
-         "etco2_source":[
-            "",
-            ""
-         ],
-         "temp_source":[
-            "Metabolism",
-            "body_temp"
-         ],
-         "ecg_signal_source":[
-            "ECG",
-            "ecg_signal"
-         ],
-         "abp_signal_source":[
-            "AA",
-            "pres"
-         ],
-         "pap_signal_source":[
-            "APC",
-            "pres"
-         ],
-         "cvp_signal_source":[
-            "VCII",
-            "pres"
-         ],
-         "ecin_signal_source":[
-            "",
-            ""
-         ],
-         "ecout_signal_source":[
-            "",
-            ""
-         ],
-         "etco2_signal_source":[
-            "",
-            ""
-         ],
-         "resp_signal_source":[
-            "Breathing",
-            "resp_muscle_pressure"
-         ],
-         "sao2_pre_source":[
-            "AA",
-            "so2"
-         ],
-         "sao2_post_source":[
-            "AD",
-            "so2"
-         ],
-         "svo2_source":[
-            "VCII",
-            "so2"
-         ],
-         "svo2_source2":[
-            "VCS",
-            "so2"
-         ],
-         "arterial_bloodgas_source":"AA",
-         "alveolar_gas_source":[
-            
-         ],
-         "liver_flow_source":[
-            "AD_LIVSPLE",
-            "real_flow"
-         ],
-         "kidney_flow_source":[
-            "AR_KIDNEYS",
-            "real_flow"
-         ],
-         "brain_flow_source":[
-            "AARCH_UB",
-            "real_flow"
-         ],
-         "lungshunt_flow_source":[
-            "SHUNT_LUNG",
-            "real_flow"
-         ],
-         "myocardium_flow_source":[
-            "AA_COR",
-            "real_flow"
-         ],
-         "vsd_flow_source":[
-            "SHUNT_VSD",
-            "real_flow"
-         ],
-         "ofo_flow_source":[
-            "SHUNT_OFO",
-            "real_flow"
-         ],
-         "pda_flow_source":[
-            "SHUNT_DA",
-            "real_flow"
-         ],
-         "ivc_flow_source":[
-            "VCII_RA",
-            "real_flow"
-         ],
-         "ub_flow_source":[
-            "AARCH_UB",
-            "real_flow"
-         ],
-         "lb_flow_source":[
-            "AD_LB",
-            "real_flow"
-         ],
-         "svc_flow_source":[
-            "VCS_RA",
-            "real_flow"
-         ],
-         "lvo_source":[
-            "LV_AA",
-            "real_flow"
-         ],
-         "rvo_source":[
-            "RV_APC",
-            "real_flow"
-         ],
-         "ecmo_flow_source":[
-            "",
-            ""
-         ],
-         "tidal_volume_source":[
-            "",
-            ""
-         ],
-         "minute_volume_source":[
-            "",
-            ""
-         ],
-         "vent_peak_pressure_source":[
-            "Ventilator",
-            "peak_pressure"
-         ],
-         "vent_plateau_pressure_source":[
-            "Ventilator",
-            "plateau_pressure"
-         ],
-         "vent_compliance_source":[
-            "",
-            ""
-         ],
-         "vent_resistance_source":[
-            "",
-            ""
-         ],
-         "vent_peep_source":[
-            "Ventilator",
-            "peep"
-         ],
-         "vent_freq_source":[
-            "Ventilator",
-            "measured_freq"
-         ],
-         "vent_minute_volume_source":[
-            "Ventilator",
-            "minute_volume"
-         ],
-         "vent_tidal_volume_source":[
-            "Ventilator",
-            "exhaled_tidal_volume"
-         ],
-         "vent_tidal_volume_insp_source":[
-            "",
-            ""
-         ],
-         "vent_insp_flow_source":[
-            "Ventilator",
-            "insp_flow"
-         ],
-         "vent_exp_flow_source":[
-            "Ventilator",
-            "exp_flow"
-         ],
-         "vent_insp_time_source":[
-            "Ventilator",
-            "t_in"
-         ],
-         "vent_exp_time_source":[
-            "Ventilator",
-            "t_ex"
-         ],
-         "vent_flow_signal_source":[
-            "Ventilator",
-            "flow"
-         ],
-         "vent_pressure_signal_source":[
-            "Ventilator",
-            "pressure"
-         ],
-         "vent_volume_signal_source":[
-            "Ventilator",
-            "volume"
-         ],
-         "vent_fio2_source":[
-            "Ventilator",
-            "fio2"
+         "name": "Monitor",
+         "description": "",
+         "type": "component",
+         "subtype": "Monitor",
+         "is_enabled": true,
+         "parameters": [
+            {
+               "label": "lvo",
+               "model": "LV_AA",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
+            },
+            {
+               "label": "rvo",
+               "model": "RV_APC",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
+            },
+            {
+               "label": "lv stroke",
+               "model": "LV_AA",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "stroke"
+            },
+            {
+               "label": "heartrate",
+               "model": "ECG",
+               "prop": "heart_rate",
+               "decimals": 0,
+               "type": "vital"
+            }
          ]
       }
    ]

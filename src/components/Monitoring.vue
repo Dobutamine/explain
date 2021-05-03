@@ -5,84 +5,14 @@
       <div class="q-gutter-es q-mt-es row gutter text-overline" @click="isEnabled = !isEnabled">
         monitoring
     </div>
-    <div v-if="isEnabled" class="row q-mt-es">
+    <div v-if="parameters.length > 0" class="row q-mt-es">
       <div class="row">
-          <q-input class="col" v-model="heartrate" filled dense square label="heartrate" />
-          <q-input class="col" v-model="abp" filled dense square label="abp" />
-          <q-input class="col" v-model="pap" filled dense square label="pap" />
-      </div>
-      <div class="row">
-          <q-input class="col" v-model="sao2_pre" filled dense square label="sao2 pre" />
-          <q-input class="col" v-model="sao2_post" filled dense square label="sao2 post" />
-          <q-input class="col" v-model="cvp" filled dense square label="cvp" />
-      </div>
-      <div class="row">
-          <q-input class="col" v-model="resp_rate" filled dense square label="resp rate" />
-          <q-input class="col" v-model="etco2" filled dense square label="etco2" />
-          <q-input class="col" v-model="temp" filled dense square label="temp" />
-      </div>
-    </div>
-    <q-separator></q-separator>
-    <div class="q-gutter-es q-mt-es row gutter text-overline" @click="bloodgasEnabled = !bloodgasEnabled">
-          bloodgas
-    </div>
-    <div v-if="bloodgasEnabled" class="row q-mt-es">
-      <div class="row">
-            <q-input class="col" v-model="ph" filled dense square label="pH" />
-            <q-input class="col" v-model="po2" filled dense square label="pO2" />
-            <q-input class="col" v-model="pco2" filled dense square label="pCO2" />
-      </div>
-    </div>
-    <q-separator></q-separator>
-    <div class="q-gutter-es q-mt-es row gutter text-overline" @click="hemodynamicEnabled = !hemodynamicEnabled">
-          hemodynamic monitor
-    </div>
-    <div v-if="hemodynamicEnabled" class="row q-mt-es q-mb-md">
-        <div class="row">
-            <q-input class="col" v-model="ivc_flow" filled dense square label="ivc flow" />
-            <q-input class="col" v-model="svc_flow" filled dense square label="svc flow" />
-            <q-input class="col" v-model="myo_flow" filled dense square label="cor flow" />
+            <div v-for="(field, index) in parameters" :key='index'>
+                <q-input class="col" v-model="field.result" filled dense square :label="field.label" />
+            </div>
         </div>
-        <div class="row">
-            <q-input class="col" v-model="pda_flow" filled dense square label="pda flow" />
-            <q-input class="col" v-model="ofo_flow" filled dense square label="ofo flow" />
-            <q-input class="col" v-model="vsd_flow" filled dense square label="vsd flow" />
-        </div>
-        <div class="row">
-            <q-input class="col" v-model="kidney_flow" filled dense square label="kidney flow" />
-            <q-input class="col" v-model="liver_flow" filled dense square label="liver flow" />
-            <q-input class="col" v-model="brain_flow" filled dense square label="brain flow" />
-        </div>
-        <div class="row">
-            <q-input class="col" v-model="lvo" filled dense square label="lvo" />
-            <q-input class="col" v-model="lv_stroke" filled dense square label="lv stroke" />
-            <q-input class="col" v-model="rvo" filled dense square label="rvo" />
-        </div>
-        <div class="row">
-            <q-input class="col" v-model="rv_stroke" filled dense square label="rv stroke" />
-            <q-input class="col" v-model="lungshunt_flow" filled dense square label="lung shunt" />
-            <q-input class="col" v-model="qpqs" filled dense square label="Qp:Qs" />
-        </div>
-        <div class="row">
-            <q-input class="col" v-model="ecmo_flow" filled dense square label="ecmo_flow" />
-            <q-input class="col" v-model="ecinp" filled dense square label="pre oxy pres" />
-            <q-input class="col" v-model="ecoutp" filled dense square label="post oxy pres" />
-        </div>
-      </div>
     </div>
-    <q-separator></q-separator>
-    <div class="q-gutter-es q-mt-es row gutter text-overline" @click="respiratoryEnabled = !respiratoryEnabled">
-          respiratory monitor
     </div>
-    <div v-if="respiratoryEnabled" class="row q-mt-es q-mb-md">
-        <div class="row">
-            <q-input class="col" v-model="resp_rate" filled dense square label="resp reate" />
-            <q-input class="col" v-model="tidal_volume" filled dense square label="tidal vol" />
-            <q-input class="col" v-model="minute_volume" filled dense square label="minute vol" />
-        </div>
-
-    </div>
-
   </q-card>
 </template>
 
@@ -91,10 +21,12 @@ export default {
   data () {
     return {
       isEnabled: true,
+      initialized: false,
       bloodgasEnabled: true,
       hemodynamicEnabled: true,
       respiratoryEnabled: false,
       modelEventListener: null,
+      parameters: [],
       heartrate: '-',
       abp: '-/-',
       pap: '-/-',
@@ -150,10 +82,6 @@ export default {
   mounted () {
     this.modelEventListener = this.$model.engine.addEventListener('message', (message) => {
       switch (message.data.type) {
-        case 'mes':
-          if (message.data.data[0] === 'ready') {
-          }
-          break
         case 'data':
           switch (message.data.target) {
             case 'datalogger_output':
@@ -196,64 +124,8 @@ export default {
     updateMonitorRealtime (data) {
       if (data.time - this.prevTime > 1) {
         this.prevTime = data.time
-        if (this.isEnabled) {
-          this.heartrate = parseInt(data.Monitor.heart_rate)
-          if (parseInt(data.Monitor.abp_syst) !== -1000) {
-            this.abp = `${this.checkIsNaN(parseInt(data.Monitor.abp_syst), 0)}/${this.checkIsNaN(parseInt(data.Monitor.abp_diast), 0)} (${parseInt(data.Monitor.abp_mean)})`
-          } else {
-            this.abp = '-'
-          }
-          if (parseInt(data.Monitor.pap_syst) !== -1000) {
-            this.pap = `${this.checkIsNaN(parseInt(data.Monitor.pap_syst), 0)}/${this.checkIsNaN(parseInt(data.Monitor.pap_diast), 0)} (${parseInt(data.Monitor.pap_mean)})`
-          } else {
-            this.pap = '-'
-          }
-          this.sao2_pre = this.checkIsNaN(parseInt(data.Monitor.saO2_pre), 0)
-          this.sao2_post = this.checkIsNaN(parseInt(data.Monitor.saO2_post), 0)
-          this.resp_rate = this.checkIsNaN(parseInt(data.Monitor.resp_rate), 0)
-          this.etco2 = this.checkIsNaN(parseInt(data.Monitor.etco2), 0)
-          this.temp = this.checkIsNaN((data.Monitor.temperature), 1)
-          this.cvp = this.checkIsNaN((data.Monitor.cvp), 1)
-          this.ecinp = this.checkIsNaN((data.Monitor.ecinp), 1)
-          this.ecoutp = this.checkIsNaN((data.Monitor.ecoutp), 1)
-        }
 
-        if (this.bloodgasEnabled) {
-          this.ph = this.checkIsNaN((data.Monitor.ph), 2)
-          this.po2 = this.checkIsNaN((data.Monitor.pao2), 0)
-          this.pco2 = this.checkIsNaN((data.Monitor.paco2), 0)
-        }
-
-        if (this.hemodynamicEnabled) {
-          this.ivc_flow = this.checkIsNaN((data.Monitor.ivc_flow), 4)
-          this.svc_flow = this.checkIsNaN((data.Monitor.svc_flow), 4)
-          this.myo_flow = this.checkIsNaN((data.Monitor.myo_flow), 4)
-
-          this.pda_flow = this.checkIsNaN((data.Monitor.pda_flow), 4)
-          this.ofo_flow = this.checkIsNaN((data.Monitor.ofo_flow), 4)
-          this.vsd_flow = this.checkIsNaN((data.Monitor.vsd_flow), 4)
-          this.lungshunt_flow = this.checkIsNaN((data.Monitor.lungshunt_flow), 4)
-          this.ecmo_flow = this.checkIsNaN((data.Monitor.ecmo_flow), 4)
-
-          this.kidney_flow = this.checkIsNaN((data.Monitor.kidney_flow), 4)
-          this.liver_flow = this.checkIsNaN((data.Monitor.liver_flow), 4)
-          this.brain_flow = this.checkIsNaN((data.Monitor.brain_flow), 4)
-          this.ub_flow = this.checkIsNaN((data.Monitor.ub_flow), 4)
-          this.lb_flow = this.checkIsNaN((data.Monitor.lb_flow), 4)
-
-          this.lvo = this.checkIsNaN((data.Monitor.lvo), 4)
-          this.lv_stroke = this.checkIsNaN((data.Monitor.lv_stroke), 4)
-          this.rvo = this.checkIsNaN((data.Monitor.rvo), 4)
-          this.rv_stroke = this.checkIsNaN((data.Monitor.rv_stroke), 4)
-
-          const temp = parseFloat(this.lvo) / (parseFloat(this.ivc_flow) + parseFloat(this.svc_flow))
-          this.qpqs = this.checkIsNaN(temp, 3)
-        }
-
-        if (this.respiratoryEnabled) {
-          this.tidal_volume = this.checkIsNaN((data.Monitor.tidal_volume), 4)
-          this.minute_volume = this.checkIsNaN((data.Monitor.minute_volume), 4)
-        }
+        this.parameters = data.Monitor.parameters
       }
     }
   }

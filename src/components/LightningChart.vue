@@ -130,7 +130,7 @@ export default {
       label: 'filename',
       box: false,
       isEnabled: true,
-      showSummary: true,
+      showSummary: false,
       chart: null,
       autoScale: true,
       minY: 0,
