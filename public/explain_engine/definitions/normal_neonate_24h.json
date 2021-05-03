@@ -1502,12 +1502,30 @@
             {
                "label": "lvo",
                "model": "LV_AA",
-               "prop": "real_flow"
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
             },
             {
                "label": "rvo",
                "model": "RV_APC",
-               "prop": "real_flow"
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "flow"
+            },
+            {
+               "label": "lv stroke",
+               "model": "LV_AA",
+               "prop": "real_flow",
+               "decimals": 3,
+               "type": "stroke"
+            },
+            {
+               "label": "heartrate",
+               "model": "ECG",
+               "prop": "heart_rate",
+               "decimals": 0,
+               "type": "vital"
             }
          ]
       }

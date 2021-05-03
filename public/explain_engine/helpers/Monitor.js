@@ -30,6 +30,7 @@ class Monitor {
             parameter['counter'] = 0
             parameter['stroke'] = 0
             parameter['flow'] = 0
+            parameter['result'] = 0
         })
         this._initialized = true
     }
@@ -52,6 +53,17 @@ class Monitor {
                 parameter.temp_max = -1000
                 parameter.temp_min = 1000
                 parameter.counter = 0
+                switch (parameter.type) {
+                    case "flow":
+                        parameter.result = (parameter.flow).toFixed(parameter.decimals)
+                        break;
+                    case "vital":
+                        parameter.result = (parameter.value).toFixed(parameter.decimals)
+                        break;
+                    case "stroke":
+                        parameter.result = (parameter.stroke).toFixed(parameter.decimals)
+                        break;
+                }
             })
             this._timeCounter = 0
         }
