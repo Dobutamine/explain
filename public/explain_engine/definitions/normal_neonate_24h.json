@@ -1459,10 +1459,10 @@
          "type":"component",
          "subtype":"Resuscitation",
          "is_enabled":false,
-         "continue_resuscitation" : false,   
+         "continue_resuscitation" : true,   
          "ratio_comp": 3,
          "ratio_resp": 1,  
-         "p_max": 40,
+         "p_max": 35,
          "p_min":0,
          "f_comp":2
       },

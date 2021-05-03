@@ -34,6 +34,7 @@ class BloodCompartment {
     this.fvatp = 0
 
     this.initialized = false
+    this.to2 =0;
     
   }
 
