@@ -690,7 +690,16 @@
             "description": "autonomic nervous system",
             "type": "component",
             "subtype": "ANS",
-            "is_enabled": false
+            "is_enabled": true,
+            "Gv": 0.028,
+            "Gs": 0.015,
+            "Tmin": 0.558,
+            "Tmax": 1.308,
+            "Dv": 0.5,
+            "Ds": 3,
+            "tau_v": 0.8,
+            "tau_s": 1.8,
+            "Psan": 95
           },
           {
             "name":"ECG",

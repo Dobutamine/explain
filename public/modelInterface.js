@@ -2,7 +2,7 @@
 export class ModelInterface {
 
   // json model file which is used on startup. File must be in the explain_e
-  default_model_definition = 'normal_neonate_24h'
+  default_model_definition = 'normal_pregnant'
 
   // declare a model engine object containing the new model
   definition = {}
