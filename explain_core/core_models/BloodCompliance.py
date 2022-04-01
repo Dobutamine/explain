@@ -7,24 +7,25 @@ class BloodCompliance:
         super().__init__()
     
         # properties
-        self.name = ""                      # name of the compliance
-        self.model_type = "BloodCompliance" # type of the model component
-        self.content = ""                   # content of the component (blood/gas/lymph)
-        self.is_enabled = True              # determines whether or not the compliance is enabled
-        self.vol = 0                        # holds the volume in liters
-        self.u_vol = 0                      # holds the unstressed volume in liters
-        self.u_vol_fac = 1.0                # holds the unstressed volume factor in liters
-        self.p_atm = 760.0                  # holds the atmospheric pressure
-        self.pres = 0                       # holds the net pressure in mmHg
+        self.name = ""                          # name of the compliance
+        self.model_type = "BloodCompliance"     # type of the model component
+        self.content = ""                       # content of the component (blood/gas/lymph)
+        self.is_enabled = True                  # determines whether or not the compliance is enabled
+        self.vol = 0                            # holds the volume in liters
+        self.u_vol = 0                          # holds the unstressed volume in liters
+        self.u_vol_fac = 1.0                    # holds the unstressed volume factor in liters
+        self.p_atm = 760.0                      # holds the atmospheric pressure
+        self.pres = 0                           # holds the net pressure in mmHg
         self.pres_rel = 0                       # holds the net pressure in mmHg
-        self.recoil_pressure = 0            # holds the recoil pressure in mmHg
-        self.pres_outside = 0               # holds the pressure which is exerted on the compliance from the outside
-        self.pres_itp = 0                   # holds the intrathoracic pressure
-        self.pres_transmural = 0 
-        self.el_base = 1.0                  # holds the baseline elastance
-        self.el_base_fac = 1.0              # holds the baseline elastance multiplier
-        self.el_k = 0                       # holds the constant for the non-linear elastance function
-        self.el_k_fac = 1.0                 # holds the non-linear elastance function factor multiplier
+        self.recoil_pressure = 0                # holds the recoil pressure in mmHg
+        self.pres_outside = 0                   # holds the pressure which is exerted on the compliance from the outside
+        self.pres_itp = 0                       # holds the intrathoracic pressure
+        self.pres_transmural = 0                # holds the transmural pressure
+        self.el_base = 1.0                      # holds the baseline elastance
+        self.el_base_fac = 1.0                  # holds the baseline elastance multiplier
+        self.el_k = 0                           # holds the constant for the non-linear elastance function
+        self.el_k_fac = 1.0                     # holds the non-linear elastance function factor multiplier
+        self.compounds = {}                     # dictionary holding all the blood compounds
     
         # set the values of the independent properties with the values from the JSON configuration file
         for key, value in args.items():
@@ -97,7 +98,14 @@ class BloodCompliance:
         if self.is_enabled:
             # add volume
             self.vol += dvol
-            
+        
+        # mix the non-fixed blood compounds if the volume is not zero
+        if (self.vol > 0):
+            for name, compound in self.compounds.items():
+                if not compound["fixed"]:
+                    d_compound = (comp_from.compounds[name]["conc"] - compound["conc"]) * dvol
+                    compound["conc"] = ((compound["conc"] * self.vol) + d_compound) / self.vol
+
         # check whether this compliance has a mix attribute.
         if (self.vol > 0):
             # calculate the change in o2 concentration

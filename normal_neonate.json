@@ -1046,6 +1046,78 @@
           "model_type":"Blood",
           "is_enabled": true,
           "p_atm": 0,
+          "compounds": {
+            "to2": {
+               "conc": 9.1,
+               "unit": "mmol/l",
+               "fixed": false
+            },
+            "tco2": {
+               "conc": 24.6,
+               "unit": "mmol/l",
+               "fixed": false
+            },
+            "hemoglobin": {
+               "conc": 10.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "dpg": {
+               "conc": 5.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "albumin": {
+               "conc": 30.0,
+               "unit": "g/l",
+               "fixed": true
+            },
+            "phosphates": {
+               "conc": 1.5,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "uma": {
+               "conc": 7.2,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "sodium": {
+               "conc": 138.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "potassium": {
+               "conc": 4.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "calcium": {
+               "conc": 1.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "magnesium": {
+               "conc": 0.9,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "chloride": {
+               "conc": 103.0,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "urate": {
+               "conc": 0.2,
+               "unit": "mmol/l",
+               "fixed": true
+            },
+            "lactate": {
+               "conc": 1.0,
+               "unit": "mmol/l",
+               "fixed": true
+            }
+          },
           "fixed_blood_compounds": {
               "hemoglobin": 10,
               "dpg": 5.0,

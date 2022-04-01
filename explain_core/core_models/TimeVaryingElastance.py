@@ -26,6 +26,7 @@ class TimeVaryingElastance:
         self.varying_elastance_factor = 0     # holds the varying elastance factor
         self.el_k = 0                         # holds the constant for the non-linear elastance function
         self.el_k_fac = 1.0
+        self.compounds = {}                     # dictionary holding all the blood compounds
         self.initialized = False
     
         # set the independent properties (name, description, type, subtype, is_enabled, vol, u_vol, el_min, el_max, el_k)
@@ -104,6 +105,12 @@ class TimeVaryingElastance:
             if (self.vol > 0):
                 # calculate the change in compound concentration
                 self.mix_blood(dvol, comp_from)
+
+                # mix the non-fixed blood compounds if the volume is not zero
+                for name, compound in self.compounds.items():
+                    if not compound["fixed"]:
+                        d_compound = (comp_from.compounds[name]["conc"] - compound["conc"]) * dvol
+                        compound["conc"] = ((compound["conc"] * self.vol) + d_compound) / self.vol
             
         if (self.content == 'gas'):
             if (self.vol > 0):

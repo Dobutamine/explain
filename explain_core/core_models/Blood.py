@@ -77,6 +77,10 @@ class Blood:
                     
                     # add a reference to the component to the blood components list
                     self.blood_components.append(comp)
+
+                    # set the blood compounds as properties of the model component
+                    for compound, value in self.compounds.items():
+                        comp.compounds[compound] = value
                     
                     # set the fixed blood compounds as properties of the model component
                     for compound, value in self.fixed_blood_compounds.items():
