@@ -980,7 +980,11 @@
       "model_type": "Heart",
       "is_enabled": true,
       "activation_delay": 0,
-      "a": 2
+      "right_atrium": ["RA"],
+      "left_atrium": ["LA"],
+      "right_ventricle": ["RV"],
+      "left_ventricle": ["LV"],
+      "coronaries": ["COR"]
     },
     "ans": {
       "name": "ans",
@@ -1227,6 +1231,12 @@
       "model_type": "Lymphatics",
       "is_enabled": false
     },
+    "birth": {
+      "name": "birth",
+      "description": "",
+      "model_type": "Birth",
+      "is_enabled": false
+    },
     "mechanical_ventilator": {
       "name": "ventilator",
       "description": "mechanical ventilator model",
@@ -1242,6 +1252,12 @@
       "target_tidal_volume": 0.0165,
       "inspiratory_flow": 8,
       "expiratory_flow": 20
+    },
+    "compressions": {
+      "name": "compressions",
+      "description": "",
+      "model_type": "Compressions",
+      "is_enabled": false
     },
     "pda": {
       "name": "pda",

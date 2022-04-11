@@ -87,9 +87,18 @@ class Heart:
             self.state = 0
 
         # transfer the activation function to the heart compartments and the coronaries
-        self.model.components['RA'].varying_elastance_factor = self.aaf
-        self.model.components['RV'].varying_elastance_factor = self.vaf
-        self.model.components['LA'].varying_elastance_factor = self.aaf
-        self.model.components['LV'].varying_elastance_factor = self.vaf
-        self.model.components['COR'].varying_elastance_factor = self.vaf
+        for ra in self.right_atrium:
+            self.model.components[ra].varying_elastance_factor = self.aaf
+
+        for la in self.left_atrium:
+            self.model.components[la].varying_elastance_factor = self.aaf
+
+        for rv in self.right_ventricle:
+            self.model.components[rv].varying_elastance_factor = self.vaf
+
+        for lv in self.left_ventricle:
+            self.model.components[lv].varying_elastance_factor = self.vaf
+
+        for cor in self.coronaries:
+            self.model.components[cor].varying_elastance_factor = self.vaf
     
