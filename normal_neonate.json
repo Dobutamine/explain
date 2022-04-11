@@ -1221,6 +1221,12 @@
       "model_type": "Ecls",
       "is_enabled": false
     },
+    "lymphatics": {
+      "name": "lymphatics",
+      "description": "",
+      "model_type": "Lymphatics",
+      "is_enabled": false
+    },
     "mechanical_ventilator": {
       "name": "ventilator",
       "description": "mechanical ventilator model",
