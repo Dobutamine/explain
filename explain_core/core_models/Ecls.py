@@ -1,6 +1,6 @@
 import math
 
-class Ecmo:
+class Ecls:
     def __init__(self, model, **args):
         # initialize the super class
         super().__init__()
