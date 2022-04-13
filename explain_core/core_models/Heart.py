@@ -45,7 +45,6 @@ class Heart:
         ncc_ventricular = self.ecg_model.ncc_ventricular
         ventricular_duration = (self.ecg_model.cqt_time + self.ecg_model.qrs_time)
 
-        a_atrium = 10.0
         # varying elastance activation function of the atria
         if ncc_atrial >= 0 and (ncc_atrial < atrial_duration / self._t):
             # the atrial activation curve consists of two gaussian curves on top of each other

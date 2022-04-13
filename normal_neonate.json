@@ -986,6 +986,32 @@
       "left_ventricle": ["LV"],
       "coronaries": ["COR"]
     },
+    "ans_exp": {
+      "name": "ans_exp",
+      "description": "Experimental autonomic nervous system model",
+      "model_type": "Ans_exp",
+      "is_enabled": true,
+      "effector_sites": [
+        {
+          "name": "sympathetic",
+          "is_enabled": true,
+          "effector": "ans_exp.symp_firing_freq",
+          "reference": 100.0
+        }
+      ],
+      "afferent_pathways": [
+        {
+          "name": "baroreceptors",
+          "is_enabled": true,
+          "input": "AA.pres",
+          "setpoint": 60.0,
+          "amplitude": 70.0,
+          "sensitivity": 0.1,
+          "efferent": "sympathetic",
+          "time_constant": 5.0
+        }
+      ]
+    },
     "ans": {
       "name": "ans",
       "description": "autonomic nervous system model",
