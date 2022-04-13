@@ -1030,7 +1030,7 @@
         },
         {
           "name": "chemoreflex_pco2",
-          "is_enabled": false,
+          "is_enabled": true,
           "input": "AA.pco2",
           "target": 40.0,
           "effector_site": "minute_volume",

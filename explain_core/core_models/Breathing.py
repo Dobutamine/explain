@@ -128,7 +128,14 @@ class Breathing:
     
     def vt_rr_controller(self):
         # calculate the spontaneous resp rate depending on the target minute volume (from ANS) and the set vt-rr ratio
+        if (self.target_minute_volume < 0):
+            self.target_minute_volume = 0
+
         self.spont_resp_rate = math.sqrt(self.target_minute_volume / self.vtrr_ratio)
+
         
         # calculate the target tidal volume depending on the target resp rate and target minute volume (from ANS)
-        self.target_tidal_volume = self.target_minute_volume / self.spont_resp_rate;
+        if (self.spont_resp_rate > 0):
+            self.target_tidal_volume = self.target_minute_volume / self.spont_resp_rate
+        else:
+            self.target_tidal_volume = 0

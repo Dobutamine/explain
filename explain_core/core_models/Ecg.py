@@ -54,6 +54,7 @@ class Ecg:
         if self.heart_rate > 0:
             self._sa_node_period = 60 / self.heart_rate
         else:
+            self.heart_rate = 0
             self._sa_node_period = 60
 
         # has the sa node period elapsed?
