@@ -4,45 +4,6 @@ class Ans:
     def __init__(self, model, **args):
         # initialize the super class
         super().__init__()
-        
-        #
-        self.d_map_hp = 0;
-        self.d_map_cont = 0;
-        self.d_map_venpool = 0;
-        self.d_map_res = 0;
-
-        self.d_lungvol_hp = 0;
-        self.d_po2_hp = 0;
-        self.d_pco2_hp = 0;
-
-        self.d_po2_ve = 0;
-        self.d_pco2_ve = 0;
-        self.d_ph_ve = 0;
-
-        self.a_map = 0;
-        self.a_lungvol = 0;
-        self.a_po2 = 0;
-        self.a_pco2 = 0;
-        self.a_ph = 0;
-
-        self._update_timer = 0;
-        self.ans_update_interval = 0.015;
-        
-        self.input_hp = ['AA']
-        self.input_ve = ['AA']
-        self.input_cont = ['AA']
-        self.input_venpool = ['AA']
-        self.input_res = ['AA']
-        
-        self.targets_hp = ['ecg']
-        self.targets_ve = ['breathing']
-        self.targets_cont = ['LV','RV']
-        self.targets_venpool = ['IVCE','SVC']
-        self.targets_res = ['AD_RLB','AD_KID','AD_INT','AD_LS']
-        
-        # set the independent properties
-        for key, value in args.items():
-            setattr(self, key, value)
             
         # get a reference to the whole model
         self.model = model
@@ -53,13 +14,18 @@ class Ans:
         
         # set the init flag to false
         self.initialized = False
-        
-        
-        self.ref_uvol_ivce = 0
-        self.ref_uvol_svc = 0
 
-        self.delta_vol = 0
-        self.prev_delta_vol = 0
+        # define a pathway list
+        self.pathways = []
+        self.ans_pathways = {}
+
+        # define a effector site dictionary
+        self.effector_sites = []
+        self.ans_effector_sites = {}
+
+        # set the independent properties
+        for key, value in args.items():
+            setattr(self, key, value)
         
     def model_step(self):
         if self.is_enabled:
@@ -70,75 +36,189 @@ class Ans:
             self.update_counter += self.model.modeling_stepsize
     
     def initialize(self):
-        # switch on the acidbase and oxygenation capabilities of the inputs
-        for comp in self.input_hp:
-            self.model.components[comp].oxy_enabled = True
-            self.model.components[comp].acidbase_enabled = True
-        
-        self.ref_uvol_ivce = self.model.components["IVCE"].u_vol
-        
+        # analyze the different effector sites and pathways and setup the model structure
+        for effector_site in self.effector_sites:
+            # instantiate an effector site
+            new_effector_site = EffectorSite(self.model, effector_site)
+
+            # add the new effector site to the effector dictionary
+            self.ans_effector_sites[new_effector_site.name] = new_effector_site
+
+        for pathway in self.pathways:
+            # instantiate a pathway
+            new_pathway = Pathway(self.model, self.update_interval, pathway)
+
+            # add the new pathway to the pathways dictionary
+            self.ans_pathways[new_pathway.name] = new_pathway
+
         # set the initialization flag to true
         self.initialized = True
-        
+
     def ans_activity(self):
-        # check whether or not the model is initialized
+        # only initialize the ANS AFTER everything else
         if not self.initialized:
             self.initialize()
+
+        # first calculate all pathways and set the effector
+        for (_, pathway) in self.ans_pathways.items():
+            # get the effector site and the effector
+            (effector_site, effect) = pathway.calculate_pathway()
+
+            # update the cummulative effector on the effector site
+            self.ans_effector_sites[effector_site].effect_cum += effect
+
+        # apply the effects and reset the cummulative effector
+        for (_, effector_site) in self.ans_effector_sites.items():
+            # update the effector
+            effector_site.update_effector()
+
+
+class EffectorSite:
+    def __init__(self, model, effector_args):
+        super().__init__()
+
+        self.model = model
+
+        # initialize the effector site
+        effector = effector_args["effector"].split(".")
+        self.effector_model = model.components[effector[0]]
+        self.effector_prop = effector[1]
+        self.effector_reference = effector_args["reference"]
+        
+        self.name = effector_args["name"]
+        self.is_enabled = effector_args["is_enabled"]
+
+        # define state variables
+        self.effect_cum = 0
+        self.prev_delta_vol = 0
+    
+    def update_effector(self):
+        
+
+        # conserve the mass
+        if (self.effector_prop == "u_vol"):
+            # calculated the new unstressed volume
+            new_unstressed_volume = self.effector_reference  + self.effect_cum
+
+            # set the new unstressed volume
+            setattr(self.effector_model, self.effector_prop, new_unstressed_volume)
+
+            # get current volume
+            current_vol_value = getattr(self.effector_model, "vol")
             
-        # activate the inputs
-        self.model.components['AA'].oxy_enabled = True
-        self.model.components['AA'].acidbase_enabled = True
+            # calculate the relative volume change of this step
+            vol_change = self.effect_cum - self.prev_delta_vol
+            
+            # set the new volume
+            setattr(self.effector_model, "vol", current_vol_value - vol_change)
+
+            # store the previous volume change
+            self.prev_delta_vol = self.effect_cum
+        else:
+            # calculate the new value
+            new_value = self.effector_reference  + self.effect_cum
+
+            # apply the new value
+            setattr(self.effector_model, self.effector_prop, new_value)
+
+        # reset the
+        self.effect_cum = 0
+
+
+
+class Pathway:
+    def __init__(self, model, update_interval, pathway_args):
+        # initialize the super class
+        super().__init__()
+
+        self.model = model
+        self.update_interval = update_interval
+
+        # initialize the pathway
+        input = pathway_args["input"].split(".")
+        self.input_model = model.components[input[0]]
+        self.input_prop = input[1]
+
+        # check whether the input model needs to activate the oxygenation and acidbase model
+        if (self.input_prop == "po2" or self.input_prop == "pco2" or self.input_prop == "ph"):
+            self.input_model.oxy_enabled = True
+            self.input_model.acidbase_enabled = True
+
+        self.name = pathway_args["name"]
+        self.is_enabled = pathway_args["is_enabled"]
+        self.gain = pathway_args["gain"]
+        self.time_constant = pathway_args["time_constant"]
+
+        # define activation and effector variables 
+        self.d = 0
+        self.net_effect = 0
+        self.threshold = pathway_args["threshold"]
+        self.operating_point = pathway_args["operating_point"]
+        self.saturation = pathway_args["saturation"]
+        self.time_constant = pathway_args["time_constant"]
+        self.gain = pathway_args["gain"]
+        self.effector_site = pathway_args["effector_site"]
+
+        # define the state variables
+        self.input_value = 0
+        self.effector_value = 0
+
+    
+    def calculate_pathway(self):
+        # get value
+        value = getattr(self.input_model, self.input_prop)
+
+        # calculate the activation function
+        activation= self.activation_function(value)
         
-        # calculate the activation functions
-        self.a_map = self.activation_function(self.model.components["AA"].pres, self.sa_map, self.op_map, self.th_map)
-        self.a_po2 = self.activation_function(self.model.components["AA"].po2, self.sa_po2, self.op_po2, self.th_po2)
-        self.a_pco2 = self.activation_function(self.model.components["AA"].pco2, self.sa_pco2, self.op_pco2, self.th_pco2)
-        self.a_ph = self.activation_function(self.model.components["AA"].ph, self.sa_ph, self.op_ph, self.th_ph)
+        # caluclate the effector value
+        self.d = self.effector_function(activation)
         
-        # calculate the effectors
-        self.d_map_hp = self.update_interval * ((1 / self.tc_map_hp) * (-self.d_map_hp + self.a_map)) + self.d_map_hp
-        self.d_po2_hp = self.update_interval * ((1 / self.tc_po2_hp) * (-self.d_po2_hp + self.a_po2)) + self.d_po2_hp
-        self.d_pco2_hp = self.update_interval * ((1 / self.tc_pco2_hp) * (-self.d_pco2_hp + self.a_pco2)) + self.d_pco2_hp
-        
-        self.d_po2_ve = self.update_interval * ((1 / self.tc_po2_ve) * (-self.d_po2_ve + self.a_po2)) + self.d_po2_ve
-        self.d_pco2_ve = self.update_interval * ((1 / self.tc_pco2_ve) * (-self.d_pco2_ve + self.a_pco2)) + self.d_pco2_ve
-        self.d_ph_ve = self.update_interval * ((1 / self.tc_ph_ve) * (-self.d_ph_ve + self.a_ph)) + self.d_ph_ve
-        
-        self.d_map_cont = self.update_interval * ((1 / self.tc_map_cont) * (-self.d_map_cont + self.a_map)) + self.d_map_cont
-        self.d_map_venpool = self.update_interval * ((1 / self.tc_map_venpool) * (-self.d_map_venpool + self.a_map)) + self.d_map_venpool
-        self.d_map_res = self.update_interval * ((1 / self.tc_map_res) * (-self.d_map_res + self.a_map)) + self.d_map_res
-        
+        # apply the effect
+        self.net_effect = self.d * self.gain
+
+        return (self.effector_site, self.net_effect)
+
+
+
+    def effector_function(self, activation):
+        return self.update_interval * ((1 / self.time_constant) * (-self.d + activation)) + self.d
+
+    def activation_function(self, value):
+        activation = 0
+
+        if value >= self.saturation:
+            activation = self.saturation - self.operating_point
+        else:
+            if value <= self.threshold:
+                activation = self.threshold - self.operating_point
+            else:
+                activation = value - self.operating_point
+
+        return activation
+
+    
+
+
         # apply the effects
         
         # if blood pressure above operating point the self.d_map_hp is positive and self.g_map_hp is positive
-        heartrate_ref = self.model.components['ecg'].heart_rate_ref
-        new_heartrate = 60000.0 / (60000.0 / heartrate_ref + self.g_map_hp * self.d_map_hp + self.g_pco2_hp * self.d_pco2_hp + self.g_po2_hp * self.d_po2_hp)
-        if new_heartrate < 0:
-            new_heartrate = 0
-        self.model.components['ecg'].heart_rate = new_heartrate
+        # heartrate_ref = self.model.components['ecg'].heart_rate_ref
+        # new_heartrate = 60000.0 / (60000.0 / heartrate_ref + self.g_map_hp * self.d_map_hp + self.g_pco2_hp * self.d_pco2_hp + self.g_po2_hp * self.d_po2_hp)
+        # if new_heartrate < 0:
+        #     new_heartrate = 0
+        # self.model.components['ecg'].heart_rate = new_heartrate
         
-        mv_ref = self.model.components['breathing'].ref_minute_volume
-        new_mv = mv_ref + self.g_ph_ve * self.d_ph_ve + self.g_pco2_ve * self.d_pco2_ve + self.g_po2_ve * self.d_po2_ve;
-        if new_mv < 0:
-            new_mv = 0
-        self.model.components['breathing'].target_minute_volume = new_mv
+        # mv_ref = self.model.components['breathing'].ref_minute_volume
+        # new_mv = mv_ref + self.g_ph_ve * self.d_ph_ve + self.g_pco2_ve * self.d_pco2_ve + self.g_po2_ve * self.d_po2_ve;
+        # if new_mv < 0:
+        #     new_mv = 0
+        # self.model.components['breathing'].target_minute_volume = new_mv
         
-        self.delta_vol = self.g_map_venpool * self.d_map_venpool
-        self.model.components['IVCE'].u_vol = self.ref_uvol_ivce + self.delta_vol
+        # self.delta_vol = self.g_map_venpool * self.d_map_venpool
+        # self.model.components['IVCE'].u_vol = self.ref_uvol_ivce + self.delta_vol
         
-        # to conserve the mass balance we have to change the volume of the IVCE according to delta_vol
-        self.model.components['IVCE'].vol -= (self.delta_vol - self.prev_delta_vol)
-        self.prev_delta_vol = self.delta_vol
-        
-    def activation_function(self, value, saturation, operating_point, threshold):
-        activation = 0;
+        # # to conserve the mass balance we have to change the volume of the IVCE according to delta_vol
+        # self.model.components['IVCE'].vol -= (self.delta_vol - self.prev_delta_vol)
+        # self.prev_delta_vol = self.delta_vol
 
-        if value >= saturation:
-            activation = saturation - operating_point
-        else:
-            if value <= threshold:
-                activation = threshold - operating_point
-            else:
-                activation = value - operating_point
-
-        return activation
