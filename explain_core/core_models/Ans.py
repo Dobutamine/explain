@@ -94,9 +94,9 @@ class EffectorSite:
     
     def update_effector(self):
         
-
-        # conserve the mass
         if (self.effector_prop == "u_vol"):
+            # we have to conserve the mass if we target th unstressed volume
+
             # calculated the new unstressed volume
             new_unstressed_volume = self.effector_reference  + self.effect_cum
 
@@ -197,28 +197,4 @@ class Pathway:
 
         return activation
 
-    
-
-
-        # apply the effects
-        
-        # if blood pressure above operating point the self.d_map_hp is positive and self.g_map_hp is positive
-        # heartrate_ref = self.model.components['ecg'].heart_rate_ref
-        # new_heartrate = 60000.0 / (60000.0 / heartrate_ref + self.g_map_hp * self.d_map_hp + self.g_pco2_hp * self.d_pco2_hp + self.g_po2_hp * self.d_po2_hp)
-        # if new_heartrate < 0:
-        #     new_heartrate = 0
-        # self.model.components['ecg'].heart_rate = new_heartrate
-        
-        # mv_ref = self.model.components['breathing'].ref_minute_volume
-        # new_mv = mv_ref + self.g_ph_ve * self.d_ph_ve + self.g_pco2_ve * self.d_pco2_ve + self.g_po2_ve * self.d_po2_ve;
-        # if new_mv < 0:
-        #     new_mv = 0
-        # self.model.components['breathing'].target_minute_volume = new_mv
-        
-        # self.delta_vol = self.g_map_venpool * self.d_map_venpool
-        # self.model.components['IVCE'].u_vol = self.ref_uvol_ivce + self.delta_vol
-        
-        # # to conserve the mass balance we have to change the volume of the IVCE according to delta_vol
-        # self.model.components['IVCE'].vol -= (self.delta_vol - self.prev_delta_vol)
-        # self.prev_delta_vol = self.delta_vol
 
