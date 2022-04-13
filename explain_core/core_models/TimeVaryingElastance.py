@@ -39,6 +39,7 @@ class TimeVaryingElastance:
         # systolic and diastolic pressures
         self.systole = 0
         self.diastole = 0
+        self.mean = 0
         self.min_pres_temp = 0
         self.max_pres_temp = 0
         
@@ -85,6 +86,7 @@ class TimeVaryingElastance:
             self.diastole = self.min_pres_temp
             self.min_pres_temp = 1000
             self.analysis_counter = 0
+            self.mean = ((2 * self.diastole) + self.systole) / 3.0
         
         self.analysis_counter += self.model.modeling_stepsize
         

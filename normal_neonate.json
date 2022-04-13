@@ -965,7 +965,7 @@
       "resp_q": 0.8,
       "p_atm": 760,
       "outside_temp": 20,
-      "body_temp": 36.9,
+      "body_temp": 37.0,
       "active_comps": [
         { "comp": "RLB", "fvatp": 0.185 },
         { "comp": "RUB", "fvatp": 0.2 },
@@ -996,7 +996,7 @@
           "name": "heart_rate",
           "is_enabled": true,
           "effector": "ecg.heart_rate",
-          "reference": 125.0
+          "reference": 135.0
         },
         {
           "name": "minute_volume",
@@ -1009,6 +1009,12 @@
           "is_enabled": true,
           "effector": "IVCE.u_vol",
           "reference": 0.05710848
+        },
+        {
+          "name": "contractility",
+          "is_enabled": false,
+          "effector": "heart.cont_factor",
+          "reference": 1.0
         }
       ],
       "pathways": [
@@ -1016,45 +1022,41 @@
           "name": "baroreflex",
           "is_enabled": true,
           "input": "AA.pres",
+          "target": 60.0,
           "effector_site": "heart_rate",
-          "threshold": 30.0,
-          "operating_point": 53.0,
-          "saturation": 70.0,
-          "time_constant": 5.0,
-          "gain": -1.2
+          "effect_range": 70.0,
+          "effect_slope": -0.1,
+          "effect_time_constant": 5.0
         },
         {
-          "name": "chemoreflex_co2",
-          "is_enabled": true,
+          "name": "chemoreflex_pco2",
+          "is_enabled": false,
           "input": "AA.pco2",
+          "target": 40.0,
           "effector_site": "minute_volume",
-          "threshold": 25.0,
-          "operating_point": 40.0,
-          "saturation": 70.0,
-          "time_constant": 5.0,
-          "gain": 0.025
+          "effect_range": 0.5,
+          "effect_slope": 0.2,
+          "effect_time_constant": 5.0
         },
         {
           "name": "chemoreflex_ph",
           "is_enabled": true,
           "input": "AA.ph",
+          "target": 7.39,
           "effector_site": "minute_volume",
-          "threshold": 7.0,
-          "operating_point": 7.39,
-          "saturation": 7.6,
-          "time_constant": 2.0,
-          "gain": 0.45
+          "effect_range": 0.5,
+          "effect_slope": -10.0,
+          "effect_time_constant": 2.0
         },
         {
-          "name": "baroreflex_venpool",
+          "name": "temperature",
           "is_enabled": true,
-          "input": "AA.pres",
-          "effector_site": "ven_pool",
-          "threshold": 30.0,
-          "operating_point": 53.0,
-          "saturation": 70.0,
-          "time_constant": 20.0,
-          "gain": 0.00175
+          "input": "metabolism.body_temp",
+          "target": 37.0,
+          "effector_site": "heart_rate",
+          "effect_range": 70.0,
+          "effect_slope": 0.35,
+          "effect_time_constant": 5.0
         }
       ]
     },

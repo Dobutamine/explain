@@ -29,6 +29,9 @@ class Heart:
         # get the modeling stepsize from the model
         self._t = model.modeling_stepsize
 
+        # set the contractility factor
+        self.cont_factor = 1.0
+
     def model_step(self):
         if (self.is_enabled):
             self.model_cycle()
