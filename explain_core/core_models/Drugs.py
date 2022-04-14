@@ -5,8 +5,6 @@ class Drugs:
         # initialize the super class
         super().__init__()
         
-        self.vol = 0.0
-        
         # set the independent properties
         for key, value in args.items():
             setattr(self, key, value)
