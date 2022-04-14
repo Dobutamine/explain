@@ -119,13 +119,11 @@ class Sensor:
         self.name = sensor_args["name"]
         self.is_enabled = sensor_args["is_enabled"]
         self.setpoint = sensor_args["setpoint"]
-        self.amplitude = sensor_args["amplitude"]
         self.sensitivity = sensor_args["sensitivity"]
         self.time_constant = sensor_args["time_constant"]
-        self.integrator = sensor_args["integrator"]
 
         # state variable
-        self.sensor_output = 0
+        self.sensor = 0
 
     def update_sensor(self):
         # get sensor if enabled
@@ -134,15 +132,10 @@ class Sensor:
             sensor_value = getattr(self.sensor_model, self.sensor_prop)
 
             # process the sensor value and generate the sensor output
-            activity = ((2 * self.amplitude) / (1 + math.pow(math.e, (sensor_value - self.setpoint) * -self.sensitivity))) - self.amplitude
+            activity = (100.0 / (1 + math.pow(math.e, (sensor_value - self.setpoint) * -self.sensitivity)))
 
             # apply the time constant
             self.sensor_output = self.update_interval * ((1 / self.time_constant) * (-self.sensor_output + activity)) + self.sensor_output
-
-            # return the sensor output
-            return (self.integrator, self.sensor_output)
-        else:
-            return (self.integrator, 0.0)
 
 class Integrator:
     def __init__(self, model, integrator_args, update_interval):
