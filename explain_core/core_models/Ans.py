@@ -16,13 +16,15 @@ class Ans:
         # set the init flag to false
         self.initialized = False
 
-        # define a pathway list
-        self.pathways = []
-        self.ans_pathways = {}
+        # define the settings lists
+        self.sensors = []
+        self.integrators = []
+        self.effectors = []
 
-        # define a effector site dictionary
-        self.effector_sites = []
-        self.ans_effector_sites = {}
+        # define the components
+        self.ans_sensors = {}
+        self.ans_integrators = {}
+        self.ans_effectors = {}
 
         # set the independent properties
         for key, value in args.items():
@@ -30,27 +32,36 @@ class Ans:
 
     def model_step(self):
         if self.is_enabled:
-            if (self.update_counter > self.update_interval):
+            if (self.update_counter >= self.update_interval):
                 self.update_counter = 0
                 self.ans_activity()
 
             self.update_counter += self.model.modeling_stepsize
 
     def initialize(self):
-        # analyze the different effector sites and pathways and setup the model structure
-        for effector_site in self.effector_sites:
-            # instantiate an effector site
-            new_effector_site = EffectorSite(self.model, effector_site)
+        # initialize the sensors
+        for sensor in self.sensors:
+            # instantiate a new sensor
+            new_sensor = Sensor(self.model, sensor, self.update_interval)
 
-            # add the new effector site to the effector dictionary
-            self.ans_effector_sites[new_effector_site.name] = new_effector_site
+            # add sensor to sensor dictionary
+            self.ans_sensors[new_sensor.name] = new_sensor
 
-        for pathway in self.pathways:
-            # instantiate a pathway
-            new_pathway = Pathway(self.model, self.update_interval, pathway)
+        # initialize the integrators
+        for integrator in self.integrators:
+            # instantiate a new sensor
+            new_integrator = Integrator(self.model, integrator, self.update_interval)
 
-            # add the new pathway to the pathways dictionary
-            self.ans_pathways[new_pathway.name] = new_pathway
+            # add integrator to integrator dictionary
+            self.ans_integrators[new_integrator.name] = new_integrator
+
+        # initialize the effectors
+        for effector in self.effectors:
+            # instantiate a new sensor
+            new_effector = Effector(self.model, effector, self.update_interval)
+
+            # add effector to effector dictionary
+            self.ans_effectors[new_effector.name] = new_effector
 
         # set the initialization flag to true
         self.initialized = True
@@ -60,131 +71,130 @@ class Ans:
         if not self.initialized:
             self.initialize()
 
-        # first calculate all pathways and set the effector
-        for (_, pathway) in self.ans_pathways.items():
-            if (pathway.is_enabled):
-                # get the effector site and the effector
-                (effector_site, effect) = pathway.calculate_pathway()
+        # get the output of the sensors and feed them into the integrators
+        for (_, sensor) in self.ans_sensors.items():
+            # get the sensor output
+            sensor_output = sensor.update_sensor()
 
-                # update the cummulative effector on the effector site
-                self.ans_effector_sites[effector_site].effect_cum += effect
+            # apply the sensor output to the correct integrator
+            self.ans_integrators[sensor_output[0]].update_integrator(sensor_output[1])
 
-        # apply the effects and reset the cummulative effector
-        for (_, effector_site) in self.ans_effector_sites.items():
-            if (effector_site.is_enabled):
-            # update the effector
-                effector_site.update_effector()
+        # get the output of the integrators and feed them into the effectors
+        for (_, integrator) in self.ans_integrators.items():
+            # get the integrator output
+            integrator_output = integrator.get_output()
+
+            # apply the integrator output to the correct effector
+            for effector in integrator_output[0]:
+                # effector is an object with effector and effect_size 
+                self.ans_effectors[effector["effector"]].update_effector(integrator_output[1] * effector["effect_size"])
+
+            # # reset the integrators
+            integrator.integrator_output = 0.0
+
+        # process the effectors and apply the effect
+        for (_, effector) in self.ans_effectors.items():
+            effector.apply_effect()
 
 
-class EffectorSite:
-    def __init__(self, model, effector_args):
-        super().__init__()
-
+class Sensor:
+    def __init__(self, model, sensor_args, update_interval):
+        # store a reference to the complete model
         self.model = model
 
-        # initialize the effector site
-        effector = effector_args["effector"].split(".")
-        self.effector_model = model.components[effector[0]]
-        self.effector_prop = effector[1]
-        self.effector_reference = effector_args["reference"]
-
-        self.name = effector_args["name"]
-        self.is_enabled = effector_args["is_enabled"]
-
-        # define state variables
-        self.effect_cum = 0
-        self.prev_delta_vol = 0
-
-    def update_effector(self):
-
-        if (self.effector_prop == "u_vol"):
-            # we have to conserve the mass if we target th unstressed volume
-
-            # calculated the new unstressed volume
-            new_unstressed_volume = self.effector_reference + self.effect_cum
-
-            # set the new unstressed volume
-            setattr(self.effector_model, self.effector_prop,
-                    new_unstressed_volume)
-
-            # get current volume
-            current_vol_value = getattr(self.effector_model, "vol")
-
-            # calculate the relative volume change of this step
-            vol_change = self.effect_cum - self.prev_delta_vol
-
-            # set the new volume
-            setattr(self.effector_model, "vol", current_vol_value - vol_change)
-
-            # store the previous volume change
-            self.prev_delta_vol = self.effect_cum
-
-        else:
-
-            # calculate the new value
-            new_value = self.effector_reference + self.effect_cum
-            # apply the new value
-            setattr(self.effector_model, self.effector_prop, new_value)
-
-        # reset the
-        self.effect_cum = 0
-
-
-class Pathway:
-    def __init__(self, model, update_interval, pathway_args):
-        # initialize the super class
-        super().__init__()
-
-        self.model = model
+        # get the update interval
         self.update_interval = update_interval
 
-        # initialize the pathway
-        input = pathway_args["input"].split(".")
-        self.input_model = model.components[input[0]]
-        self.input_prop = input[1]
+        # process the sensor argument list
+        sensor = sensor_args["sensor"].split(".")
+        self.sensor_model = self.model.components[sensor[0]]
+        self.sensor_prop = sensor[1]
 
-        # check whether the input model needs to activate the oxygenation and acidbase model
-        if (self.input_prop == "po2" or self.input_prop == "pco2" or self.input_prop == "ph"):
-            self.input_model.oxy_enabled = True
-            self.input_model.acidbase_enabled = True
+        # check whether the sensor requires the oxygenation and acidbase model to be active on the sensos
+        if (self.sensor_prop == 'po2' or self.sensor_prop == 'pco2' or self.sensor_prop == 'ph'):
+            self.sensor_model.oxy_enabled = True
+            self.sensor_model.acidbase_enabled = True
+        
+        # set the rest of the properties
+        self.name = sensor_args["name"]
+        self.is_enabled = sensor_args["is_enabled"]
+        self.setpoint = sensor_args["setpoint"]
+        self.amplitude = sensor_args["amplitude"]
+        self.sensitivity = sensor_args["sensitivity"]
+        self.time_constant = sensor_args["time_constant"]
+        self.integrator = sensor_args["integrator"]
 
-        self.name = pathway_args["name"]
-        self.is_enabled = pathway_args["is_enabled"]
-        self.target = pathway_args["target"]
-        self.range = pathway_args["effect_range"]
-        self.slope = pathway_args["effect_slope"]
-        self.time_constant = pathway_args["effect_time_constant"]
-        self.effector_site = pathway_args["effector_site"]
+        # state variable
+        self.sensor_output = 0
 
-        # define activation and effector variables
-        self.d = 0
-        self.net_effect = 0
-
-        # define the state variables
-        self.input_value = 0
-        self.effector_value = 0
-
-    def calculate_pathway(self):
-        # get value
-        value = getattr(self.input_model, self.input_prop)
-
-        # calculate the activation function
-        activation = self.activation_function(value)
-
-        # caluclate the effector value
-        self.net_effect = self.effector_function(activation)
-
-        # apply the effect
+    def update_sensor(self):
+        # get sensor if enabled
         if (self.is_enabled):
-            return (self.effector_site, self.net_effect)
+            # get the sensor value
+            sensor_value = getattr(self.sensor_model, self.sensor_prop)
+
+            # process the sensor value and generate the sensor output
+            activity = ((2 * self.amplitude) / (1 + math.pow(math.e, (sensor_value - self.setpoint) * -self.sensitivity))) - self.amplitude
+
+            # apply the time constant
+            self.sensor_output = self.update_interval * ((1 / self.time_constant) * (-self.sensor_output + activity)) + self.sensor_output
+
+            # return the sensor output
+            return (self.integrator, self.sensor_output)
         else:
-            return (self.effector_site, 0.0)
+            return (self.integrator, 0.0)
 
-    def effector_function(self, activation):
-        return self.update_interval * ((1 / self.time_constant) * (-self.net_effect + activation)) + self.net_effect
+class Integrator:
+    def __init__(self, model, integrator_args, update_interval):
+        # store a reference to the complete model
+        self.model = model
 
-    def activation_function(self, value):
-        activation = ((2 * self.range) / (1 + math.pow(math.e,
-                      (value - self.target) * -self.slope))) - self.range
+        # get the update interval
+        self.update_interval = update_interval
 
-        return activation
+        # process the integrator argument list
+        self.name = integrator_args["name"]
+        self.is_enabled = integrator_args["is_enabled"]
+        self.effectors = integrator_args["effectors"]
+
+        # state variable
+        self.integrator_output = 0
+
+    def update_integrator(self, sensor_output):
+        self.integrator_output += sensor_output
+
+    def get_output(self):
+        return (self.effectors, self.integrator_output)
+
+
+class Effector:
+    def __init__(self, model, effector_args, update_interval):
+        # store a reference to the complete model
+        self.model = model
+
+        # get the update interval
+        self.update_interval = update_interval
+
+        # process the integrator argument list
+        self.name = effector_args["name"]
+        self.is_enabled = effector_args["is_enabled"]
+        self.effect_sites = []
+        for effect_site in effector_args["effect_sites"]:
+            (site_model, site_prop) = effect_site["effect_site"].split(".")
+            self.effect_sites.append({ "model": self.model.components[site_model], "prop": site_prop, "ref": effect_site["ref"]})
+
+        # state variable
+        self.effector_output = 0
+    
+    def update_effector(self, integrator_output):
+        self.effector_output = integrator_output
+
+    def apply_effect(self):
+        # apply effect
+        for effect_site in self.effect_sites:
+            new_value = effect_site["ref"] + self.effector_output
+            setattr(effect_site["model"], effect_site["prop"], new_value)
+        
+        # reset the effector output
+        self.effector_output = 0
+
