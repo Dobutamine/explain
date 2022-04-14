@@ -990,7 +990,7 @@
       "name": "ans",
       "description": "Experimental autonomic nervous system model",
       "model_type": "Ans",
-      "is_enabled": true,
+      "is_enabled": false,
       "update_interval": 0.05,
       "sensors": [
         {
@@ -1072,6 +1072,76 @@
           ]
         }
       ]
+    },
+    "sns": {
+      "name": "sns",
+      "description": "sympathetic nervous system",
+      "model_type": "SensorIntegrator",
+      "is_enabled": true,
+      "sensors": [
+        { "sensor": "baroreceptor", "magnitude": 1.0 },
+        { "sensor": "temp", "magnitude": 1.0 }
+      ]
+    },
+    "baroreceptor": {
+      "name": "baroreceptor",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "AA.pres",
+      "setpoint": 60.0,
+      "sensitivity": 0.1,
+      "time_constant": 5.0
+    },
+    "chemoreceptor_ph": {
+      "name": "chemoreceptor_ph",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "AA.ph",
+      "setpoint": 7.39,
+      "sensitivity": 0.1,
+      "time_constant": 5.0
+    },
+    "chemoreceptor_pco2": {
+      "name": "chemoreceptor_pco2",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "AA.pco2",
+      "setpoint": 40,
+      "sensitivity": 0.1,
+      "time_constant": 5.0
+    },
+    "chemoreceptor_po2": {
+      "name": "chemoreceptor_po2",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "AA.po2",
+      "setpoint": 90,
+      "sensitivity": 0.1,
+      "time_constant": 5.0
+    },
+    "temperature_sensor": {
+      "name": "temp",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "metabolism.body_temp",
+      "setpoint": 37,
+      "sensitivity": 0.1,
+      "time_constant": 10.0
+    },
+    "lungstretch": {
+      "name": "lung_stretch",
+      "description": "",
+      "model_type": "Sensor",
+      "is_enabled": true,
+      "sensor": "ALL.vol",
+      "setpoint": 0.04,
+      "sensitivity": 0.1,
+      "time_constant": 5.0
     },
     "blood": {
       "name": "blood",
