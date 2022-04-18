@@ -9,16 +9,32 @@ class Ans:
         # get a reference to the whole model
         self.model = model
 
+        # define the properties
+        self.is_enabled = True
+        self.sensors = []
+        self.effect_sites = []
+        self.ans_inputs = {}
+
         # set the independent properties
         for key, value in args.items():
             setattr(self, key, value)
 
+        # define state variables
+        self._initialized = False
+
     def model_step(self):
         if self.is_enabled:
-            pass
+            self.ans_activity()
 
     def initialize(self):
-        pass
+        # get reference to all the sensors
+        for sensor in self.sensors:
+            self.ans_inputs[sensor["name"]] = {
+                "model": self.model.components[sensor["name"]]
+            }
+        self._initialized = True
+
 
     def ans_activity(self):
-       pass
+       if not self._initialized:
+           self.initialize()

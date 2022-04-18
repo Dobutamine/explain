@@ -990,10 +990,8 @@
       "name": "ans",
       "description": "autonomic nervous system model",
       "model_type": "Ans",
-      "is_enabled": false,
-      "sensors": [],
-      "integrators": [],
-      "effectors": []
+      "is_enabled": true,
+      "sensors": [{ "name": "sns" }]
     },
     "sns": {
       "name": "sns",
@@ -1260,6 +1258,12 @@
       "name": "birth",
       "description": "",
       "model_type": "Birth",
+      "is_enabled": false
+    },
+    "placenta": {
+      "name": "placenta",
+      "description": "",
+      "model_type": "Placenta",
       "is_enabled": false
     },
     "mechanical_ventilator": {

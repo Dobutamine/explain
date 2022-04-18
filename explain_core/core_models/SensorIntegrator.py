@@ -13,7 +13,7 @@ class SensorIntegrator:
         self.is_enabled = True
         self.sensors = []
         self.update_interval = 0.05
-        self.integrator_output = 0.0
+        self.sensor_output = 0.0
         
         # set the independent properties
         for key, value in args.items():
@@ -46,7 +46,7 @@ class SensorIntegrator:
         total_magnitude += sensor["magnitude"]
         total_output += output
       
-      self.integrator_output = total_output / total_magnitude
+      self.sensor_output = total_output / total_magnitude
       
 
 
