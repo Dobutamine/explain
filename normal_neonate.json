@@ -990,16 +990,29 @@
       "name": "ans",
       "description": "autonomic nervous system model",
       "model_type": "Ans",
-      "is_enabled": true,
+      "is_enabled": false,
       "effect_sites": [
         {
           "name": "heartrate",
           "sensor": "sns",
           "target": "ecg.heart_rate",
           "reference_value": 135.0,
-          "gain": 1.0
+          "gain": 1.0,
+          "preserve_mass": false,
+          "preserve_mass_from": ""
         }
       ]
+    },
+    "effector_heartrate": {
+      "name": "ef_hr",
+      "description": "effector of sensors on heartrate",
+      "model_type": "Effector",
+      "is_enabled": true,
+      "sensor": "sns",
+      "effect_site": "ecg.heart_rate",
+      "gain": 1.0,
+      "preserve_mass": false,
+      "preserve_mass_from": ""
     },
     "sns": {
       "name": "sns",
