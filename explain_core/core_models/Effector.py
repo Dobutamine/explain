@@ -40,9 +40,6 @@ class Effector:
       (effect_site_model, self._effect_site_prop) = self.effect_site.split(".")
       self._effect_site_model = self.model.components[effect_site_model]
 
-      print(self._pres_mass_model)
-      print(self._effect_site_model)
-
       self._initialized = True
 
     def model_step(self):
