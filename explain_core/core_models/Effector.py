@@ -10,6 +10,8 @@ class Effector:
         self.is_enabled = True
         self.sensor = "sns"
         self.effect_site = "ecg.heart_rate"
+        self.effector_output = 0
+        self.prev_effector_output = 0
         self.gain = 1.0
         self.reference = 135.0
         self.preserve_mass = False
@@ -26,8 +28,6 @@ class Effector:
         self._effect_site_prop = {}
         self._pres_mass_model = {}
         self._pres_mass_prop = {}
-        self._prop_change = 0
-        self._prev_prop_change = 0
 
     def initialize(self):
       
@@ -57,22 +57,20 @@ class Effector:
       sensor_value = (self._sensor_model.sensor_output - 50.0)
 
       # calculate the property change
-      self._prop_change = sensor_value * self.gain
+      self.effector_output = (sensor_value * self.gain)
 
       if self.preserve_mass:
         # get the current value of the property which is used to conserve the mass
         current_mass_prop = getattr(self._pres_mass_model, self._pres_mass_prop)
         
         # adjust the property
-        current_mass_prop -= self._prop_change - self.prev_prop_change
+        current_mass_prop -= (self.effector_output - self.prev_effector_output)
 
-        # store the current prop change
-        self.prev_prop_change = self._prop_change
+        # store the current effector output
+        self.prev_effector_output = self.effector_output
 
+        # set the property of the mass balance property
         setattr(self._pres_mass_model, self._pres_mass_prop, current_mass_prop)
 
-      # calculate the new property value
-      new_value = self.reference + self._prop_change
-
       # set the actual property
-      setattr(self._effect_site_model, self._effect_site_prop, new_value)
+      setattr(self._effect_site_model, self._effect_site_prop, self.reference + self.effector_output)
