@@ -986,23 +986,6 @@
       "left_ventricle": ["LV"],
       "coronaries": ["COR"]
     },
-    "ans": {
-      "name": "ans",
-      "description": "autonomic nervous system model",
-      "model_type": "Ans",
-      "is_enabled": false,
-      "effect_sites": [
-        {
-          "name": "heartrate",
-          "sensor": "sns",
-          "target": "ecg.heart_rate",
-          "reference_value": 135.0,
-          "gain": 1.0,
-          "preserve_mass": false,
-          "preserve_mass_from": ""
-        }
-      ]
-    },
     "effector_heartrate": {
       "name": "ef_hr",
       "description": "effector of sensors on heartrate",
@@ -1010,9 +993,33 @@
       "is_enabled": true,
       "sensor": "sns",
       "effect_site": "ecg.heart_rate",
-      "gain": 1.0,
+      "reference": 135.0,
+      "gain": 1.3,
       "preserve_mass": false,
       "preserve_mass_from": ""
+    },
+    "effector_breathing": {
+      "name": "ef_mv",
+      "description": "effector of sensors on exhaled minute volume",
+      "model_type": "Effector",
+      "is_enabled": true,
+      "sensor": "cob",
+      "effect_site": "breathing.target_minute_volume",
+      "reference": 0.63,
+      "gain": 0.02,
+      "preserve_mass": false,
+      "preserve_mass_from": ""
+    },
+    "cob": {
+      "name": "cob",
+      "description": "control of breathing",
+      "model_type": "SensorIntegrator",
+      "is_enabled": true,
+      "sensors": [
+        { "sensor": "chemoreceptor_ph", "magnitude": 1.0 },
+        { "sensor": "chemoreceptor_pco2", "magnitude": 0.8 },
+        { "sensor": "chemoreceptor_po2", "magnitude": 0.2 }
+      ]
     },
     "sns": {
       "name": "sns",
@@ -1041,8 +1048,8 @@
       "is_enabled": true,
       "sensor": "AA.ph",
       "setpoint": 7.39,
-      "sensitivity": 0.1,
-      "time_constant": 5.0
+      "sensitivity": -20.0,
+      "time_constant": 4.0
     },
     "chemoreceptor_pco2": {
       "name": "chemoreceptor_pco2",
@@ -1051,7 +1058,7 @@
       "is_enabled": true,
       "sensor": "AA.pco2",
       "setpoint": 40,
-      "sensitivity": 0.1,
+      "sensitivity": 0.2,
       "time_constant": 5.0
     },
     "chemoreceptor_po2": {
@@ -1060,8 +1067,8 @@
       "model_type": "Sensor",
       "is_enabled": true,
       "sensor": "AA.po2",
-      "setpoint": 90,
-      "sensitivity": 0.1,
+      "setpoint": 75,
+      "sensitivity": -0.1,
       "time_constant": 5.0
     },
     "temperature_sensor": {

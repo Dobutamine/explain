@@ -5,7 +5,7 @@ class Effector:
 
         # get a reference to the whole model
         self.model = model
-
+        
         # define the properties
         self.is_enabled = True
         self.sensor = "sns"
@@ -16,6 +16,7 @@ class Effector:
         self.reference = 135.0
         self.preserve_mass = False
         self.preserve_mass_from = ""
+        
 
         # set the independent properties
         for key, value in args.items():
@@ -50,7 +51,7 @@ class Effector:
       if not self._initialized:
         self.initialize()
 
-      # get the sensor value
+      # get the sensor or sensor integrator value
       sensor_value = (self._sensor_model.sensor_output - 50.0)
 
       # calculate the property change
